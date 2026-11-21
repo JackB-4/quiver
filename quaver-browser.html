@@ -108,6 +108,17 @@ input[type="text"], input[type="number"], select {
   pointer-events: none;
   transition: background 0.3s ease;
 }
+body.in-menu #bg-dim-layer {
+  background: radial-gradient(ellipse at 50% 44%, rgba(6, 2, 16, 0.08) 0%, rgba(5, 1, 12, 0.48) 100%);
+}
+body.in-menu .panel-card {
+  background: rgba(8, 5, 18, 0.72);
+  backdrop-filter: blur(10px);
+}
+body.in-menu .menu-nav-btn {
+  background: linear-gradient(90deg, rgba(12, 8, 28, 0.84), rgba(8, 5, 18, 0.66));
+  backdrop-filter: blur(8px);
+}
 body.in-select #bg-dim-layer {
   background: linear-gradient(180deg, rgba(6, 1, 9, 0.46) 0%, rgba(6, 1, 9, 0.34) 45%, rgba(6, 1, 9, 0.52) 100%);
 }
@@ -296,25 +307,25 @@ body.in-select .mapset-group {
 .menu-logo-wrap {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 6px;
+  gap: 15px;
+  margin-bottom: 10px;
 }
 .menu-logo-svg {
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   flex-shrink: 0;
-  filter: drop-shadow(0 0 18px rgba(2, 171, 255, 0.45));
+  filter: drop-shadow(0 0 18px rgba(82, 124, 255, 0.42));
 }
 .menu-wordmark {
-  font-size: clamp(36px, 4.6vw, 52px);
+  font-size: clamp(38px, 4.6vw, 54px);
   font-weight: 900;
   letter-spacing: 0.22em;
   line-height: 1;
-  color: #ffffff;
-  text-shadow: 0 0 28px rgba(2, 171, 255, 0.35);
-}
-.menu-wordmark span {
-  color: var(--accent);
+  background: linear-gradient(100deg, #e0f7ff 0%, #2ec4ff 38%, #7b61ff 72%, #c084fc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 22px rgba(96, 112, 255, 0.34));
 }
 
 .menu-nav-list {
@@ -414,6 +425,37 @@ body.in-select .mapset-group {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
+}
+.reconnect-card {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 16px;
+  background: linear-gradient(90deg, rgba(2, 171, 255, 0.16), rgba(168, 85, 247, 0.14));
+  border: 1px solid rgba(2, 171, 255, 0.6);
+  border-radius: var(--radius);
+  box-shadow: 0 0 22px rgba(2, 171, 255, 0.18);
+}
+.reconnect-card.visible { display: flex; }
+.fav-star-btn {
+  background: rgba(6, 1, 9, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.45);
+  border-radius: 6px;
+  padding: 4px 9px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.12s;
+  flex-shrink: 0;
+}
+.fav-star-btn:hover { color: #ffe76b; border-color: rgba(255, 231, 107, 0.6); }
+.fav-star-btn.active {
+  color: #ffe76b;
+  background: rgba(255, 231, 107, 0.16);
+  border-color: rgba(255, 231, 107, 0.7);
+  text-shadow: 0 0 10px rgba(255, 231, 107, 0.55);
 }
 .stat-tile {
   background: rgba(255, 255, 255, 0.03);
@@ -525,15 +567,111 @@ body.in-select .mapset-group {
   overflow: hidden;
 }
 .lb-header {
-  padding: 10px 14px;
+  padding: 8px 12px;
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.09em;
+}
+.lb-mode-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.lb-mode-tab {
+  padding: 4px 9px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.lb-mode-tab:hover { color: #fff; border-color: rgba(2, 171, 255, 0.5); }
+.lb-mode-tab.active {
+  color: #fff;
+  background: rgba(2, 171, 255, 0.24);
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(2, 171, 255, 0.22);
+}
+.map-preview-view {
+  flex: 1;
+  min-height: 0;
+  display: none;
+  flex-direction: column;
+  background: #000000;
+  position: relative;
+  overflow: hidden;
+}
+.map-preview-view.active { display: flex; }
+.preview-stage-wrap {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  background: #000000;
+  overflow: hidden;
+}
+#sel-preview-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.preview-hud-top {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+  z-index: 3;
+}
+.preview-controls {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  background: rgba(6, 1, 9, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+.preview-ctrl-btn {
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.preview-ctrl-btn:hover { border-color: var(--accent); background: rgba(2, 171, 255, 0.18); }
+.preview-seek {
+  flex: 1;
+  min-width: 60px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.preview-time-lbl {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-sub);
+  min-width: 36px;
 }
 .lb-pb {
   padding: 10px 14px;
@@ -1443,14 +1581,14 @@ input[type="checkbox"] {
 }
 </style>
 </head>
-<body>
+<body class="in-menu">
 <div id="app">
   <canvas id="bg-canvas"></canvas>
   <div id="bg-image-layer"></div>
   <div id="bg-dim-layer"></div>
 
   <!-- Hidden file inputs (work across all browsers including file:// and integrated views) -->
-  <input id="file-input-files" type="file" multiple accept=".qpack,.qp,.zip,.osz,.qua,.osu,.mp3,.ogg,.wav,.flac,.m4a,.jpg,.jpeg,.png,.webp" hidden>
+  <input id="file-input-files" type="file" multiple accept=".qpack,.qp,.zip,.osz,.qua,.osu,.json,.mp3,.ogg,.wav,.flac,.m4a,.jpg,.jpeg,.png,.webp" hidden>
   <input id="file-input-folder" type="file" webkitdirectory directory multiple hidden>
   <input id="file-input-skin" type="file" webkitdirectory directory multiple hidden>
   <input id="file-input-backup" type="file" accept=".json" hidden>
@@ -1461,11 +1599,17 @@ input[type="checkbox"] {
       <div class="bar-group">
         <div class="brand-mark">
           <svg width="22" height="22" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-            <polygon points="32,4 60,32 32,60 4,32" stroke="#02abff" stroke-width="4" fill="rgba(2,171,255,0.12)"/>
-            <path d="M22 42 L44 20 M31 20 H44 V33" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M40 40 L56 56" stroke="#02abff" stroke-width="5" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="qBrandGrad" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#00d2ff"/>
+                <stop offset="55%" stop-color="#6366f1"/>
+                <stop offset="100%" stop-color="#a855f7"/>
+              </linearGradient>
+            </defs>
+            <circle cx="30" cy="30" r="20" stroke="url(#qBrandGrad)" stroke-width="6.5"/>
+            <path d="M38 38 L56 56" stroke="url(#qBrandGrad)" stroke-width="6.5" stroke-linecap="round"/>
           </svg>
-          <span>QUIVER</span>
+          <span style="background:linear-gradient(95deg,#e0f7ff,#38bdf8 48%,#a855f7);-webkit-background-clip:text;background-clip:text;color:transparent;">QUIVER</span>
         </div>
       </div>
       <div class="bar-group">
@@ -1481,21 +1625,24 @@ input[type="checkbox"] {
     <main id="menu-content">
       <div class="menu-hero">
         <div class="menu-logo-wrap">
-          <svg class="menu-logo-svg" viewBox="0 0 72 72" fill="none" aria-hidden="true">
+          <svg class="menu-logo-svg" viewBox="0 0 64 64" fill="none" aria-hidden="true">
             <defs>
-              <linearGradient id="qLogoGrad" x1="8" y1="8" x2="64" y2="64" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#ffffff"/>
-                <stop offset="55%" stop-color="#02abff"/>
-                <stop offset="100%" stop-color="#7c3aff"/>
+              <linearGradient id="qLogoGrad" x1="6" y1="6" x2="58" y2="58" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#00d2ff"/>
+                <stop offset="52%" stop-color="#6366f1"/>
+                <stop offset="100%" stop-color="#a855f7"/>
+              </linearGradient>
+              <linearGradient id="qTailGrad" x1="34" y1="34" x2="58" y2="58" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#e0f7ff"/>
+                <stop offset="45%" stop-color="#38bdf8"/>
+                <stop offset="100%" stop-color="#a855f7"/>
               </linearGradient>
             </defs>
-            <polygon points="36,4 68,36 36,68 4,36" stroke="url(#qLogoGrad)" stroke-width="3.5" fill="rgba(6,1,9,0.85)"/>
-            <polygon points="36,14 58,36 36,58 14,36" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" fill="rgba(2,171,255,0.08)"/>
-            <path d="M24 46 L48 22 M34 22 H48 V36" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M45 45 L62 62" stroke="#02abff" stroke-width="5.5" stroke-linecap="round"/>
-            <path d="M47 47 L60 60" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="29" cy="29" r="21" stroke="url(#qLogoGrad)" stroke-width="5.5" fill="rgba(16, 12, 36, 0.45)"/>
+            <path d="M36 36 L57 57" stroke="url(#qTailGrad)" stroke-width="5.8" stroke-linecap="round"/>
+            <path d="M48 57 H57 V48" stroke="#a855f7" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <div class="menu-wordmark">QUIV<span>E</span>R</div>
+          <div class="menu-wordmark">QUIVER</div>
         </div>
         <nav class="menu-nav-list">
           <button class="menu-nav-btn primary-nav" onclick="App.showScreen('select')">
@@ -1522,6 +1669,17 @@ input[type="checkbox"] {
       </div>
 
       <div class="menu-right">
+        <div class="reconnect-card" id="qpack-reconnect-card">
+          <div style="min-width:0;">
+            <div style="font-size:13px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="qpack-reconnect-title">Reconnect Last Library</div>
+            <div style="font-size:11.5px;color:var(--text-sub);margin-top:2px;" id="qpack-reconnect-sub">Click to grant file permission and reload instantly</div>
+          </div>
+          <div style="display:flex;gap:6px;flex-shrink:0;">
+            <button class="btn btn-accent btn-sm" id="btn-qpack-reconnect" onclick="App.reconnectLastQpack()">Allow &amp; Load</button>
+            <button class="btn btn-sm" onclick="App.dismissReconnectCard()" title="Dismiss">✕</button>
+          </div>
+        </div>
+
         <div class="panel-card drop-card" onclick="App.triggerImportFiles()">
           <div class="drop-card-title">Drop .qpack Library or Charts Anywhere</div>
           <div class="drop-card-sub">Supports instant-load <b>.qpack</b> library packs, native <b>.qp</b> archives, unpacked <b>Songs/</b> folders, or loose <b>.qua</b>/<b>.osu</b> + audio — 100% offline.</div>
@@ -1536,7 +1694,7 @@ input[type="checkbox"] {
 
         <div class="panel-card">
           <h3>
-            <span>Active Profile &amp; Defaults</span>
+            <span>Active Profile &amp; Career Stats</span>
             <span style="color:var(--text-muted);font-weight:600;">fusy's Darkwave Circles</span>
           </h3>
           <div class="quick-stats-grid">
@@ -1544,6 +1702,10 @@ input[type="checkbox"] {
             <div class="stat-tile"><div class="k">Charts</div><div class="v" id="stat-charts">0</div></div>
             <div class="stat-tile"><div class="k">4K Setup</div><div class="v" id="stat-4k-setup">32.0 UP</div></div>
             <div class="stat-tile"><div class="k">Local Scores</div><div class="v" id="stat-scores">0</div></div>
+            <div class="stat-tile"><div class="k">Total Plays</div><div class="v" id="stat-plays">0</div></div>
+            <div class="stat-tile"><div class="k">Full Combos</div><div class="v" id="stat-fcs" style="color:var(--gold)">0</div></div>
+            <div class="stat-tile"><div class="k">Playtime</div><div class="v" id="stat-playtime">0m</div></div>
+            <div class="stat-tile"><div class="k">Life M:P</div><div class="v" id="stat-mp-ratio">—</div></div>
           </div>
         </div>
 
@@ -1575,6 +1737,7 @@ input[type="checkbox"] {
         <span style="font-weight:800;letter-spacing:0.1em;font-size:14px;">SONG SELECT</span>
       </div>
       <div class="bar-group">
+        <button class="bar-btn" id="btn-sel-reconnect" style="display:none;border-color:var(--accent);color:var(--accent-bright);" onclick="App.reconnectLastQpack()" title="Reconnect your last loaded .qpack library">Reload .qpack</button>
         <button class="bar-btn" onclick="App.triggerImportFiles()">+ .qpack / .qp</button>
         <button class="bar-btn" onclick="App.triggerImportFolder()">+ Folder</button>
         <button class="bar-btn btn-fullscreen-toggle" onclick="App.toggleFullscreen()" title="Toggle Fullscreen (F11)">Fullscreen</button>
@@ -1587,8 +1750,13 @@ input[type="checkbox"] {
       <div class="select-left">
         <div class="map-detail-card">
           <div class="map-banner" id="sel-banner">
-            <div class="map-banner-title" id="sel-title">No Chart Selected</div>
-            <div class="map-banner-artist" id="sel-artist">Drop a .qp or song folder to begin</div>
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;">
+              <div style="min-width:0;flex:1;">
+                <div class="map-banner-title" id="sel-title">No Chart Selected</div>
+                <div class="map-banner-artist" id="sel-artist">Drop a .qp or song folder to begin</div>
+              </div>
+              <button class="fav-star-btn" id="btn-sel-fav" onclick="App.toggleFavoriteSelected()" title="Favorite Chart">★</button>
+            </div>
             <div class="map-banner-meta" id="sel-meta"></div>
           </div>
           <div class="map-metrics">
@@ -1617,6 +1785,7 @@ input[type="checkbox"] {
           </div>
           <div style="display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--border);background:rgba(6,1,9,0.9);">
             <button class="btn btn-accent" style="flex:1" onclick="App.startSelectedMap(false)">Play Chart</button>
+            <button class="btn" id="btn-sel-preview" onclick="App.toggleMapPreview()" title="Toggle live scrolling Map Preview synced to the song audio">Preview</button>
             <button class="btn" onclick="App.startSelectedMap(true)" title="Practice Mode with seek &amp; loop">Practice</button>
             <button class="btn btn-sm" id="btn-export-qp" onclick="App.exportSelectedMapset()" title="Export mapset as .qp package">Export .qp</button>
             <button class="btn btn-crimson btn-sm" id="btn-delete-mapset" onclick="App.deleteSelectedMapset()" title="Remove mapset from library">Del</button>
@@ -1625,13 +1794,34 @@ input[type="checkbox"] {
 
         <div class="leaderboard-card">
           <div class="lb-header">
-            <span>Local Leaderboard</span>
-            <span id="sel-local-offset-label" style="color:var(--accent);font-family:var(--font-mono);">Offset: 0ms</span>
+            <div class="lb-mode-tabs">
+              <button class="lb-mode-tab active" id="tab-lb-scores" onclick="App.setMapPreviewMode(false)">Leaderboard</button>
+              <button class="lb-mode-tab" id="tab-lb-preview" onclick="App.setMapPreviewMode(true)">Map Preview</button>
+            </div>
+            <span id="sel-local-offset-label" style="color:var(--accent);font-family:var(--font-mono);font-size:11px;">Offset: 0ms</span>
           </div>
-          <div class="lb-pb" id="sel-pb-box">
-            <span style="color:var(--text-muted);font-size:12px;">No Personal Best yet</span>
+          <div id="sel-lb-view" style="flex:1;min-height:0;display:flex;flex-direction:column;">
+            <div class="lb-pb" id="sel-pb-box">
+              <span style="color:var(--text-muted);font-size:12px;">No Personal Best yet</span>
+            </div>
+            <div class="lb-list" id="sel-lb-list"></div>
           </div>
-          <div class="lb-list" id="sel-lb-list"></div>
+          <div id="sel-preview-view" class="map-preview-view">
+            <div class="preview-stage-wrap" id="sel-preview-wrap">
+              <canvas id="sel-preview-canvas"></canvas>
+              <div class="preview-hud-top">
+                <span id="sel-preview-bpm" style="color:var(--accent-bright);">120 BPM</span>
+                <span id="sel-preview-sv" style="color:#e278ff;"></span>
+              </div>
+            </div>
+            <div class="preview-controls">
+              <button class="preview-ctrl-btn" id="btn-preview-play" onclick="App.togglePreviewAudioPause()" title="Pause / Resume Preview Audio">⏸</button>
+              <span class="preview-time-lbl" id="sel-preview-time">0:00</span>
+              <input type="range" class="preview-seek" id="sel-preview-seek" min="0" max="1000" value="0">
+              <span class="preview-time-lbl" id="sel-preview-dur" style="text-align:right;">0:00</span>
+              <button class="preview-ctrl-btn" onclick="App.jumpPreviewStart()" title="Restart preview from 0:00">0:00</button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1650,6 +1840,8 @@ input[type="checkbox"] {
             <option value="title">Sort: Title</option>
             <option value="artist">Sort: Artist</option>
             <option value="bpm">Sort: BPM</option>
+            <option value="favorites">Sort: Favorites</option>
+            <option value="plays">Sort: Most Played</option>
             <option value="added">Sort: Recently Added</option>
           </select>
           <button class="btn btn-sm" id="sel-sort-dir" onclick="App.toggleSortDir()" title="Reverse Sort">Desc</button>
@@ -2121,10 +2313,16 @@ input[type="checkbox"] {
               <div class="setting-ctrl"><input type="checkbox" id="set-persistlib"></div>
             </div>
             <div class="setting-row">
-              <div class="setting-label"><span>Backup &amp; Restore (Settings, Local Scores, Offsets)</span><small>Handy when moving between browsers or file:// origins</small></div>
+              <div class="setting-label"><span>Local Save Cache</span><small id="cache-storage-summary">Calculating local storage usage...</small></div>
               <div class="setting-ctrl">
-                <button class="btn btn-sm" onclick="App.exportBackup()">Export JSON</button>
-                <button class="btn btn-sm" onclick="App.triggerImportBackup()">Import JSON</button>
+                <button class="btn btn-sm" onclick="App.reconnectLastQpack()" id="btn-opt-reconnect">Reload Last .qpack</button>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-label"><span>Backup &amp; Restore (Full Scores, Replays, Graphs, Stats, Offsets)</span><small>Drop a .qsave.json / backup file anywhere to merge &amp; restore</small></div>
+              <div class="setting-ctrl">
+                <button class="btn btn-sm" onclick="App.exportBackup()">Export .qsave</button>
+                <button class="btn btn-sm" onclick="App.triggerImportBackup()">Import Save</button>
               </div>
             </div>
             <div class="setting-row">
@@ -2353,9 +2551,21 @@ function fnv1aHash(str) {
  * ========================================================================== */
 const SafeStore = (() => {
   const DB_NAME = 'QuaverDarkwaveWebDB_v1';
+  const DB_VER = 2;
   const memLS = new Map();
   let db = null;
   let idbAvailable = false;
+  let lsAvailable = false;
+
+  // Probe localStorage reliability (works across sessions even on file://!)
+  try {
+    const tk = '__quiver_ls_probe__';
+    window.localStorage.setItem(tk, '1');
+    window.localStorage.removeItem(tk);
+    lsAvailable = true;
+  } catch {
+    lsAvailable = false;
+  }
 
   function lsGet(k, fallback = null) {
     try {
@@ -2368,19 +2578,44 @@ const SafeStore = (() => {
 
   function lsSet(k, v) {
     memLS.set(k, v);
-    try { window.localStorage.setItem(k, JSON.stringify(v)); } catch {}
+    try {
+      window.localStorage.setItem(k, JSON.stringify(v));
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  function lsRemove(k) {
+    memLS.delete(k);
+    try { window.localStorage.removeItem(k); } catch {}
+  }
+
+  function lsByteSize() {
+    let total = 0;
+    try {
+      for (let i = 0; i < window.localStorage.length; i++) {
+        const k = window.localStorage.key(i);
+        if (k && (k.startsWith('quaver_') || k.startsWith('quiver_'))) {
+          const val = window.localStorage.getItem(k) || '';
+          total += (k.length + val.length) * 2;
+        }
+      }
+    } catch {}
+    return total;
   }
 
   function initIDB() {
     return new Promise((resolve) => {
       try {
         if (!window.indexedDB) { resolve(false); return; }
-        const req = window.indexedDB.open(DB_NAME, 1);
+        const req = window.indexedDB.open(DB_NAME, DB_VER);
         req.onupgradeneeded = (e) => {
           const d = e.target.result;
           if (!d.objectStoreNames.contains('mapsets')) d.createObjectStore('mapsets', { keyPath: 'id' });
           if (!d.objectStoreNames.contains('blobs'))   d.createObjectStore('blobs', { keyPath: 'key' });
           if (!d.objectStoreNames.contains('scores'))  d.createObjectStore('scores', { keyPath: 'id' });
+          if (!d.objectStoreNames.contains('handles')) d.createObjectStore('handles', { keyPath: 'key' });
         };
         req.onsuccess = (e) => { db = e.target.result; idbAvailable = true; resolve(true); };
         req.onerror = () => { idbAvailable = false; resolve(false); };
@@ -2409,11 +2644,103 @@ const SafeStore = (() => {
     });
   }
 
+  // Delta-encoded compact serializer for Replay + Hit Errors + Results Timeline (fits hundreds of full replays in localStorage!)
+  function packScoreDetail(sc) {
+    const out = {};
+    if (Array.isArray(sc.hitErrors) && sc.hitErrors.length) {
+      const he = new Array(sc.hitErrors.length * 3);
+      let prevT = 0;
+      for (let i = 0; i < sc.hitErrors.length; i++) {
+        const p = sc.hitErrors[i];
+        const t = Math.round(p.t || 0);
+        he[i * 3]     = t - prevT;
+        he[i * 3 + 1] = Math.round((p.err || 0) * 10);
+        he[i * 3 + 2] = p.judge | 0;
+        prevT = t;
+      }
+      out.he = he;
+    }
+    if (Array.isArray(sc.runTimeline) && sc.runTimeline.length) {
+      const tl = new Array(sc.runTimeline.length * 5);
+      let prevT = 0;
+      for (let i = 0; i < sc.runTimeline.length; i++) {
+        const p = sc.runTimeline[i];
+        const t = Math.round(p[0] || 0);
+        tl[i * 5]     = t - prevT;
+        tl[i * 5 + 1] = p[1] | 0;
+        tl[i * 5 + 2] = p[2] | 0;
+        tl[i * 5 + 3] = p[3] | 0;
+        tl[i * 5 + 4] = p[4] | 0;
+        prevT = t;
+      }
+      out.tl = tl;
+    }
+    if (sc.replay && Array.isArray(sc.replay.events) && sc.replay.events.length) {
+      const evs = sc.replay.events;
+      const rp = new Array(1 + evs.length * 2);
+      rp[0] = sc.replay.randSeed >>> 0;
+      let prevT10 = 0;
+      for (let i = 0; i < evs.length; i++) {
+        const t10 = Math.round((evs[i][0] || 0) * 10);
+        rp[1 + i * 2]     = t10 - prevT10;
+        rp[1 + i * 2 + 1] = ((evs[i][1] | 0) << 1) | (evs[i][2] ? 1 : 0);
+        prevT10 = t10;
+      }
+      out.rp = rp;
+    }
+    return (out.he || out.tl || out.rp) ? out : null;
+  }
+
+  function unpackScoreDetail(packed) {
+    if (!packed || typeof packed !== 'object') return null;
+    const out = {};
+    if (Array.isArray(packed.he) && packed.he.length >= 3) {
+      const he = packed.he;
+      const n = Math.floor(he.length / 3);
+      const arr = new Array(n);
+      let t = 0;
+      for (let i = 0; i < n; i++) {
+        t += he[i * 3];
+        arr[i] = { t, err: he[i * 3 + 1] / 10, judge: he[i * 3 + 2] };
+      }
+      out.hitErrors = arr;
+    }
+    if (Array.isArray(packed.tl) && packed.tl.length >= 5) {
+      const tl = packed.tl;
+      const n = Math.floor(tl.length / 5);
+      const arr = new Array(n);
+      let t = 0;
+      for (let i = 0; i < n; i++) {
+        t += tl[i * 5];
+        arr[i] = [t, tl[i * 5 + 1], tl[i * 5 + 2], tl[i * 5 + 3], tl[i * 5 + 4]];
+      }
+      out.runTimeline = arr;
+    }
+    if (Array.isArray(packed.rp) && packed.rp.length >= 3) {
+      const rp = packed.rp;
+      const n = Math.floor((rp.length - 1) / 2);
+      const evs = new Array(n);
+      let t10 = 0;
+      for (let i = 0; i < n; i++) {
+        t10 += rp[1 + i * 2];
+        const code = rp[1 + i * 2 + 1];
+        evs[i] = [t10 / 10, code >>> 1, code & 1];
+      }
+      out.replay = { randSeed: rp[0] >>> 0, events: evs };
+    }
+    return out;
+  }
+
   return {
     init: initIDB,
     get available() { return idbAvailable; },
+    get lsAvailable() { return lsAvailable; },
     lsGet,
     lsSet,
+    lsRemove,
+    lsByteSize,
+    packScoreDetail,
+    unpackScoreDetail,
     async putMapset(ms) { return idbTx('mapsets', 'readwrite', s => s.put(ms)); },
     async getAllMapsets() { return (await idbTx('mapsets', 'readonly', s => s.getAll())) || []; },
     async deleteMapset(id) { return idbTx('mapsets', 'readwrite', s => s.delete(id)); },
@@ -2421,6 +2748,18 @@ const SafeStore = (() => {
     async getBlob(key) {
       const r = await idbTx('blobs', 'readonly', s => s.get(key));
       return r ? r.blob : null;
+    },
+    async putHandle(key, handle) {
+      try { return await idbTx('handles', 'readwrite', s => s.put({ key, handle, savedAt: Date.now() })); } catch { return null; }
+    },
+    async getHandle(key) {
+      try {
+        const r = await idbTx('handles', 'readonly', s => s.get(key));
+        return r ? r.handle : null;
+      } catch { return null; }
+    },
+    async deleteHandle(key) {
+      try { return await idbTx('handles', 'readwrite', s => s.delete(key)); } catch { return null; }
     },
     async deleteBlobsByPrefix(prefix) {
       if (!idbAvailable || !db) return;
@@ -3377,6 +3716,18 @@ const TimelineEngine = (() => {
     return cumPos[lo] + (timeMs - times[lo]) * mults[lo];
   }
 
+  function getSvMultiplierAt(table, timeMs) {
+    if (!table || !table.n) return 1.0;
+    const { n, times, mults } = table;
+    if (n === 1) return mults[0];
+    let lo = 0, hi = n - 1;
+    while (lo < hi) {
+      const mid = (lo + hi + 1) >>> 1;
+      if (times[mid] <= timeMs) lo = mid; else hi = mid - 1;
+    }
+    return mults[lo];
+  }
+
   function getSsfMultiplier(ssfs, timeMs) {
     if (!ssfs || ssfs.length === 0) return 1.0;
     if (timeMs <= ssfs[0].startTime) return ssfs[0].multiplier;
@@ -3552,7 +3903,7 @@ const TimelineEngine = (() => {
     };
   }
 
-  return { compile, getTrackPos, getSsfMultiplier };
+  return { compile, getTrackPos, getSvMultiplierAt, getSsfMultiplier };
 })();
 
 /* ============================================================================
@@ -4157,10 +4508,16 @@ const AudioEngine = (() => {
     stopSongNodes();
   }
 
-  // Preview LRU cache + debounce + pending unlock support
+  // Preview LRU cache + debounce + pending unlock + exact hardware-aligned playback clock for Map Preview
   const previewBufCache = new Map(); // audioKey -> AudioBuffer (max 6)
   let previewDebounceTimer = null;
   let pendingPreview = null;
+  let previewStartCtxTime = 0;
+  let previewStartOffsetSec = 0;
+  let previewDurationSec = 0;
+  let previewRate = 1.0;
+  let previewPausedAtSec = null;
+  let previewActiveBlobGetter = null;
 
   function cachePreviewBuffer(key, buf) {
     if (previewBufCache.has(key)) previewBufCache.delete(key);
@@ -4171,25 +4528,71 @@ const AudioEngine = (() => {
     }
   }
 
-  function startPreview(audioKey, previewTimeMs, blobGetter, immediate = false) {
+  function getPreviewContextNowSec() {
+    if (!ctx) return 0;
+    if (typeof ctx.getOutputTimestamp === 'function') {
+      const ts = ctx.getOutputTimestamp();
+      if (ts && ts.contextTime > 0) return ts.contextTime;
+    }
+    return ctx.currentTime - getHardwareLatencySec();
+  }
+
+  function launchPreviewBuffer(audioKey, buffer, startSec, playbackRate, fadeInSec = 0.35) {
+    const c = ensureContext();
+    stopPreviewNodesOnly();
+    const dur = buffer.duration || 0;
+    const clampedStart = dur > 0.2 ? clamp(startSec, 0, Math.max(0, dur - 0.15)) : 0;
+    const r = clamp(playbackRate || 1.0, 0.5, 2.0);
+    const src = c.createBufferSource();
+    src.buffer = buffer;
+    src.loop = true;
+    src.playbackRate.value = r;
+    const g = c.createGain();
+    if (fadeInSec > 0.01) {
+      g.gain.setValueAtTime(0.0001, c.currentTime);
+      g.gain.linearRampToValueAtTime(0.85, c.currentTime + fadeInSec);
+    } else {
+      g.gain.setValueAtTime(0.85, c.currentTime);
+    }
+    src.connect(g);
+    g.connect(musicGain);
+    const startAt = c.currentTime + 0.015;
+    src.start(startAt, clampedStart);
+    previewSource = src;
+    previewGain = g;
+    previewKey = audioKey;
+    previewStartCtxTime = startAt;
+    previewStartOffsetSec = clampedStart;
+    previewDurationSec = dur;
+    previewRate = r;
+    previewPausedAtSec = null;
+    pendingPreview = null;
+  }
+
+  function startPreview(audioKey, previewTimeMs, blobGetter, immediate = false, playbackRate = 1.0) {
     if (!audioKey) return;
-    pendingPreview = { audioKey, previewTimeMs, blobGetter };
-    if (previewKey === audioKey && previewSource && ctx && ctx.state === 'running') return;
+    previewActiveBlobGetter = blobGetter;
+    pendingPreview = { audioKey, previewTimeMs, blobGetter, playbackRate };
+    if (previewKey === audioKey && (previewSource || previewPausedAtSec !== null) && ctx && ctx.state === 'running') {
+      if (Math.abs((playbackRate || 1.0) - previewRate) > 0.001) setPreviewRate(playbackRate);
+      return;
+    }
     if (previewDebounceTimer) { clearTimeout(previewDebounceTimer); previewDebounceTimer = null; }
     const delay = immediate ? 0 : 120;
     if (delay > 0) {
       previewDebounceTimer = setTimeout(() => {
         previewDebounceTimer = null;
-        startPreviewNow(audioKey, previewTimeMs, blobGetter);
+        startPreviewNow(audioKey, previewTimeMs, blobGetter, playbackRate);
       }, delay);
     } else {
-      startPreviewNow(audioKey, previewTimeMs, blobGetter);
+      startPreviewNow(audioKey, previewTimeMs, blobGetter, playbackRate);
     }
   }
 
-  async function startPreviewNow(audioKey, previewTimeMs, blobGetter) {
+  async function startPreviewNow(audioKey, previewTimeMs, blobGetter, playbackRate = 1.0) {
     const token = ++previewToken;
     stopPreviewNodesOnly();
+    previewPausedAtSec = null;
     const c = ensureContext();
     if (c.state === 'suspended') {
       try { await c.resume(); } catch {}
@@ -4203,28 +4606,77 @@ const AudioEngine = (() => {
         if (buffer) cachePreviewBuffer(audioKey, buffer);
       }
       if (!buffer || token !== previewToken) return;
-      const src = c.createBufferSource();
-      src.buffer = buffer;
-      src.loop = true;
-      const g = c.createGain();
-      g.gain.setValueAtTime(0.0001, c.currentTime);
-      g.gain.linearRampToValueAtTime(0.85, c.currentTime + 0.4);
-      src.connect(g);
-      g.connect(musicGain);
       const dur = buffer.duration || 0;
       const startSec = dur > 2 ? clamp((previewTimeMs || 0) / 1000, 0, Math.max(0, dur - 2)) : 0;
-      src.start(0, startSec);
-      previewSource = src;
-      previewGain = g;
-      previewKey = audioKey;
-      pendingPreview = null;
+      launchPreviewBuffer(audioKey, buffer, startSec, playbackRate, 0.35);
     } catch {}
   }
 
+  function getPreviewState() {
+    if (!previewKey || previewDurationSec <= 0) {
+      return { active: false, playing: false, key: null, timeMs: 0, durationMs: 0, rate: previewRate };
+    }
+    if (previewPausedAtSec !== null) {
+      return { active: true, playing: false, key: previewKey, timeMs: previewPausedAtSec * 1000, durationMs: previewDurationSec * 1000, rate: previewRate };
+    }
+    if (!previewSource || !ctx) {
+      return { active: true, playing: false, key: previewKey, timeMs: previewStartOffsetSec * 1000, durationMs: previewDurationSec * 1000, rate: previewRate };
+    }
+    const elapsedCtx = Math.max(0, getPreviewContextNowSec() - previewStartCtxTime);
+    const curSec = (previewStartOffsetSec + elapsedCtx * previewRate) % previewDurationSec;
+    return { active: true, playing: true, key: previewKey, timeMs: curSec * 1000, durationMs: previewDurationSec * 1000, rate: previewRate };
+  }
+
+  function seekPreview(timeMs) {
+    if (!previewKey) return;
+    const buf = previewBufCache.get(previewKey);
+    if (!buf) return;
+    const targetSec = clamp((timeMs || 0) / 1000, 0, Math.max(0, buf.duration - 0.15));
+    if (previewPausedAtSec !== null) {
+      previewPausedAtSec = targetSec;
+      return;
+    }
+    launchPreviewBuffer(previewKey, buf, targetSec, previewRate, 0.04);
+  }
+
+  function setPreviewRate(newRate) {
+    const r = clamp(newRate || 1.0, 0.5, 2.0);
+    if (!previewKey || Math.abs(r - previewRate) < 0.001) { previewRate = r; return; }
+    const st = getPreviewState();
+    previewRate = r;
+    if (previewSource && ctx && st.playing) {
+      previewStartOffsetSec = st.timeMs / 1000;
+      previewStartCtxTime = getPreviewContextNowSec();
+      previewSource.playbackRate.value = r;
+    }
+  }
+
+  function togglePreviewPause() {
+    if (!previewKey) {
+      if (pendingPreview) resumePendingPreview();
+      return true;
+    }
+    const buf = previewBufCache.get(previewKey);
+    if (!buf) return false;
+    if (previewPausedAtSec !== null) {
+      launchPreviewBuffer(previewKey, buf, previewPausedAtSec, previewRate, 0.06);
+      return true;
+    } else {
+      const st = getPreviewState();
+      const keyKeep = previewKey;
+      const durKeep = previewDurationSec;
+      stopPreviewNodesOnly();
+      previewKey = keyKeep;
+      previewDurationSec = durKeep;
+      previewPausedAtSec = st.timeMs / 1000;
+      return false;
+    }
+  }
+
   function resumePendingPreview() {
-    if (pendingPreview && !previewSource) {
+    if (pendingPreview && !previewSource && previewPausedAtSec === null) {
       const p = pendingPreview;
-      startPreviewNow(p.audioKey, p.previewTimeMs, p.blobGetter);
+      startPreviewNow(p.audioKey, p.previewTimeMs, p.blobGetter, p.playbackRate || 1.0);
     }
   }
 
@@ -4244,6 +4696,8 @@ const AudioEngine = (() => {
   function stopPreview() {
     previewToken++;
     pendingPreview = null;
+    previewPausedAtSec = null;
+    previewDurationSec = 0;
     if (previewDebounceTimer) { clearTimeout(previewDebounceTimer); previewDebounceTimer = null; }
     stopPreviewNodesOnly();
   }
@@ -4281,6 +4735,10 @@ const AudioEngine = (() => {
     startPreview,
     stopPreview,
     resumePendingPreview,
+    getPreviewState,
+    seekPreview,
+    setPreviewRate,
+    togglePreviewPause,
     getSpectrum,
     getHwInfoText,
     get context() { return ctx; }
@@ -6369,6 +6827,11 @@ const App = (() => {
   let mapsets = [];
   let scores = [];
   let localOffsets = {}; // mapHash -> ms
+  let careerStats = null;
+  let chartMeta = {}; // mapHash -> { plays, lastPlayed, fav }
+  let lastQpackMeta = null; // { name, size, lastModified, mapsets, charts, savedAt, hasHandle }
+  let savedQpackHandle = null; // FileSystemFileHandle from IDB when supported
+  let reconnectDismissed = false;
   let memBlobs = new Map(); // session blobs (key -> Blob)
   let bgUrlCache = new Map();
 
@@ -6378,6 +6841,19 @@ const App = (() => {
   let sortDesc = true;
   let lastResult = null;
   let listeningKeybind = null; // { group, keyCount, lane, btn }
+  let hasPickedInitialRandom = false;
+  let mapPreviewActive = false;
+
+  // Truly random integer using Web Crypto CSPRNG (zero fixed seed!)
+  function trueRandomInt(max) {
+    if (max <= 1) return 0;
+    if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
+      const buf = new Uint32Array(1);
+      crypto.getRandomValues(buf);
+      return buf[0] % max;
+    }
+    return Math.floor(Math.random() * max);
+  }
 
   const mods = {
     rate: 1.0,
@@ -6442,6 +6918,355 @@ const App = (() => {
     SafeStore.lsSet('quaver_darkwave_offsets_v1', localOffsets);
   }
 
+  /* ---------- PERSISTENT SCORES, REPLAYS, CAREER STATS & LAST .QPACK ---------- */
+  function defaultCareerStats() {
+    return {
+      totalPlays: 0,
+      totalPasses: 0,
+      totalFails: 0,
+      totalFCs: 0,
+      totalPlayTimeMs: 0,
+      judgements: [0, 0, 0, 0, 0, 0],
+      highestCombo: 0,
+      bestPr: 0,
+      lastPlayedAt: 0
+    };
+  }
+
+  function loadExtraStats() {
+    const cs = SafeStore.lsGet('quiver_career_stats_v1', null);
+    careerStats = Object.assign(defaultCareerStats(), cs || {});
+    if (!Array.isArray(careerStats.judgements) || careerStats.judgements.length !== 6) {
+      careerStats.judgements = [0, 0, 0, 0, 0, 0];
+    }
+    chartMeta = SafeStore.lsGet('quiver_chart_meta_v1', {}) || {};
+    lastQpackMeta = SafeStore.lsGet('quiver_last_qpack_v1', null);
+  }
+
+  function bootstrapCareerFromScores() {
+    if (!careerStats || careerStats.totalPlays > 0 || !scores.length) return;
+    for (const sc of scores) {
+      careerStats.totalPlays++;
+      if (sc.grade !== 'F') careerStats.totalPasses++; else careerStats.totalFails++;
+      if (sc.counts && sc.counts[5] === 0 && sc.grade !== 'F') careerStats.totalFCs++;
+      careerStats.totalPlayTimeMs += Number(sc.mapLengthMs) || 90000;
+      if (Array.isArray(sc.counts)) {
+        for (let i = 0; i < 6; i++) careerStats.judgements[i] += Number(sc.counts[i]) || 0;
+      }
+      if ((sc.maxCombo || 0) > careerStats.highestCombo) careerStats.highestCombo = sc.maxCombo || 0;
+      if ((sc.pr || 0) > careerStats.bestPr) careerStats.bestPr = sc.pr || 0;
+      if ((sc.date || 0) > careerStats.lastPlayedAt) careerStats.lastPlayedAt = sc.date || 0;
+      if (sc.mapHash) {
+        if (!chartMeta[sc.mapHash]) chartMeta[sc.mapHash] = { plays: 0, lastPlayed: 0, fav: false };
+        chartMeta[sc.mapHash].plays++;
+        chartMeta[sc.mapHash].lastPlayed = Math.max(chartMeta[sc.mapHash].lastPlayed || 0, sc.date || 0);
+      }
+    }
+    saveCareerStats();
+    saveChartMeta();
+  }
+
+  function saveCareerStats() {
+    SafeStore.lsSet('quiver_career_stats_v1', careerStats);
+  }
+
+  function saveChartMeta() {
+    SafeStore.lsSet('quiver_chart_meta_v1', chartMeta);
+  }
+
+  function saveUiState() {
+    const modeEl = document.getElementById('sel-mode-filter');
+    const sortEl = document.getElementById('sel-sort');
+    SafeStore.lsSet('quiver_ui_state_v1', {
+      modeFilter: modeEl ? modeEl.value : '4',
+      sortBy: sortEl ? sortEl.value : 'length',
+      sortDesc: !!sortDesc,
+      mapPreviewActive: !!mapPreviewActive,
+      mods: { ...mods }
+    });
+  }
+
+  function restoreUiState() {
+    const ui = SafeStore.lsGet('quiver_ui_state_v1', null);
+    if (!ui || typeof ui !== 'object') return;
+    const modeEl = document.getElementById('sel-mode-filter');
+    const sortEl = document.getElementById('sel-sort');
+    if (modeEl && ui.modeFilter && [...modeEl.options].some(o => o.value === ui.modeFilter)) modeEl.value = ui.modeFilter;
+    if (sortEl && ui.sortBy && [...sortEl.options].some(o => o.value === ui.sortBy)) sortEl.value = ui.sortBy;
+    if (typeof ui.sortDesc === 'boolean') {
+      sortDesc = ui.sortDesc;
+      const dirBtn = document.getElementById('sel-sort-dir');
+      if (dirBtn) dirBtn.textContent = sortDesc ? 'Desc' : 'Asc';
+    }
+    if (ui.mods && typeof ui.mods === 'object') {
+      mods.rate = clamp(Number(ui.mods.rate) || 1.0, 0.5, 2.0);
+      for (const k of ['mirror','random','nln','fln','inverse','nsv','nf','nm','auto']) {
+        mods[k] = !!ui.mods[k];
+      }
+    }
+    if (typeof ui.mapPreviewActive === 'boolean') {
+      mapPreviewActive = ui.mapPreviewActive;
+      const lbView = document.getElementById('sel-lb-view');
+      const pvView = document.getElementById('sel-preview-view');
+      const tabLb = document.getElementById('tab-lb-scores');
+      const tabPv = document.getElementById('tab-lb-preview');
+      const btnPv = document.getElementById('btn-sel-preview');
+      if (lbView) lbView.style.display = mapPreviewActive ? 'none' : 'flex';
+      if (pvView) pvView.classList.toggle('active', mapPreviewActive);
+      if (tabLb) tabLb.classList.toggle('active', !mapPreviewActive);
+      if (tabPv) tabPv.classList.toggle('active', mapPreviewActive);
+      if (btnPv) btnPv.classList.toggle('btn-accent', mapPreviewActive);
+    }
+  }
+
+  function stripScoreSummary(s) {
+    return {
+      id: s.id, mapHash: s.mapHash, mapTitle: s.mapTitle, mapArtist: s.mapArtist, mapCreator: s.mapCreator,
+      mapLengthMs: s.mapLengthMs, difficultyName: s.difficultyName, keyCount: s.keyCount,
+      username: s.username, date: s.date, score: s.score, accuracy: s.accuracy, grade: s.grade,
+      pr: s.pr, dr: s.dr, maxCombo: s.maxCombo, counts: s.counts, mods: s.mods,
+      judgementPreset: s.judgementPreset, mean: s.mean, sd: s.sd, ur: s.ur, early: s.early, late: s.late
+    };
+  }
+
+  // Two-tier localStorage score persistence: ALL summaries + compact delta-encoded Replays & Results Graphs
+  // prioritized by Personal Bests first, then 40 most recent scores, with quota-safe graceful eviction!
+  function persistAllScores() {
+    SafeStore.lsSet('quaver_darkwave_scores_summary_v1', scores.map(stripScoreSummary));
+
+    // Identify PB score IDs per mapHash (highest priority — keep replays & full graphs!)
+    const pbIds = new Set();
+    const pbByHash = new Map();
+    for (const sc of scores) {
+      if (sc.grade === 'F') continue;
+      const cur = pbByHash.get(sc.mapHash);
+      if (!cur || sc.score > cur.score || (sc.score === cur.score && sc.accuracy > cur.accuracy)) {
+        pbByHash.set(sc.mapHash, sc);
+      }
+    }
+    for (const sc of pbByHash.values()) pbIds.add(sc.id);
+
+    // Order detail candidates: PBs first (newest first), then recent non-PB runs (up to 40)
+    const pbList = [];
+    const recentList = [];
+    for (const sc of scores) {
+      if (!sc.hitErrors && !sc.runTimeline && !sc.replay) continue;
+      if (pbIds.has(sc.id)) pbList.push(sc);
+      else recentList.push(sc);
+    }
+    pbList.sort((a, b) => (b.date || 0) - (a.date || 0));
+    recentList.sort((a, b) => (b.date || 0) - (a.date || 0));
+    const ordered = pbList.concat(recentList.slice(0, 40));
+
+    const detailMap = {};
+    const orderKeys = [];
+    for (const sc of ordered) {
+      const packed = SafeStore.packScoreDetail(sc);
+      if (packed) {
+        detailMap[sc.id] = packed;
+        orderKeys.push(sc.id);
+      }
+    }
+
+    // Write to localStorage; if QuotaExceededError occurs, gracefully evict oldest low-priority details
+    let saved = SafeStore.lsSet('quaver_darkwave_score_details_v1', detailMap);
+    while (!saved && orderKeys.length > 0) {
+      const dropCount = Math.max(1, Math.ceil(orderKeys.length * 0.15));
+      for (let i = 0; i < dropCount && orderKeys.length > 0; i++) {
+        delete detailMap[orderKeys.pop()];
+      }
+      saved = SafeStore.lsSet('quaver_darkwave_score_details_v1', detailMap);
+    }
+    updateCacheStorageSummary();
+  }
+
+  function hydrateScoresFromStorage(idbScores) {
+    const byId = new Map();
+    const lsSummaries = SafeStore.lsGet('quaver_darkwave_scores_summary_v1', []) || [];
+    const lsDetails = SafeStore.lsGet('quaver_darkwave_score_details_v1', {}) || {};
+
+    for (const sc of lsSummaries) {
+      if (!sc || !sc.id) continue;
+      const hydrated = { ...sc };
+      const det = lsDetails[sc.id] ? SafeStore.unpackScoreDetail(lsDetails[sc.id]) : null;
+      if (det) {
+        if (det.hitErrors) hydrated.hitErrors = det.hitErrors;
+        if (det.runTimeline) hydrated.runTimeline = det.runTimeline;
+        if (det.replay) hydrated.replay = det.replay;
+      }
+      byId.set(sc.id, hydrated);
+    }
+    if (Array.isArray(idbScores)) {
+      for (const sc of idbScores) {
+        if (!sc || !sc.id) continue;
+        const prev = byId.get(sc.id);
+        if (!prev) {
+          byId.set(sc.id, sc);
+        } else {
+          // Merge keeping richest telemetry/replay from either store
+          byId.set(sc.id, {
+            ...prev,
+            ...sc,
+            hitErrors: (sc.hitErrors && sc.hitErrors.length) ? sc.hitErrors : prev.hitErrors,
+            runTimeline: (sc.runTimeline && sc.runTimeline.length) ? sc.runTimeline : prev.runTimeline,
+            replay: sc.replay || prev.replay
+          });
+        }
+      }
+    }
+    return Array.from(byId.values());
+  }
+
+  function updateCacheStorageSummary() {
+    const el = document.getElementById('cache-storage-summary');
+    if (!el) return;
+    const kb = (SafeStore.lsByteSize() / 1024).toFixed(1);
+    const replaysCached = scores.filter(s => s.replay && s.replay.events && s.replay.events.length).length;
+    const graphsCached = scores.filter(s => (s.runTimeline && s.runTimeline.length) || (s.hitErrors && s.hitErrors.length)).length;
+    const favCount = Object.values(chartMeta).filter(m => m && m.fav).length;
+    el.textContent = `${scores.length} scores • ${replaysCached} replays • ${graphsCached} graphs • ${favCount} ★ favs • ${kb} KB in localStorage`;
+  }
+
+  function formatPlaytime(ms) {
+    const mins = Math.floor((ms || 0) / 60000);
+    if (mins < 60) return mins + 'm';
+    const hrs = Math.floor(mins / 60);
+    const rem = mins % 60;
+    return `${hrs}h ${rem}m`;
+  }
+
+  function toggleFavoriteSelected() {
+    const pair = getSelectedPair();
+    if (!pair) return;
+    const h = pair.ch.hash;
+    if (!chartMeta[h]) chartMeta[h] = { plays: 0, lastPlayed: 0, fav: false };
+    chartMeta[h].fav = !chartMeta[h].fav;
+    saveChartMeta();
+    const favBtn = document.getElementById('btn-sel-fav');
+    if (favBtn) favBtn.classList.toggle('active', !!chartMeta[h].fav);
+    renderMapsetList(false);
+    updateCacheStorageSummary();
+    toast(chartMeta[h].fav ? `Favorited ${pair.ch.title} [${pair.ch.difficultyName}] ★` : 'Removed from Favorites');
+  }
+
+  async function recordLastQpack(file, handle, addedSets, addedCharts) {
+    const meta = {
+      name: file.name || 'quaver-library.qpack',
+      size: file.size || 0,
+      lastModified: file.lastModified || 0,
+      mapsets: addedSets || 0,
+      charts: addedCharts || 0,
+      savedAt: Date.now(),
+      hasHandle: false
+    };
+    if (handle) {
+      savedQpackHandle = handle;
+      const stored = await SafeStore.putHandle('lastQpack', handle);
+      meta.hasHandle = !!stored;
+    }
+    lastQpackMeta = meta;
+    SafeStore.lsSet('quiver_last_qpack_v1', meta);
+    reconnectDismissed = true; // already loaded in this session!
+    updateReconnectUI();
+  }
+
+  function updateReconnectUI() {
+    const card = document.getElementById('qpack-reconnect-card');
+    const titleEl = document.getElementById('qpack-reconnect-title');
+    const subEl = document.getElementById('qpack-reconnect-sub');
+    const btnEl = document.getElementById('btn-qpack-reconnect');
+    const selBtn = document.getElementById('btn-sel-reconnect');
+    const optBtn = document.getElementById('btn-opt-reconnect');
+
+    const hasRealLibrary = mapsets.some(m => !m.builtIn);
+    const hasRemembered = !!(savedQpackHandle || lastQpackMeta);
+    if (optBtn) optBtn.disabled = !hasRemembered;
+
+    if (!hasRemembered || hasRealLibrary) {
+      if (card) card.classList.remove('visible');
+      if (selBtn) selBtn.style.display = 'none';
+      return;
+    }
+
+    const name = (savedQpackHandle && savedQpackHandle.name) || (lastQpackMeta && lastQpackMeta.name) || 'quaver-library.qpack';
+    const setsTxt = lastQpackMeta && lastQpackMeta.mapsets ? `${lastQpackMeta.mapsets} mapsets • ${lastQpackMeta.charts} charts` : '';
+    const sizeTxt = lastQpackMeta && lastQpackMeta.size ? `${(lastQpackMeta.size / 1048576).toFixed(0)} MB` : '';
+    const detail = [setsTxt, sizeTxt].filter(Boolean).join(' • ');
+
+    if (titleEl) titleEl.textContent = `Last Library: ${name}`;
+    if (savedQpackHandle) {
+      if (subEl) subEl.textContent = `${detail ? detail + ' — ' : ''}Click to grant browser permission & reload instantly`;
+      if (btnEl) btnEl.textContent = 'Allow & Load';
+    } else {
+      if (subEl) subEl.textContent = `${detail ? detail + ' — ' : ''}Quick re-open your saved .qpack location`;
+      if (btnEl) btnEl.textContent = 'Re-open .qpack';
+    }
+    if (card) card.classList.toggle('visible', !reconnectDismissed);
+    if (selBtn) selBtn.style.display = '';
+  }
+
+  function dismissReconnectCard() {
+    reconnectDismissed = true;
+    const card = document.getElementById('qpack-reconnect-card');
+    if (card) card.classList.remove('visible');
+  }
+
+  async function reconnectLastQpack() {
+    // Path 1: Real persisted FileSystemFileHandle -> prompt browser permission & load directly without folder hunting!
+    if (savedQpackHandle) {
+      try {
+        let perm = typeof savedQpackHandle.queryPermission === 'function'
+          ? await savedQpackHandle.queryPermission({ mode: 'read' })
+          : 'granted';
+        if (perm !== 'granted' && typeof savedQpackHandle.requestPermission === 'function') {
+          perm = await savedQpackHandle.requestPermission({ mode: 'read' });
+        }
+        if (perm === 'granted') {
+          const file = await savedQpackHandle.getFile();
+          await handleIncomingFiles([{ file, relPath: file.name, handle: savedQpackHandle }]);
+          return;
+        } else {
+          toast('Permission not granted — you can still pick or drop your .qpack file.', 'err');
+          return;
+        }
+      } catch (err) {
+        console.warn('Saved qpack handle reconnect failed, falling back to picker:', err);
+        savedQpackHandle = null;
+      }
+    }
+    // Path 2: Fallback picker (remembering last OS directory via showOpenFilePicker id or native file dialog)
+    await triggerImportFiles(true);
+  }
+
+  async function triggerImportFiles(qpackFocus = false) {
+    if (typeof window.showOpenFilePicker === 'function') {
+      try {
+        const types = qpackFocus
+          ? [{ description: 'Quiver Library Pack (.qpack)', accept: { 'application/octet-stream': ['.qpack', '.qp', '.zip', '.osz'] } }]
+          : [{ description: 'Quiver Packs, Maps & Saves', accept: { 'application/octet-stream': ['.qpack', '.qp', '.zip', '.osz', '.qua', '.osu', '.json'], 'audio/*': ['.mp3', '.ogg', '.wav', '.flac', '.m4a'], 'image/*': ['.jpg', '.jpeg', '.png', '.webp'] } }];
+        const handles = await window.showOpenFilePicker({
+          id: 'quiver-qpack',
+          multiple: !qpackFocus,
+          types,
+          excludeAcceptAllOption: false
+        });
+        if (handles && handles.length) {
+          const items = [];
+          for (const h of handles) {
+            const f = await h.getFile();
+            items.push({ file: f, relPath: f.name, handle: h });
+          }
+          await handleIncomingFiles(items);
+        }
+        return;
+      } catch (err) {
+        if (err && err.name === 'AbortError') return; // user cancelled picker
+        // SecurityError on file:// or unsupported browser -> fall through to native <input type="file">
+      }
+    }
+    document.getElementById('file-input-files').click();
+  }
+
   async function getBlob(key) {
     if (!key) return null;
     if (memBlobs.has(key)) return memBlobs.get(key);
@@ -6496,11 +7321,22 @@ const App = (() => {
     document.getElementById('stat-charts').textContent = String(totalCharts);
     document.getElementById('stat-4k-setup').textContent = `${(settings.scrollSpeed4K / 10).toFixed(1)} ${settings.scrollDir4K.toUpperCase()}`;
     document.getElementById('stat-scores').textContent = String(scores.length);
+    if (careerStats) {
+      document.getElementById('stat-plays').textContent = String(careerStats.totalPlays || 0);
+      document.getElementById('stat-fcs').textContent = String(careerStats.totalFCs || 0);
+      document.getElementById('stat-playtime').textContent = formatPlaytime(careerStats.totalPlayTimeMs || 0);
+      const j = careerStats.judgements || [0,0,0,0,0,0];
+      const mpTxt = j[1] > 0 ? (j[0] / j[1]).toFixed(2) + ':1' : (j[0] > 0 ? '∞' : '—');
+      document.getElementById('stat-mp-ratio').textContent = mpTxt;
+    }
+    updateCacheStorageSummary();
+    updateReconnectUI();
   }
 
   /* ---------- SCREEN NAVIGATION ---------- */
   function showScreen(name) {
     currentScreen = name;
+    document.body.classList.toggle('in-menu', name === 'menu');
     document.body.classList.toggle('in-select', name === 'select');
     document.body.classList.toggle('in-results', name === 'results');
     document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
@@ -6514,6 +7350,7 @@ const App = (() => {
       bgLayer.style.opacity = '0';
       dimLayer.style.display = 'none';
       bgCanvas.style.display = 'none';
+      stopMapPreviewLoop();
       AudioEngine.stopPreview();
       stopMenuAnimation();
     } else {
@@ -6521,11 +7358,29 @@ const App = (() => {
       bgCanvas.style.display = '';
       startMenuAnimation();
       if (name === 'select') {
-        renderMapsetList();
+        if (!hasPickedInitialRandom) {
+          const filtered = getFilteredMapsets();
+          if (filtered.length > 0) {
+            const importedPool = filtered.filter(f => !f.ms.builtIn);
+            const pool = importedPool.length ? importedPool : filtered;
+            const pick = pool[trueRandomInt(pool.length)];
+            selectedMapsetId = pick.ms.id;
+            selectedChartHash = pick.charts[trueRandomInt(pick.charts.length)].hash;
+            if (importedPool.length > 0 || mapsets.length > 1) hasPickedInitialRandom = true;
+          }
+        }
+        renderMapsetList(true);
         updateSelectedChartUI();
-      } else if (name === 'menu') {
-        bgLayer.style.opacity = '0';
-        updateProfileHeader();
+        if (mapPreviewActive) {
+          refreshMapPreviewChart();
+          startMapPreviewLoop();
+        }
+      } else {
+        stopMapPreviewLoop();
+        if (name === 'menu') {
+          bgLayer.style.opacity = '0';
+          updateProfileHeader();
+        }
       }
     }
   }
@@ -6537,36 +7392,205 @@ const App = (() => {
     const vizC = document.getElementById('menu-viz-canvas');
     const vctx = vizC.getContext('2d');
 
+    // Deterministic procedural starfield, mountain peaks & glowing floating motes for the Darkwave Blue-Purple backdrop
+    const stars = Array.from({ length: 85 }, (_, i) => {
+      const s1 = Math.sin(i * 127.1 + 311.7) * 43758.5453;
+      const s2 = Math.sin(i * 269.5 + 183.3) * 43758.5453;
+      const s3 = Math.sin(i * 419.2 + 71.9) * 43758.5453;
+      return {
+        x: s1 - Math.floor(s1),
+        y: (s2 - Math.floor(s2)) * 0.60,
+        r: 0.7 + (s3 - Math.floor(s3)) * 1.6,
+        phase: (s3 - Math.floor(s3)) * Math.PI * 2,
+        hue: i % 3 === 0 ? '#93e5ff' : (i % 3 === 1 ? '#c4b5fd' : '#ffffff')
+      };
+    });
+    const motes = Array.from({ length: 28 }, (_, i) => ({
+      x: Math.random(),
+      y: Math.random(),
+      r: 1.5 + Math.random() * 3.5,
+      vy: 0.008 + Math.random() * 0.018,
+      vx: (Math.random() - 0.5) * 0.004,
+      purple: i % 2 === 0
+    }));
+    // Layered mountain ridge profile (normalized x, height)
+    const farRidge = [
+      [0, 0.04], [0.08, 0.11], [0.16, 0.06], [0.25, 0.15], [0.34, 0.09],
+      [0.44, 0.17], [0.53, 0.10], [0.64, 0.19], [0.74, 0.12], [0.83, 0.16],
+      [0.92, 0.08], [1.0, 0.12]
+    ];
+    const nearRidge = [
+      [0, 0.07], [0.11, 0.03], [0.21, 0.09], [0.31, 0.04], [0.41, 0.08],
+      [0.50, 0.02], [0.60, 0.10], [0.71, 0.05], [0.80, 0.11], [0.90, 0.04], [1.0, 0.08]
+    ];
+
     function step() {
       menuAnimId = requestAnimationFrame(step);
       const w = window.innerWidth, h = window.innerHeight;
       if (bgc.width !== w || bgc.height !== h) { bgc.width = w; bgc.height = h; }
 
-      // Darkwave cyberpunk atmosphere inspired by menu-background.png
-      const grad = bctx.createLinearGradient(0, 0, 0, h);
-      grad.addColorStop(0, '#07020c');
-      grad.addColorStop(0.65, '#0c0416');
-      grad.addColorStop(1, '#180412');
-      bctx.fillStyle = grad;
+      const nowSec = performance.now() * 0.001;
+      const hasAudio = AudioEngine.getSpectrum(vizData);
+      let bassEnergy = 0;
+      if (hasAudio) {
+        for (let i = 0; i < 8; i++) bassEnergy += vizData[i] / 255;
+        bassEnergy /= 8;
+      }
+
+      const horizonY = Math.round(h * 0.64);
+
+      // 1) Deep Midnight Indigo -> Royal Purple -> Electric Cyan Horizon Sky
+      const sky = bctx.createLinearGradient(0, 0, 0, horizonY);
+      sky.addColorStop(0, '#04020c');
+      sky.addColorStop(0.45, '#0b0624');
+      sky.addColorStop(0.82, '#1b0b3d');
+      sky.addColorStop(1, '#12224c');
+      bctx.fillStyle = sky;
+      bctx.fillRect(0, 0, w, horizonY + 2);
+
+      // Ground plane gradient below horizon
+      const ground = bctx.createLinearGradient(0, horizonY, 0, h);
+      ground.addColorStop(0, '#100826');
+      ground.addColorStop(0.35, '#080316');
+      ground.addColorStop(1, '#040109');
+      bctx.fillStyle = ground;
+      bctx.fillRect(0, horizonY, w, h - horizonY);
+
+      // 2) Luminous Blue & Purple Atmospheric Aurora Orbs
+      const pulse = 1 + bassEnergy * 0.18;
+      const orb1 = bctx.createRadialGradient(w * 0.62, horizonY - h * 0.08, 10, w * 0.62, horizonY - h * 0.08, w * 0.44 * pulse);
+      orb1.addColorStop(0, 'rgba(139, 92, 246, 0.36)');
+      orb1.addColorStop(0.42, 'rgba(56, 189, 248, 0.18)');
+      orb1.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      bctx.fillStyle = orb1;
       bctx.fillRect(0, 0, w, h);
 
-      // Subtle neon horizon glow strips (crimson taillight + cyan accent)
-      const glow = bctx.createRadialGradient(w * 0.68, h * 0.78, 10, w * 0.68, h * 0.78, w * 0.42);
-      glow.addColorStop(0, 'rgba(255, 2, 44, 0.16)');
-      glow.addColorStop(0.5, 'rgba(2, 171, 255, 0.06)');
-      glow.addColorStop(1, 'rgba(0,0,0,0)');
-      bctx.fillStyle = glow;
+      const orb2 = bctx.createRadialGradient(w * 0.24, h * 0.30, 8, w * 0.24, h * 0.30, w * 0.34);
+      orb2.addColorStop(0, 'rgba(2, 171, 255, 0.20)');
+      orb2.addColorStop(0.55, 'rgba(124, 58, 237, 0.10)');
+      orb2.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      bctx.fillStyle = orb2;
       bctx.fillRect(0, 0, w, h);
 
-      // Diagonal cyberpunk rain streaks
+      // 3) Subtle Twinkling Starfield
+      for (let i = 0; i < stars.length; i++) {
+        const st = stars[i];
+        const tw = settings.performanceMode ? 0.65 : (0.35 + 0.55 * (0.5 + 0.5 * Math.sin(nowSec * 1.4 + st.phase)));
+        bctx.globalAlpha = tw;
+        bctx.fillStyle = st.hue;
+        bctx.beginPath();
+        bctx.arc(st.x * w, st.y * h, st.r, 0, Math.PI * 2);
+        bctx.fill();
+      }
+      bctx.globalAlpha = 1;
+
+      // 4) Iconic Darkwave Blue-Purple Retrowave Sun behind the mountain horizon
+      const sunX = w * 0.62;
+      const sunR = Math.min(w, h) * (0.165 + bassEnergy * 0.014);
+      const sunY = horizonY - sunR * 0.22;
+      bctx.save();
+      bctx.beginPath();
+      bctx.rect(0, 0, w, horizonY);
+      bctx.clip();
+      const sunGrad = bctx.createLinearGradient(sunX, sunY - sunR, sunX, sunY + sunR);
+      sunGrad.addColorStop(0, '#67e8f9');
+      sunGrad.addColorStop(0.38, '#38bdf8');
+      sunGrad.addColorStop(0.72, '#7c3aed');
+      sunGrad.addColorStop(1, '#c026d3');
+      bctx.shadowColor = 'rgba(124, 58, 237, 0.55)';
+      bctx.shadowBlur = settings.performanceMode ? 0 : 42;
+      bctx.fillStyle = sunGrad;
+      bctx.beginPath();
+      bctx.arc(sunX, sunY, sunR, 0, Math.PI * 2);
+      bctx.fill();
+      bctx.shadowBlur = 0;
+      // Clean darkwave horizontal slice cuts across lower half of the sun
+      bctx.fillStyle = '#14092e';
+      for (let s = 0; s < 6; s++) {
+        const sy = sunY + sunR * (0.04 + s * 0.13);
+        const sh = Math.max(1.5, sunR * (0.018 + s * 0.011));
+        bctx.fillRect(sunX - sunR - 2, sy, sunR * 2 + 4, sh);
+      }
+      bctx.restore();
+
+      // 5) Silhouetted Distant & Near Darkwave Mountain Ridges
+      const drawRidge = (pts, fillStyle, strokeStyle) => {
+        bctx.beginPath();
+        bctx.moveTo(0, horizonY + 1);
+        for (let i = 0; i < pts.length; i++) {
+          bctx.lineTo(pts[i][0] * w, horizonY - pts[i][1] * h);
+        }
+        bctx.lineTo(w, horizonY + 1);
+        bctx.closePath();
+        bctx.fillStyle = fillStyle;
+        bctx.fill();
+        if (strokeStyle) {
+          bctx.strokeStyle = strokeStyle;
+          bctx.lineWidth = 1.2;
+          bctx.stroke();
+        }
+      };
+      drawRidge(farRidge, '#120829', 'rgba(139, 92, 246, 0.35)');
+      drawRidge(nearRidge, '#070214', 'rgba(2, 171, 255, 0.32)');
+
+      // 6) Smooth Scrolling 3D Perspective Neon Blue-Purple Floor Grid
+      const gridH = Math.max(40, h - horizonY);
+      const vanishX = w * 0.62;
+      // Glowing horizon line
+      const hLineGrad = bctx.createLinearGradient(0, horizonY, w, horizonY);
+      hLineGrad.addColorStop(0, 'rgba(2, 171, 255, 0.18)');
+      hLineGrad.addColorStop(0.55, 'rgba(56, 189, 248, 0.85)');
+      hLineGrad.addColorStop(0.8, 'rgba(168, 85, 247, 0.82)');
+      hLineGrad.addColorStop(1, 'rgba(168, 85, 247, 0.15)');
+      bctx.fillStyle = hLineGrad;
+      bctx.fillRect(0, horizonY - 1, w, 2);
+
+      // Perspective radiating lanes
+      bctx.lineWidth = 1;
+      const numVerts = 22;
+      for (let i = -numVerts; i <= numVerts; i++) {
+        const bx = vanishX + (i / 7.5) * w;
+        const gCol = Math.abs(i) % 2 === 0 ? 'rgba(2, 171, 255, 0.20)' : 'rgba(168, 85, 247, 0.18)';
+        bctx.strokeStyle = gCol;
+        bctx.beginPath();
+        bctx.moveTo(vanishX + i * (w * 0.012), horizonY);
+        bctx.lineTo(bx, h);
+        bctx.stroke();
+      }
+      // Scrolling horizontal depth lines (exponential perspective)
+      const scrollPhase = settings.performanceMode ? 0 : ((nowSec * 0.38) % 1);
+      const numHoriz = 14;
+      for (let i = 0; i < numHoriz; i++) {
+        const t = (i + scrollPhase) / numHoriz;
+        const y = horizonY + Math.pow(t, 2.35) * gridH;
+        const alpha = 0.06 + t * 0.34;
+        bctx.strokeStyle = i % 2 === 0 ? `rgba(56, 189, 248, ${alpha.toFixed(3)})` : `rgba(168, 85, 247, ${alpha.toFixed(3)})`;
+        bctx.beginPath();
+        bctx.moveTo(0, y);
+        bctx.lineTo(w, y);
+        bctx.stroke();
+      }
+
+      // 7) Subtle Rising Blue/Purple Light Motes + Fine Atmospheric Streaks
       if (!settings.performanceMode) {
+        for (let i = 0; i < motes.length; i++) {
+          const m = motes[i];
+          m.y -= m.vy * 0.016;
+          m.x += m.vx * 0.016;
+          if (m.y < -0.04) { m.y = 1.04; m.x = Math.random(); }
+          if (m.x < -0.02) m.x = 1.02; else if (m.x > 1.02) m.x = -0.02;
+          bctx.fillStyle = m.purple ? 'rgba(192, 132, 252, 0.28)' : 'rgba(56, 189, 248, 0.26)';
+          bctx.beginPath();
+          bctx.arc(m.x * w, m.y * h, m.r, 0, Math.PI * 2);
+          bctx.fill();
+        }
         bctx.lineWidth = 1;
         for (let i = 0; i < rainDrops.length; i++) {
           const r = rainDrops[i];
           r.y += r.spd * 0.011;
           r.x -= r.spd * 0.0022;
           if (r.y > 1.05) { r.y = -0.05; r.x = Math.random() * 1.15; }
-          bctx.strokeStyle = r.red ? 'rgba(255, 42, 77, 0.22)' : 'rgba(130, 210, 255, 0.14)';
+          bctx.strokeStyle = r.red ? 'rgba(168, 85, 247, 0.18)' : 'rgba(56, 189, 248, 0.14)';
           bctx.beginPath();
           bctx.moveTo(r.x * w, r.y * h);
           bctx.lineTo(r.x * w - r.len * 0.2, r.y * h + r.len);
@@ -6578,17 +7602,16 @@ const App = (() => {
       if (currentScreen === 'menu' && vctx) {
         const vw = vizC.width, vh = vizC.height;
         vctx.clearRect(0, 0, vw, vh);
-        const hasAudio = AudioEngine.getSpectrum(vizData);
         const bars = 48;
         const bw = (vw - 24) / bars;
-        const t = performance.now() * 0.0025;
+        const t = nowSec * 2.5;
         for (let i = 0; i < bars; i++) {
           const raw = hasAudio ? (vizData[i] / 255) : 0;
           const idle = 0.08 + 0.06 * Math.sin(t + i * 0.35);
           const v = Math.max(idle, raw);
           const bh = Math.max(3, v * (vh - 14));
           const x = 12 + i * bw;
-          vctx.fillStyle = i % 2 === 0 ? 'rgba(2, 171, 255, 0.82)' : 'rgba(180, 90, 255, 0.72)';
+          vctx.fillStyle = i % 2 === 0 ? 'rgba(2, 171, 255, 0.85)' : 'rgba(168, 85, 247, 0.80)';
           vctx.fillRect(x + 1, vh - bh - 4, Math.max(2, bw - 3), bh);
         }
       }
@@ -6896,9 +7919,13 @@ const App = (() => {
           qpackImported.push(...qr.importedSets);
           qpackCharts += qr.addedCharts;
           qpackMs += qr.elapsedMs;
+          await recordLastQpack(f, item.handle || null, qr.addedSets, qr.addedCharts);
         } catch (err) {
           toast(`Failed to load ${f.name}: ${err.message}`, 'err');
         }
+      } else if (low.endsWith('.qsave.json') || (low.endsWith('.json') && /quiver|quaver|backup|qsave/i.test(low))) {
+        zipCount++;
+        await importBackupFile(f);
       } else if (low.endsWith('.qp') || low.endsWith('.zip') || low.endsWith('.osz')) {
         zipCount++;
         try {
@@ -6937,21 +7964,26 @@ const App = (() => {
         ? ` in ${qpackMs}ms (lazy .qpack stream)`
         : (res.bulkSessionMode ? ' (instant disk-handle session mode)' : '');
       toast(`Loaded ${totalAddedSets} mapset(s) (${totalAddedCharts} charts)${note}`, 'ok');
-      // Prefer selecting an imported chart matching current mode filter (e.g. 4K) if available
+      // Pick a truly random chart from the imported sets (preferring current mode filter e.g. 4K)
       const mf = document.getElementById('sel-mode-filter');
-      let pickMs = allImportedSets[0];
-      let pickCh = pickMs && pickMs.charts[0];
+      let matchingPairs = [];
       if (mf.value === '4' || mf.value === '7') {
         const wantK = Number(mf.value);
         for (const ms of allImportedSets) {
-          const match = ms.charts.find(c => c.keyCount === wantK);
-          if (match) { pickMs = ms; pickCh = match; break; }
+          for (const c of ms.charts) if (c.keyCount === wantK) matchingPairs.push({ ms, ch: c });
         }
       }
-      if (pickMs && pickCh) {
-        selectedMapsetId = pickMs.id;
-        selectedChartHash = pickCh.hash;
-        if (mf.value !== 'all' && String(pickCh.keyCount) !== mf.value) mf.value = 'all';
+      if (!matchingPairs.length) {
+        for (const ms of allImportedSets) {
+          for (const c of ms.charts) matchingPairs.push({ ms, ch: c });
+        }
+      }
+      if (matchingPairs.length) {
+        const chosen = matchingPairs[trueRandomInt(matchingPairs.length)];
+        selectedMapsetId = chosen.ms.id;
+        selectedChartHash = chosen.ch.hash;
+        hasPickedInitialRandom = true;
+        if (mf.value !== 'all' && String(chosen.ch.keyCount) !== mf.value) mf.value = 'all';
       }
       updateProfileHeader();
       if (currentScreen !== 'game') showScreen('select');
@@ -6962,13 +7994,13 @@ const App = (() => {
     }
   }
 
-  // Recursive drag-and-drop reader (webkitGetAsEntry + FileSystemHandle fallback)
+  // Recursive drag-and-drop reader (captures FileSystemFileHandle synchronously before await so .qpack handle can persist!)
   async function readDataTransferItems(items) {
     const out = [];
     async function walkEntry(entry, prefix) {
       if (entry.isFile) {
         await new Promise((res) => {
-          entry.file((file) => { out.push({ file, relPath: prefix + file.name }); res(); }, () => res());
+          entry.file((file) => { out.push({ file, relPath: prefix + file.name, handle: null }); res(); }, () => res());
         });
       } else if (entry.isDirectory) {
         const reader = entry.createReader();
@@ -6982,7 +8014,7 @@ const App = (() => {
     async function walkHandle(handle, prefix) {
       if (handle.kind === 'file') {
         const file = await handle.getFile();
-        out.push({ file, relPath: prefix + file.name });
+        out.push({ file, relPath: prefix + file.name, handle });
       } else if (handle.kind === 'directory') {
         for await (const [, child] of handle.entries()) {
           await walkHandle(child, prefix + handle.name + '/');
@@ -6990,27 +8022,29 @@ const App = (() => {
       }
     }
 
-    const entries = [];
-    const handles = [];
+    // Grab handles/entries synchronously before any await (browsers clear dataTransfer after first await!)
+    const handlePromises = [];
+    const fallbackEntries = [];
+    const fallbackFiles = [];
     for (let i = 0; i < items.length; i++) {
       const it = items[i];
-      if (typeof it.webkitGetAsEntry === 'function') {
-        const ent = it.webkitGetAsEntry();
-        if (ent) { entries.push(ent); continue; }
-      }
       if (typeof it.getAsFileSystemHandle === 'function') {
-        try {
-          const h = await it.getAsFileSystemHandle();
-          if (h) { handles.push(h); continue; }
-        } catch {}
-      }
-      if (it.kind === 'file') {
+        handlePromises.push(it.getAsFileSystemHandle().catch(() => null));
+      } else if (typeof it.webkitGetAsEntry === 'function') {
+        const ent = it.webkitGetAsEntry();
+        if (ent) fallbackEntries.push(ent);
+        else if (it.kind === 'file') { const f = it.getAsFile(); if (f) fallbackFiles.push(f); }
+      } else if (it.kind === 'file') {
         const f = it.getAsFile();
-        if (f) out.push({ file: f, relPath: f.name });
+        if (f) fallbackFiles.push(f);
       }
     }
-    for (const e of entries) await walkEntry(e, '');
-    for (const h of handles) await walkHandle(h, '');
+    if (handlePromises.length) {
+      const resolved = await Promise.all(handlePromises);
+      for (const h of resolved) if (h) await walkHandle(h, '');
+    }
+    for (const e of fallbackEntries) await walkEntry(e, '');
+    for (const f of fallbackFiles) out.push({ file: f, relPath: f.name, handle: null });
     return out;
   }
 
@@ -7046,6 +8080,18 @@ const App = (() => {
       }
       if (sortBy === 'bpm') return (ca.meta.dominantBpm - cb.meta.dominantBpm) * dir;
       if (sortBy === 'artist') return a.ms.artist.localeCompare(b.ms.artist) * dir;
+      if (sortBy === 'favorites') {
+        const fa = a.charts.some(c => chartMeta[c.hash] && chartMeta[c.hash].fav) ? 1 : 0;
+        const fb = b.charts.some(c => chartMeta[c.hash] && chartMeta[c.hash].fav) ? 1 : 0;
+        if (fa !== fb) return (fa - fb) * dir;
+        return a.ms.title.localeCompare(b.ms.title);
+      }
+      if (sortBy === 'plays') {
+        const pa = a.charts.reduce((s, c) => s + ((chartMeta[c.hash] && chartMeta[c.hash].plays) || 0), 0);
+        const pb = b.charts.reduce((s, c) => s + ((chartMeta[c.hash] && chartMeta[c.hash].plays) || 0), 0);
+        if (pa !== pb) return (pa - pb) * dir;
+        return a.ms.title.localeCompare(b.ms.title);
+      }
       if (sortBy === 'added') return ((a.ms.addedAt || 0) - (b.ms.addedAt || 0)) * dir;
       return a.ms.title.localeCompare(b.ms.title) * dir;
     });
@@ -7139,13 +8185,16 @@ const App = (() => {
           if (isCur) activeEl = item;
           const pb = getPersonalBest(ch.hash);
           const rateDR = ChartParser.estimateDifficultyRating(ch, mods.rate).dr;
+          const cm = chartMeta[ch.hash];
           item.innerHTML = `
             <div style="display:flex;align-items:center;gap:8px;min-width:0;">
               <span class="pill ${ch.keyCount===4?'pill-4k':ch.keyCount===7?'pill-7k':''}">${ch.keyCount}K</span>
+              ${cm && cm.fav ? '<span style="color:#ffe76b;font-size:12px;">★</span>' : ''}
               <span class="diff-name">${escapeHtml(ch.difficultyName)}</span>
               ${ch.meta.hasSV ? '<span class="pill pill-sv" style="font-size:10px;">SV</span>' : ''}
             </div>
             <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+              ${cm && cm.plays ? `<span style="font-size:10.5px;color:var(--text-muted);font-family:var(--font-mono);">${cm.plays}x</span>` : ''}
               ${pb ? `<span class="grade-badge grade-${pb.grade}">${pb.grade}</span>` : ''}
               <span class="diff-dr" style="color:${drColor(rateDR)}">${rateDR.toFixed(2)}</span>
             </div>`;
@@ -7178,7 +8227,11 @@ const App = (() => {
 
     document.getElementById('sel-title').textContent = ch.title;
     document.getElementById('sel-artist').textContent = `${ch.artist} — [${ch.difficultyName}]`;
-    document.getElementById('sel-meta').innerHTML = `<span>Mapper: <b>${escapeHtml(ch.creator)}</b></span><span>Mode: <b>${ch.keyCount}K</b></span>${ch.meta.hasSV ? '<span style="color:#e278ff"><b>Has SV/SSF</b></span>' : ''}`;
+    const cmSel = chartMeta[ch.hash];
+    const favBtn = document.getElementById('btn-sel-fav');
+    if (favBtn) favBtn.classList.toggle('active', !!(cmSel && cmSel.fav));
+    const playsPart = (cmSel && cmSel.plays) ? `<span>Plays: <b>${cmSel.plays}</b></span>` : '';
+    document.getElementById('sel-meta').innerHTML = `<span>Mapper: <b>${escapeHtml(ch.creator)}</b></span><span>Mode: <b>${ch.keyCount}K</b></span>${playsPart}${ch.meta.hasSV ? '<span style="color:#e278ff"><b>Has SV/SSF</b></span>' : ''}`;
     document.getElementById('sel-dr').textContent = rateStats.dr.toFixed(2);
     document.getElementById('sel-dr').style.color = drColor(rateStats.dr);
     document.getElementById('sel-length').textContent = formatTime(ch.meta.lengthMs / mods.rate);
@@ -7205,11 +8258,337 @@ const App = (() => {
 
     // Play audio preview at SongPreviewTime whenever selecting or scrolling songs
     if (currentScreen === 'select') {
-      AudioEngine.startPreview(ms.audioKey, ch.songPreviewTime, getBlob, immediatePreview);
+      AudioEngine.startPreview(ms.audioKey, ch.songPreviewTime, getBlob, immediatePreview, mods.rate);
     }
 
     updateModStripUI();
     renderLeaderboard(ch.hash);
+    if (mapPreviewActive && currentScreen === 'select') {
+      refreshMapPreviewChart();
+    }
+  }
+
+  /* ---------- LIVE AUDIO-SYNCED MAP PREVIEW IN SONG SELECT ---------- */
+  let previewChartObj = null;
+  let previewTimeline = null;
+  let previewRafId = 0;
+  let previewFallbackT = 0;
+  let previewLastPerf = 0;
+  let previewSeeking = false;
+  const previewHitFlash = new Float32Array(10); // 0..1 flash per lane when note crosses receptor
+
+  function setMapPreviewMode(on) {
+    mapPreviewActive = !!on;
+    const lbView = document.getElementById('sel-lb-view');
+    const pvView = document.getElementById('sel-preview-view');
+    const tabLb = document.getElementById('tab-lb-scores');
+    const tabPv = document.getElementById('tab-lb-preview');
+    const btnPv = document.getElementById('btn-sel-preview');
+    if (lbView) lbView.style.display = mapPreviewActive ? 'none' : 'flex';
+    if (pvView) pvView.classList.toggle('active', mapPreviewActive);
+    if (tabLb) tabLb.classList.toggle('active', !mapPreviewActive);
+    if (tabPv) tabPv.classList.toggle('active', mapPreviewActive);
+    if (btnPv) btnPv.classList.toggle('btn-accent', mapPreviewActive);
+    saveUiState();
+
+    if (mapPreviewActive && currentScreen === 'select') {
+      AudioEngine.ensureContext();
+      const pair = getSelectedPair();
+      if (pair) AudioEngine.startPreview(pair.ms.audioKey, pair.ch.songPreviewTime, getBlob, true, mods.rate);
+      refreshMapPreviewChart();
+      startMapPreviewLoop();
+    } else {
+      stopMapPreviewLoop();
+    }
+  }
+
+  function toggleMapPreview() {
+    setMapPreviewMode(!mapPreviewActive);
+  }
+
+  function togglePreviewAudioPause() {
+    const isPlaying = AudioEngine.togglePreviewPause();
+    const btn = document.getElementById('btn-preview-play');
+    if (btn) btn.textContent = isPlaying ? '⏸' : '▶';
+  }
+
+  function jumpPreviewStart() {
+    AudioEngine.seekPreview(0);
+    previewFallbackT = 0;
+  }
+
+  function refreshMapPreviewChart() {
+    const pair = getSelectedPair();
+    if (!pair) { previewChartObj = null; previewTimeline = null; return; }
+    const { ch } = pair;
+    ChartParser.ensureHitObjects(ch);
+    previewChartObj = ch;
+    previewTimeline = TimelineEngine.compile(ch, mods, 42);
+    previewFallbackT = ch.songPreviewTime || 0;
+    previewHitFlash.fill(0);
+    const durMs = Math.max(1000, ch.meta.lengthMs || 60000);
+    const seekEl = document.getElementById('sel-preview-seek');
+    if (seekEl) seekEl.max = Math.round(durMs);
+    const durEl = document.getElementById('sel-preview-dur');
+    if (durEl) durEl.textContent = formatTime(durMs);
+  }
+
+  function startMapPreviewLoop() {
+    if (previewRafId) return;
+    previewLastPerf = performance.now();
+    const tick = (nowPerf) => {
+      if (!mapPreviewActive || currentScreen !== 'select') { previewRafId = 0; return; }
+      previewRafId = requestAnimationFrame(tick);
+      renderMapPreviewFrame(nowPerf);
+    };
+    previewRafId = requestAnimationFrame(tick);
+  }
+
+  function stopMapPreviewLoop() {
+    if (previewRafId) { cancelAnimationFrame(previewRafId); previewRafId = 0; }
+  }
+
+  function renderMapPreviewFrame(nowPerf) {
+    const wrap = document.getElementById('sel-preview-wrap');
+    const canvas = document.getElementById('sel-preview-canvas');
+    if (!wrap || !canvas || !previewChartObj || !previewTimeline) return;
+
+    const dtMs = Math.min(80, Math.max(0.1, nowPerf - previewLastPerf));
+    previewLastPerf = nowPerf;
+
+    const w = Math.max(180, wrap.clientWidth || 340);
+    const h = Math.max(140, wrap.clientHeight || 260);
+    const dpr = settings.performanceMode ? 1 : Math.min(window.devicePixelRatio || 1, 2);
+    if (canvas.width !== Math.round(w * dpr) || canvas.height !== Math.round(h * dpr)) {
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+    }
+
+    const pair = getSelectedPair();
+    const audioKey = pair ? pair.ms.audioKey : null;
+    const pst = AudioEngine.getPreviewState();
+    const durMs = Math.max(1000, pst.durationMs || previewChartObj.meta.lengthMs || 60000);
+
+    let songTimeMs;
+    if (pst.active && pst.key === audioKey) {
+      songTimeMs = pst.timeMs;
+      previewFallbackT = songTimeMs;
+    } else {
+      previewFallbackT = (previewFallbackT + dtMs * mods.rate) % durMs;
+      songTimeMs = previewFallbackT;
+    }
+
+    // Sync seek bar & play/pause icon without fighting user drags
+    const btnPlay = document.getElementById('btn-preview-play');
+    if (btnPlay) btnPlay.textContent = (pst.active && !pst.playing) ? '▶' : '⏸';
+    const timeEl = document.getElementById('sel-preview-time');
+    if (timeEl) timeEl.textContent = formatTime(songTimeMs);
+    const durEl = document.getElementById('sel-preview-dur');
+    if (durEl) durEl.textContent = formatTime(durMs);
+    const seekEl = document.getElementById('sel-preview-seek');
+    if (seekEl && !previewSeeking) {
+      seekEl.max = Math.round(durMs);
+      seekEl.value = clamp(Math.round(songTimeMs), 0, Math.round(durMs));
+    }
+
+    // Live BPM & SV readout
+    const tps = previewChartObj.timingPoints || [];
+    let curBpm = previewChartObj.meta.dominantBpm || 120;
+    for (let i = tps.length - 1; i >= 0; i--) {
+      if (tps[i].startTime <= songTimeMs) { curBpm = tps[i].bpm; break; }
+    }
+    const curSv = TimelineEngine.getSvMultiplierAt(previewTimeline.mainTable, songTimeMs);
+    const curSsf = TimelineEngine.getSsfMultiplier(previewTimeline.ssfs, songTimeMs);
+    const bpmEl = document.getElementById('sel-preview-bpm');
+    if (bpmEl) bpmEl.textContent = `${Math.round(curBpm * mods.rate)} BPM • ${previewChartObj.keyCount}K • ${mods.rate.toFixed(2)}x`;
+    const svEl = document.getElementById('sel-preview-sv');
+    if (svEl) {
+      const effSv = curSv * curSsf;
+      svEl.textContent = (!mods.nsv && Math.abs(effSv - 1) > 0.01) ? `SV ${effSv.toFixed(2)}x` : '';
+    }
+
+    const c = canvas.getContext('2d');
+    c.save();
+    c.scale(dpr, dpr);
+    c.fillStyle = '#030106';
+    c.fillRect(0, 0, w, h);
+
+    const k = previewChartObj.keyCount;
+    const baseVScale = h / 768;
+    const baseColV = k <= 4 ? 100 : (k === 7 ? 80 : clamp(Math.floor(580 / k), 56, 96));
+    const notePadV = 8;
+    const stagePadV = 14;
+    const lanesSpanV = k * baseColV + (k - 1) * notePadV;
+    const totalStageV = lanesSpanV + 2 * stagePadV;
+
+    // Fit stage cleanly inside preview box while preserving Quaver proportions
+    let pfScale = baseVScale * 1.15;
+    const maxStageW = w * 0.86;
+    if (totalStageV * pfScale > maxStageW) pfScale = maxStageW / totalStageV;
+
+    const colW = baseColV * pfScale;
+    const colPitch = (baseColV + notePadV) * pfScale;
+    const stagePad = stagePadV * pfScale;
+    const stageW = totalStageV * pfScale;
+    const stageX = (w - stageW) / 2;
+    const lanesX = stageX + stagePad;
+    const receptorSize = Math.max(14, colW);
+    const noteSize = Math.max(13, colW * (settings.noteScale / 100));
+    const halfN = noteSize / 2;
+    const halfR = receptorSize / 2;
+
+    const dir = k === 4 ? settings.scrollDir4K : (k === 7 ? settings.scrollDir7K : settings.scrollDirOther);
+    const isUp = dir === 'Up';
+    const baseEdgeOffV = Number.isFinite(settings.receptorOffsetY) ? settings.receptorOffsetY : 100;
+    const edgeOffV = k === 7 ? baseEdgeOffV * 0.8 : baseEdgeOffV;
+    const receptorY = isUp
+      ? (Math.max(26, edgeOffV * baseVScale) + halfR)
+      : (h - Math.max(20, edgeOffV * baseVScale) - halfR);
+
+    // Stage background & subtle rails
+    c.fillStyle = '#060109';
+    c.fillRect(stageX, 0, stageW, h);
+    c.fillStyle = 'rgba(2, 171, 255, 0.22)';
+    c.fillRect(stageX - 1, 0, 1, h);
+    c.fillRect(stageX + stageW, 0, 1, h);
+
+    const rawSpeed = k === 4 ? settings.scrollSpeed4K : (k === 7 ? settings.scrollSpeed7K : settings.scrollSpeedOther);
+    const rateNorm = 1 + (mods.rate - 1) * (settings.normSvByRate / 100);
+    const pxPerTrackMs = ((rawSpeed / 10) * 0.050 * baseVScale / rateNorm) * curSsf;
+    const dirSign = isUp ? 1 : -1;
+    const visTimeMs = songTimeMs + (settings.visualOffset || 0);
+    const curTrackPos = TimelineEngine.getTrackPos(previewTimeline.mainTable, visTimeMs);
+
+    // Measure timing lines
+    if (settings.displayTimingLines && Math.abs(pxPerTrackMs) > 0.0001) {
+      c.fillStyle = 'rgba(150, 150, 150, 0.42)';
+      const lines = previewTimeline.timingLines;
+      for (let i = 0; i < lines.length; i++) {
+        const y = receptorY + (lines[i].trackPos - curTrackPos) * pxPerTrackMs * dirSign;
+        if (y >= -2 && y <= h + 2) c.fillRect(stageX, y - 0.6, stageW, 1.2);
+      }
+    }
+
+    const atlas = SkinAtlas.get(receptorSize, dpr, settings);
+    const lanePressed = new Uint8Array(k);
+    const laneHolding = new Uint8Array(k);
+
+    // Decay hit flashes
+    for (let l = 0; l < k; l++) {
+      if (previewHitFlash[l] > 0) previewHitFlash[l] = Math.max(0, previewHitFlash[l] - dtMs / 180);
+    }
+
+    // Cull & collect visible notes + auto-press detection
+    const absPx = Math.abs(pxPerTrackMs);
+    const visTrackMargin = absPx > 0.001 ? ((h + noteSize * 2) / absPx) : 1e9;
+    const minVisTrack = curTrackPos - visTrackMargin;
+    const maxVisTrack = curTrackPos + visTrackMargin;
+    const chunks = previewTimeline.chunks;
+    const notes = previewTimeline.notes;
+    const grpTables = previewTimeline.groupTables;
+    const percyPx = (settings.percyAmount || 0) * baseVScale;
+
+    // Pass 1: Detect lanes currently being hit / held for authentic autoplay receptor feedback
+    for (let ci = 0; ci < chunks.length; ci++) {
+      const ch = chunks[ci];
+      if (!previewTimeline.hasNegativeSV && (ch.maxTrack < minVisTrack || ch.minTrack > maxVisTrack)) continue;
+      for (let i = ch.start; i < ch.end; i++) {
+        const n = notes[i];
+        if (n.isMine) continue;
+        const dtHit = visTimeMs - n.startTime;
+        if (dtHit >= 0 && dtHit <= 85) {
+          lanePressed[n.lane] = 1;
+          if (dtHit <= 45) previewHitFlash[n.lane] = 1.0;
+        }
+        if (n.isLN && visTimeMs >= n.startTime && visTimeMs <= n.endTime) {
+          lanePressed[n.lane] = 1;
+          laneHolding[n.lane] = 1;
+        }
+      }
+    }
+
+    const receptorsOver = (k === 7);
+    const drawReceptors = () => {
+      for (let l = 0; l < k; l++) {
+        const rx = lanesX + l * colPitch;
+        const ry = receptorY - halfR;
+        c.drawImage(lanePressed[l] ? atlas.receptorDown : atlas.receptorUp, rx, ry, receptorSize, receptorSize);
+      }
+    };
+    if (!receptorsOver) drawReceptors();
+
+    const getSprite = (n) => {
+      if (k === 4) {
+        if (atlas.custom4K && !settings.colorBySnap4K) return atlas.custom4K[n.lane] || atlas.classic4K[n.lane];
+        return settings.colorBySnap4K ? atlas.snapNotes[n.snap & 7] : atlas.classic4K[n.lane];
+      }
+      if (k === 7) return (atlas.custom7K && atlas.custom7K[n.lane]) || atlas.col7K[n.lane];
+      return atlas.colOther[n.lane % 10];
+    };
+
+    // Pass 2: Render unhit notes & active LNs
+    for (let ci = 0; ci < chunks.length; ci++) {
+      const ch = chunks[ci];
+      if (!previewTimeline.hasNegativeSV && (ch.maxTrack < minVisTrack || ch.minTrack > maxVisTrack)) continue;
+      for (let i = ch.start; i < ch.end; i++) {
+        const n = notes[i];
+        // Hide notes already passed (autoplay hit them cleanly!)
+        if (!n.isLN && !n.isMine && visTimeMs > n.startTime + 12) continue;
+        if (n.isLN && visTimeMs > n.endTime + 12) continue;
+
+        const curTP = (n.timingGroup && grpTables[n.timingGroup])
+          ? TimelineEngine.getTrackPos(grpTables[n.timingGroup], visTimeMs)
+          : curTrackPos;
+        let headY = receptorY + (n.startTrack - curTP) * pxPerTrackMs * dirSign;
+        const nx = lanesX + n.lane * colPitch + (receptorSize - noteSize) / 2;
+
+        if (n.isLN) {
+          let tailY = receptorY + (n.endTrack - curTP) * pxPerTrackMs * dirSign;
+          if (percyPx > 0) {
+            if (isUp) tailY = Math.max(headY, tailY - percyPx);
+            else tailY = Math.min(headY, tailY + percyPx);
+          }
+          const holding = visTimeMs >= n.startTime && visTimeMs <= n.endTime;
+          if (holding) {
+            headY = receptorY;
+            if (isUp && tailY < receptorY) tailY = receptorY;
+            else if (!isUp && tailY > receptorY) tailY = receptorY;
+          }
+          const topY = Math.min(headY, tailY);
+          const botY = Math.max(headY, tailY);
+          if (botY < -noteSize || topY > h + noteSize) continue;
+          const bodyH = Math.max(0, botY - topY);
+          if (bodyH > 1) c.drawImage(atlas.holdBody, nx, topY, noteSize, bodyH);
+          const capH = Math.ceil(noteSize / 2) + 2;
+          if (isUp) c.drawImage(atlas.holdCapUp, nx, tailY - 1, noteSize, capH);
+          else c.drawImage(atlas.holdCapDown, nx, tailY - capH + 1, noteSize, capH);
+          if (!holding) c.drawImage(getSprite(n), nx, headY - halfN, noteSize, noteSize);
+        } else {
+          if (headY < -noteSize || headY > h + noteSize) continue;
+          c.drawImage(n.isMine ? atlas.mine : getSprite(n), nx, headY - halfN, noteSize, noteSize);
+        }
+      }
+    }
+
+    if (receptorsOver) drawReceptors();
+
+    // Hit / Hold lighting bursts on receptors
+    for (let l = 0; l < k; l++) {
+      const cx = lanesX + l * colPitch + halfR;
+      if (laneHolding[l]) {
+        const hf = Math.floor((nowPerf / 40) % 8);
+        const hl = atlas.holdLight[hf];
+        const sz = receptorSize * 1.26;
+        c.drawImage(hl, cx - sz / 2, receptorY - sz / 2, sz, sz);
+      } else if (previewHitFlash[l] > 0.05) {
+        const fIdx = clamp(Math.floor((1 - previewHitFlash[l]) * 5), 0, 4);
+        const hl = atlas.hitLight[fIdx];
+        const sz = receptorSize * 1.32;
+        c.drawImage(hl, cx - sz / 2, receptorY - sz / 2, sz, sz);
+      }
+    }
+
+    c.restore();
   }
 
   function renderLeaderboard(mapHash) {
@@ -7279,6 +8658,8 @@ const App = (() => {
 
   function stepRate(delta) {
     mods.rate = clamp(Math.round((mods.rate + delta) * 20) / 20, 0.5, 2.0);
+    AudioEngine.setPreviewRate(mods.rate);
+    saveUiState();
     updateSelectedChartUI();
     renderMapsetList();
   }
@@ -7298,12 +8679,16 @@ const App = (() => {
     if (key === 'inverse' && mods.inverse) { mods.nln = false; mods.fln = false; }
     if (key === 'nf' && mods.nf) mods.nm = false;
     if (key === 'nm' && mods.nm) mods.nf = false;
+    saveUiState();
     updateModStripUI();
+    if (mapPreviewActive && currentScreen === 'select') refreshMapPreviewChart();
   }
 
   function clearMods() {
     mods.rate = 1.0;
     mods.mirror = mods.random = mods.nln = mods.fln = mods.inverse = mods.nsv = mods.nf = mods.nm = mods.auto = false;
+    AudioEngine.setPreviewRate(1.0);
+    saveUiState();
     updateSelectedChartUI();
     renderMapsetList();
   }
@@ -7311,15 +8696,21 @@ const App = (() => {
   function toggleSortDir() {
     sortDesc = !sortDesc;
     document.getElementById('sel-sort-dir').textContent = sortDesc ? 'Desc' : 'Asc';
+    saveUiState();
     renderMapsetList();
   }
 
   function selectRandomMap() {
     const filtered = getFilteredMapsets();
     if (!filtered.length) return;
-    const pick = filtered[Math.floor(Math.random() * filtered.length)];
+    let pool = filtered;
+    if (filtered.length > 1) {
+      const others = filtered.filter(f => f.ms.id !== selectedMapsetId);
+      if (others.length) pool = others;
+    }
+    const pick = pool[trueRandomInt(pool.length)];
     selectedMapsetId = pick.ms.id;
-    selectedChartHash = pick.charts[Math.floor(Math.random() * pick.charts.length)].hash;
+    selectedChartHash = pick.charts[trueRandomInt(pick.charts.length)].hash;
     renderMapsetList(true);
     updateSelectedChartUI();
   }
@@ -7507,14 +8898,37 @@ const App = (() => {
 
   async function onGameFinished(res) {
     let isNewPB = false;
+    // Track lifetime career stats & per-chart play counts for real runs (not replay/autoplay)
+    if (!res.replayMode && !res.mods.auto && careerStats) {
+      careerStats.totalPlays++;
+      if (res.grade !== 'F') careerStats.totalPasses++; else careerStats.totalFails++;
+      if (res.grade !== 'F' && res.counts && res.counts[5] === 0 && !res.practiceMode) careerStats.totalFCs++;
+      const playedMs = res.mapLengthMs ? Math.round(res.mapLengthMs / (res.mods && res.mods.rate || 1)) : 60000;
+      careerStats.totalPlayTimeMs += playedMs;
+      if (Array.isArray(res.counts)) {
+        for (let i = 0; i < 6; i++) careerStats.judgements[i] += Number(res.counts[i]) || 0;
+      }
+      if ((res.maxCombo || 0) > careerStats.highestCombo) careerStats.highestCombo = res.maxCombo || 0;
+      if ((res.pr || 0) > careerStats.bestPr) careerStats.bestPr = res.pr || 0;
+      careerStats.lastPlayedAt = Date.now();
+      saveCareerStats();
+
+      if (res.mapHash) {
+        if (!chartMeta[res.mapHash]) chartMeta[res.mapHash] = { plays: 0, lastPlayed: 0, fav: false };
+        chartMeta[res.mapHash].plays = (chartMeta[res.mapHash].plays || 0) + 1;
+        chartMeta[res.mapHash].lastPlayed = Date.now();
+        saveChartMeta();
+      }
+    }
+
     if (!res.practiceMode && !res.replayMode && !res.mods.auto && res.grade !== 'F') {
       const prevPb = getPersonalBest(res.mapHash);
       if (!prevPb || res.score > prevPb.score) isNewPB = true;
       scores.push(res);
-      SafeStore.lsSet('quaver_darkwave_scores_summary_v1', scores.map(s => ({ ...s, hitErrors: undefined, runTimeline: undefined, replay: undefined })));
+      persistAllScores();
       await SafeStore.putScore(res);
-      updateProfileHeader();
     }
+    updateProfileHeader();
     showResults(res, isNewPB);
   }
 
@@ -8427,18 +9841,25 @@ const App = (() => {
 
   function exportBackup() {
     const payload = {
-      version: 1,
+      version: 2,
+      exportedAt: Date.now(),
       settings,
       localOffsets,
-      scores: scores.map(s => ({ ...s, hitErrors: (s.hitErrors || []).slice(0, 600) }))
+      careerStats,
+      chartMeta,
+      lastQpackMeta,
+      scores: scores.map(s => ({
+        ...stripScoreSummary(s),
+        _packed: SafeStore.packScoreDetail(s) || undefined
+      }))
     };
-    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `quiver-backup-${new Date().toISOString().slice(0,10)}.json`;
+    a.download = `quiver-save-${new Date().toISOString().slice(0,10)}.qsave.json`;
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 5000);
-    toast('Backup JSON downloaded', 'ok');
+    toast(`Save exported (${scores.length} scores + replays & stats)`, 'ok');
   }
 
   async function importBackupFile(file) {
@@ -8447,21 +9868,56 @@ const App = (() => {
       if (data.settings) {
         const defs = cloneDefaults();
         settings = Object.assign(defs, data.settings);
+        settings.keys = Object.assign(cloneDefaults().keys, data.settings.keys || {});
+        settings.keysAlt = Object.assign(cloneDefaults().keysAlt, data.settings.keysAlt || {});
         settings.hotkeys = Object.assign(cloneDefaults().hotkeys, data.settings.hotkeys || {});
       }
       if (data.localOffsets) localOffsets = Object.assign(localOffsets, data.localOffsets);
+      if (data.careerStats) {
+        careerStats = Object.assign(defaultCareerStats(), careerStats || {}, data.careerStats);
+        saveCareerStats();
+      }
+      if (data.chartMeta && typeof data.chartMeta === 'object') {
+        for (const [h, m] of Object.entries(data.chartMeta)) {
+          const cur = chartMeta[h] || { plays: 0, lastPlayed: 0, fav: false };
+          chartMeta[h] = {
+            plays: Math.max(cur.plays || 0, m.plays || 0),
+            lastPlayed: Math.max(cur.lastPlayed || 0, m.lastPlayed || 0),
+            fav: !!(cur.fav || m.fav)
+          };
+        }
+        saveChartMeta();
+      }
+      if (data.lastQpackMeta && !lastQpackMeta) {
+        lastQpackMeta = data.lastQpackMeta;
+        SafeStore.lsSet('quiver_last_qpack_v1', lastQpackMeta);
+      }
+      let addedScores = 0;
       if (Array.isArray(data.scores)) {
         const existing = new Set(scores.map(s => s.id));
-        for (const sc of data.scores) {
-          if (!existing.has(sc.id)) { scores.push(sc); await SafeStore.putScore(sc); }
+        for (const rawSc of data.scores) {
+          if (!rawSc || !rawSc.id || existing.has(rawSc.id)) continue;
+          const sc = { ...rawSc };
+          if (sc._packed) {
+            const det = SafeStore.unpackScoreDetail(sc._packed);
+            delete sc._packed;
+            if (det) Object.assign(sc, det);
+          }
+          scores.push(sc);
+          existing.add(sc.id);
+          addedScores++;
+          await SafeStore.putScore(sc);
         }
       }
       saveSettings();
       SafeStore.lsSet('quaver_darkwave_offsets_v1', localOffsets);
+      persistAllScores();
       syncSettingsUI();
-      toast('Backup restored successfully!', 'ok');
+      updateProfileHeader();
+      if (currentScreen === 'select') { renderMapsetList(false); updateSelectedChartUI(); }
+      toast(`Save restored (${addedScores} new score(s) + replays & settings persisted)!`, 'ok');
     } catch (err) {
-      toast('Invalid backup JSON: ' + err.message, 'err');
+      toast('Invalid save JSON: ' + err.message, 'err');
     }
   }
 
@@ -8628,10 +10084,22 @@ const App = (() => {
       }
     });
 
-    // Song Select filter listeners
+    // Song Select filter listeners + Map Preview scrub bar
     document.getElementById('sel-search').addEventListener('input', () => renderMapsetList());
-    document.getElementById('sel-mode-filter').addEventListener('change', () => { renderMapsetList(); updateSelectedChartUI(); });
-    document.getElementById('sel-sort').addEventListener('change', () => renderMapsetList());
+    document.getElementById('sel-mode-filter').addEventListener('change', () => { saveUiState(); renderMapsetList(); updateSelectedChartUI(); });
+    document.getElementById('sel-sort').addEventListener('change', () => { saveUiState(); renderMapsetList(); });
+    const pvSeek = document.getElementById('sel-preview-seek');
+    if (pvSeek) {
+      pvSeek.addEventListener('pointerdown', () => { previewSeeking = true; });
+      pvSeek.addEventListener('input', (e) => {
+        const ms = Number(e.target.value) || 0;
+        previewFallbackT = ms;
+        AudioEngine.seekPreview(ms);
+      });
+      const endSeek = () => { previewSeeking = false; };
+      pvSeek.addEventListener('pointerup', endSeek);
+      pvSeek.addEventListener('change', endSeek);
+    }
 
     // Master Keyboard Dispatcher (1:1 Quaver keybind parity via settings.hotkeys)
     window.addEventListener('keydown', (e) => {
@@ -8739,26 +10207,31 @@ const App = (() => {
 
   async function init() {
     loadSettings();
+    loadExtraStats();
     const idbOk = await SafeStore.init();
-    document.getElementById('storage-status-pill').textContent = idbOk
-      ? 'Offline Cache: IndexedDB Active'
-      : 'Offline Cache: Session Memory Mode';
+    const storagePill = document.getElementById('storage-status-pill');
+    if (idbOk && SafeStore.lsAvailable) storagePill.textContent = 'Offline Cache: IndexedDB + LocalStorage';
+    else if (SafeStore.lsAvailable) storagePill.textContent = 'Offline Cache: LocalStorage Active (file://)';
+    else storagePill.textContent = 'Offline Cache: Session Memory Mode';
 
     // Always include the pure Web-Audio built-in starter mapset first
     mapsets = [StarterSynth.createStarterMapset()];
 
-    // Restore persisted mapsets & scores from IndexedDB
+    // Restore persisted mapsets & union-merge full scores + replays + graphs from IDB and LocalStorage!
+    let idbScores = [];
     if (idbOk) {
       try {
         const storedSets = await SafeStore.getAllMapsets();
         for (const ms of storedSets) if (ms && ms.charts && ms.charts.length) mapsets.push(ms);
-        const storedScores = await SafeStore.getAllScores();
-        if (Array.isArray(storedScores)) scores = storedScores;
+        idbScores = (await SafeStore.getAllScores()) || [];
+        savedQpackHandle = await SafeStore.getHandle('lastQpack');
       } catch {}
-    } else {
-      scores = SafeStore.lsGet('quaver_darkwave_scores_summary_v1', []) || [];
     }
+    scores = hydrateScoresFromStorage(idbScores);
+    bootstrapCareerFromScores();
+    if (scores.length && SafeStore.lsAvailable) persistAllScores();
 
+    restoreUiState();
     selectedMapsetId = mapsets[0].id;
     selectedChartHash = mapsets[0].charts[0].hash;
 
@@ -8767,6 +10240,27 @@ const App = (() => {
     syncSettingsUI();
     updateProfileHeader();
     startMenuAnimation();
+
+    // Auto-reconnect saved .qpack handle immediately if browser permission is already granted,
+    // otherwise display the one-click permission prompt card on Main Menu!
+    if (savedQpackHandle && !mapsets.some(m => !m.builtIn)) {
+      try {
+        const perm = typeof savedQpackHandle.queryPermission === 'function'
+          ? await savedQpackHandle.queryPermission({ mode: 'read' })
+          : 'prompt';
+        if (perm === 'granted') {
+          const f = await savedQpackHandle.getFile();
+          await handleIncomingFiles([{ file: f, relPath: f.name, handle: savedQpackHandle }]);
+        } else {
+          updateReconnectUI();
+        }
+      } catch {
+        updateReconnectUI();
+      }
+    } else {
+      updateReconnectUI();
+    }
+
     tryLoadHttpManifest();
   }
 
@@ -8785,16 +10279,23 @@ const App = (() => {
     closeModals,
     toggleFullscreen,
     formatModsDisplay,
-    triggerImportFiles: () => document.getElementById('file-input-files').click(),
+    triggerImportFiles,
     triggerImportFolder: () => document.getElementById('file-input-folder').click(),
     triggerImportSkin: () => document.getElementById('file-input-skin').click(),
     triggerImportBackup: () => document.getElementById('file-input-backup').click(),
+    reconnectLastQpack,
+    dismissReconnectCard,
+    toggleFavoriteSelected,
     stepRate,
     togglePitch,
     toggleMod,
     clearMods,
     toggleSortDir,
     selectRandomMap,
+    toggleMapPreview,
+    setMapPreviewMode,
+    togglePreviewAudioPause,
+    jumpPreviewStart,
     startSelectedMap,
     deleteSelectedMapset,
     exportSelectedMapset,

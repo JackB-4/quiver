@@ -14,8 +14,11 @@ Open [quaver-browser.html](quaver-browser.html) directly in any modern browser (
 - **Singleplayer Quaver Parity**:
   - Supports **1K–10K** (4K & 7K presets out of the box), Long Notes (dual head/tail judgements, `1.5×` release window, late hold-over auto-Good), Mines, negative/reverse Scroll Velocities (SV), `ScrollSpeedFactors` (SSF), and `TimingGroups`.
   - Exact judgement presets (`Standard`, `Lenient`, `Chill`, `Strict`, `Tough`, `Extreme`), accuracy weights, 1,000,000 scoring, HP drain/gain, grades (`X`–`F`), and Performance Rating (`PR`).
-  - Mods: Rate (`0.50x`–`2.00x`, pitched & unpitched), Mirror, Randomize, No LN, Full LN, Inverse, No SV, No Fail, No Miss, Autoplay, plus Practice Mode (scrubbing & A–B loops) and local Replay recording/playback.
+  - Mods: Rate (`0.50x`–`2.00x`, pitched & unpitched), Mirror, Randomize, No LN, Full LN, Inverse, No SV, No Fail, No Miss, Autoplay, plus Practice Mode (scrubbing & A–B loops), live audio-synced **Map Preview** in Song Select, and local Replay recording/playback.
   - Full-viewport Results recap with 5 swappable interactive analytics graphs (`Accuracy`, `Hit Error`, `Distribution`, `Health`, and `Combo & NPS`).
+- **Offline Persistence & Quick Reconnect**:
+  - Persists settings, per-map local offsets, local leaderboards, compact delta-encoded replays & Results graphs (for PBs and recent runs), lifetime career stats, favorites, play counts, and Song Select state directly in `localStorage` + `IndexedDB` (works across reloads even on `file://`), plus drag-and-drop `.qsave.json` save exports/restores.
+  - Remembers your last loaded `.qpack` library and offers one-click permission reconnect (`FileSystemFileHandle` where supported, or quick re-open on `file://`).
 - **Separate Song Packaging**:
   - Built-in procedural Web Audio starter mapset (**Darkwave Pulse**, 4K & 7K) playable immediately.
   - Import native `.qp` / `.zip` / `.osz` archives, unpacked Quaver `Songs/` folders, loose `.qua` / `.osu` (Mania Mode 3) charts, or hyper-compact **`.qpack`** library packs (lazy `File.slice()` streaming, opens hundreds of charts in ~50 ms).
