@@ -1,0 +1,22 @@
+# Packaged song libraries & archives (keep copyrighted audio out of Git)
+*.qpack
+*.qp
+*.osz
+*.7z
+*.zip
+*.rar
+
+# Loose audio / chart imports
+*.mp3
+*.ogg
+*.wav
+*.flac
+*.m4a
+*.qua
+*.osu
+songs/
+
+# OS / editor artifacts
+.DS_Store
+Thumbs.db
+desktop.ini
