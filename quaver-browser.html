@@ -373,10 +373,12 @@ body.in-select .mapset-group {
 .menu-right {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  max-width: 680px;
+  gap: 12px;
+  max-width: 430px;
   justify-self: end;
+  align-self: end;
   width: 100%;
+  padding-bottom: 6px;
 }
 
 .panel-card {
@@ -397,28 +399,82 @@ body.in-select .mapset-group {
   justify-content: space-between;
 }
 
-.drop-card {
-  border: 1px dashed rgba(2, 171, 255, 0.55);
-  background: linear-gradient(135deg, rgba(2, 171, 255, 0.08), rgba(168, 0, 232, 0.05));
-  text-align: center;
-  padding: 24px 20px;
-  cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
+.menu-summary-card {
+  background: rgba(7, 4, 16, 0.58);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 12px;
+  padding: 16px 18px 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.45);
 }
-.drop-card:hover {
-  border-color: var(--accent);
-  background: linear-gradient(135deg, rgba(2, 171, 255, 0.16), rgba(168, 0, 232, 0.08));
+.menu-stat-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
 }
-.drop-card-title { font-weight: 700; font-size: 15px; margin-bottom: 5px; }
-.drop-card-sub { color: var(--text-sub); font-size: 12px; margin-bottom: 14px; }
+.menu-stat-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 10px;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+.menu-stat-col:first-child {
+  padding-left: 0;
+  border-left: none;
+}
+.menu-stat-col .mk {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.menu-stat-col .mv {
+  font-family: var(--font-mono);
+  font-size: 17px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+}
+.menu-meta-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  flex-wrap: wrap;
+}
+.menu-meta-line b { color: var(--text-sub); font-weight: 700; }
 
 #menu-viz-canvas {
   width: 100%;
-  height: 76px;
+  height: 44px;
   display: block;
   border-radius: 6px;
-  background: rgba(6, 1, 9, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(5, 2, 12, 0.42);
+}
+.menu-drop-hint {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.menu-drop-hint span:last-child {
+  font-family: var(--font-mono);
+  color: rgba(147, 197, 253, 0.72);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .quick-stats-grid {
@@ -465,6 +521,134 @@ body.in-select .mapset-group {
 }
 .stat-tile .k { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
 .stat-tile .v { font-size: 17px; font-weight: 700; font-family: var(--font-mono); margin-top: 2px; color: #fff; }
+
+/* Main Menu Jukebox Playback Bar */
+.menu-jukebox-bar {
+  height: 58px;
+  gap: 16px;
+  padding: 0 20px;
+  background: rgba(6, 2, 14, 0.94);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(124, 58, 237, 0.55);
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.78), inset 0 1px 0 rgba(56, 189, 248, 0.25);
+}
+.jb-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.jb-btn {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  line-height: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+  color: #e6f4ff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.13s ease;
+}
+.jb-btn svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+  fill: currentColor;
+  pointer-events: none;
+}
+.jb-btn:hover {
+  border-color: var(--accent);
+  background: rgba(2, 171, 255, 0.2);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(2, 171, 255, 0.35);
+}
+.jb-btn.jb-play {
+  width: 38px;
+  height: 38px;
+  border-color: rgba(56, 189, 248, 0.65);
+  background: linear-gradient(135deg, rgba(2, 171, 255, 0.34), rgba(124, 58, 237, 0.36));
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.28);
+}
+.jb-btn.jb-play svg {
+  width: 17px;
+  height: 17px;
+}
+.jb-btn.jb-play:hover {
+  background: linear-gradient(135deg, rgba(2, 171, 255, 0.52), rgba(168, 85, 247, 0.48));
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+}
+.jb-now {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 0 1 290px;
+  cursor: pointer;
+  padding: 4px 8px 4px 4px;
+  border-radius: 6px;
+  transition: background 0.12s;
+}
+.jb-now:hover { background: rgba(255, 255, 255, 0.06); }
+.jb-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #0d1b3d, #3b0d54);
+  background-size: cover;
+  background-position: center;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+.jb-track-meta {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.jb-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.jb-sub {
+  font-size: 11px;
+  color: var(--accent-bright);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--font-mono);
+}
+.jb-scrub {
+  flex: 1 1 220px;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.jb-time {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-sub);
+  min-width: 36px;
+}
+.jb-seek {
+  flex: 1;
+  min-width: 70px;
+  accent-color: #38bdf8;
+  cursor: pointer;
+  height: 5px;
+}
+@media (max-width: 900px) {
+  #screen-menu #storage-status-pill { display: none; }
+  .jb-now { flex: 0 1 180px; }
+}
 
 /* ========== SONG SELECT SCREEN ========== */
 #select-body {
@@ -1671,8 +1855,8 @@ input[type="checkbox"] {
       <div class="menu-right">
         <div class="reconnect-card" id="qpack-reconnect-card">
           <div style="min-width:0;">
-            <div style="font-size:13px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="qpack-reconnect-title">Reconnect Last Library</div>
-            <div style="font-size:11.5px;color:var(--text-sub);margin-top:2px;" id="qpack-reconnect-sub">Click to grant file permission and reload instantly</div>
+            <div style="font-size:12.5px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="qpack-reconnect-title">Reconnect Last Library</div>
+            <div style="font-size:11px;color:var(--text-sub);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="qpack-reconnect-sub">Click to grant permission &amp; reload</div>
           </div>
           <div style="display:flex;gap:6px;flex-shrink:0;">
             <button class="btn btn-accent btn-sm" id="btn-qpack-reconnect" onclick="App.reconnectLastQpack()">Allow &amp; Load</button>
@@ -1680,50 +1864,45 @@ input[type="checkbox"] {
           </div>
         </div>
 
-        <div class="panel-card drop-card" onclick="App.triggerImportFiles()">
-          <div class="drop-card-title">Drop .qpack Library or Charts Anywhere</div>
-          <div class="drop-card-sub">Supports instant-load <b>.qpack</b> library packs, native <b>.qp</b> archives, unpacked <b>Songs/</b> folders, or loose <b>.qua</b>/<b>.osu</b> + audio — 100% offline.</div>
-          <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;" onclick="event.stopPropagation()">
-            <button class="btn btn-accent btn-sm" onclick="App.triggerImportFiles()">Pick .qpack / .qp / Files</button>
-            <button class="btn btn-sm" onclick="App.triggerImportFolder()">Pick Folder</button>
-            <label style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--text-sub);padding:0 6px;cursor:pointer;">
-              <input type="checkbox" id="chk-persist-imports" checked> Cache in Browser
-            </label>
+        <div class="menu-summary-card">
+          <div class="menu-stat-strip">
+            <div class="menu-stat-col"><span class="mk">Charts</span><span class="mv" id="stat-charts">0</span></div>
+            <div class="menu-stat-col"><span class="mk">Plays</span><span class="mv" id="stat-plays">0</span></div>
+            <div class="menu-stat-col"><span class="mk">FCs</span><span class="mv" id="stat-fcs" style="color:var(--gold)">0</span></div>
+            <div class="menu-stat-col"><span class="mk">Time</span><span class="mv" id="stat-playtime">0m</span></div>
           </div>
-        </div>
-
-        <div class="panel-card">
-          <h3>
-            <span>Active Profile &amp; Career Stats</span>
-            <span style="color:var(--text-muted);font-weight:600;">fusy's Darkwave Circles</span>
-          </h3>
-          <div class="quick-stats-grid">
-            <div class="stat-tile"><div class="k">Mapsets</div><div class="v" id="stat-mapsets">0</div></div>
-            <div class="stat-tile"><div class="k">Charts</div><div class="v" id="stat-charts">0</div></div>
-            <div class="stat-tile"><div class="k">4K Setup</div><div class="v" id="stat-4k-setup">32.0 UP</div></div>
-            <div class="stat-tile"><div class="k">Local Scores</div><div class="v" id="stat-scores">0</div></div>
-            <div class="stat-tile"><div class="k">Total Plays</div><div class="v" id="stat-plays">0</div></div>
-            <div class="stat-tile"><div class="k">Full Combos</div><div class="v" id="stat-fcs" style="color:var(--gold)">0</div></div>
-            <div class="stat-tile"><div class="k">Playtime</div><div class="v" id="stat-playtime">0m</div></div>
-            <div class="stat-tile"><div class="k">Life M:P</div><div class="v" id="stat-mp-ratio">—</div></div>
+          <div class="menu-meta-line">
+            <span><b id="stat-mapsets">0</b> sets &bull; <b id="stat-scores">0</b> scores &bull; <b id="stat-mp-ratio">—</b> M:P</span>
+            <span id="stat-4k-setup" style="color:var(--accent-bright);font-weight:700;">32.0 UP</span>
           </div>
-        </div>
-
-        <div class="panel-card">
-          <h3>
-            <span>Menu Visualizer</span>
-            <span id="jukebox-label" style="color:var(--text-sub);font-family:var(--font-mono);font-size:11px;">Ready — 0% Network</span>
-          </h3>
-          <canvas id="menu-viz-canvas" width="600" height="76"></canvas>
+          <canvas id="menu-viz-canvas" width="420" height="44"></canvas>
+          <div class="menu-drop-hint">
+            <span>Drop .qpack, .qp, or Songs folder anywhere</span>
+            <span id="jukebox-label">Ready</span>
+          </div>
         </div>
       </div>
     </main>
 
-    <footer class="menu-bar-bottom">
-      <div class="bar-group" style="font-size:12px;color:var(--text-muted);">
-        <span>4K: <b style="color:#fff">A S ; '</b> &nbsp;|&nbsp; 7K: <b style="color:#fff">A S D Space L ; '</b> &nbsp;|&nbsp; Offline Standalone Build</span>
+    <footer class="menu-bar-bottom menu-jukebox-bar" id="menu-jukebox-bar">
+      <div class="jb-controls">
+        <button class="jb-btn" id="btn-jb-prev" onclick="App.jukeboxPrev()" title="Previous Song / Restart Track" aria-label="Previous Song"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5.5" width="2.5" height="13" rx="0.9"/><path d="M19 6.2c0-.8-.9-1.3-1.6-.8l-8.5 5.8c-.5.4-.5 1.2 0 1.6l8.5 5.8c.7.5 1.6 0 1.6-.8V6.2z"/></svg></button>
+        <button class="jb-btn jb-play" id="btn-jb-play" onclick="App.jukeboxTogglePlay()" title="Play / Pause Music" aria-label="Play or Pause"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.8c0-.8.9-1.3 1.6-.8l9.2 6.2c.6.4.6 1.2 0 1.6l-9.2 6.2c-.7.5-1.6 0-1.6-.8V5.8z"/></svg></button>
+        <button class="jb-btn" id="btn-jb-next" onclick="App.jukeboxNext()" title="Skip to Next Random Song" aria-label="Next Random Song"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6.2c0-.8.9-1.3 1.6-.8l8.5 5.8c.5.4.5 1.2 0 1.6l-8.5 5.8c-.7.5-1.6 0-1.6-.8V6.2z"/><rect x="16.5" y="5.5" width="2.5" height="13" rx="0.9"/></svg></button>
       </div>
-      <div class="bar-group">
+      <div class="jb-now" id="jb-now-btn" onclick="App.showScreen('select')" title="Click to open this song in Song Select">
+        <div class="jb-thumb" id="jb-thumb"></div>
+        <div class="jb-track-meta">
+          <div class="jb-title" id="jb-title">Darkwave Pulse</div>
+          <div class="jb-sub" id="jb-sub">Built-In Synth &bull; 140 BPM</div>
+        </div>
+      </div>
+      <div class="jb-scrub">
+        <span class="jb-time" id="jb-time">0:00</span>
+        <input type="range" class="jb-seek" id="jb-seek" min="0" max="1000" value="0" aria-label="Song playback position">
+        <span class="jb-time" id="jb-dur" style="text-align:right;">0:00</span>
+      </div>
+      <div class="bar-group" style="flex-shrink:0;">
         <span id="storage-status-pill" style="font-size:11px;color:var(--text-muted);font-family:var(--font-mono);">Storage: Ready</span>
       </div>
     </footer>
@@ -1982,7 +2161,8 @@ input[type="checkbox"] {
           <div class="res-graph-footer">
             <span style="font-size:12.5px;color:var(--text-sub);" id="res-offset-advice">Timing looks well centered.</span>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
-              <button class="btn btn-sm" id="btn-apply-map-offset" onclick="App.applyMeanToMapOffset()">Apply Mean to Map Offset</button>
+              <button class="btn btn-sm" id="btn-apply-global-offset" onclick="App.applyMeanToGlobalOffset()" title="Shifts ALL songs globally (best for browser/headphone latency)">Apply to Global Offset</button>
+              <button class="btn btn-sm" id="btn-apply-map-offset" onclick="App.applyMeanToMapOffset()" title="Shifts only this chart">Apply to Map Offset</button>
               <button class="btn btn-sm" onclick="App.watchLastReplay()">Watch Replay</button>
               <button class="btn btn-accent btn-sm" onclick="App.retryLastMap()">Play Again</button>
             </div>
@@ -2134,7 +2314,7 @@ input[type="checkbox"] {
           <div class="setting-section">
             <h4>Latency &amp; Offset Calibration</h4>
             <div class="setting-row">
-              <div class="setting-label"><span>Global Audio Offset (ms)</span><small>Positive = notes arrive later (if hitting late, decrease)</small></div>
+              <div class="setting-label"><span>Global Audio Offset (ms)</span><small>Positive = delays notes (if hitting late (+), increase; if hitting early (-), decrease)</small></div>
               <div class="setting-ctrl">
                 <input type="range" id="set-audiooffset" min="-150" max="150" step="1">
                 <span class="val-badge" id="val-audiooffset">0 ms</span>
@@ -4179,6 +4359,7 @@ const AudioEngine = (() => {
   // Active song playback state
   let currentAudioKey = null;
   let currentBuffer = null;
+  let currentBufferTrimSec = 0;
   let activeSource = null;
   let unpitchedEl = null;
   let unpitchedUrl = null;
@@ -4208,10 +4389,11 @@ const AudioEngine = (() => {
       musicGain = ctx.createGain();
       sfxGain = ctx.createGain();
       analyser = ctx.createAnalyser();
-      analyser.fftSize = 128;
-      analyser.smoothingTimeConstant = 0.78;
+      analyser.fftSize = 512;
+      analyser.smoothingTimeConstant = 0.52;
       musicGain.connect(analyser);
       analyser.connect(masterGain);
+
       sfxGain.connect(masterGain);
       masterGain.connect(ctx.destination);
       applyVolumes();
@@ -4323,6 +4505,80 @@ const AudioEngine = (() => {
     src.start(0);
   }
 
+  function scheduleSfxAt(name, ctxTime, volume = 1.0) {
+    if (!ctx || ctx.state !== 'running') return;
+    const buf = hitsoundBufs[name];
+    if (!buf) return;
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    if (volume !== 1.0) {
+      const g = ctx.createGain();
+      g.gain.value = volume;
+      src.connect(g); g.connect(sfxGain);
+    } else {
+      src.connect(sfxGain);
+    }
+    src.start(Math.max(ctx.currentTime, ctxTime));
+  }
+
+  function getOutputClockSnapshot() {
+    if (!ctx) return null;
+    if (typeof ctx.getOutputTimestamp === 'function') {
+      const ts = ctx.getOutputTimestamp();
+      if (ts && ts.contextTime > 0 && ts.performanceTime > 0) {
+        return { contextTime: ts.contextTime, performanceTime: ts.performanceTime };
+      }
+    }
+    return { contextTime: ctx.currentTime - getHardwareLatencySec(), performanceTime: performance.now() };
+  }
+
+  // Exact BASS vs Chromium MP3 parity:
+  // BASS strips the 529-sample MP3 MDCT synthesis filterbank delay even on MP3s lacking a Xing/Info/VBRI tag,
+  // whereas Chromium decodeAudioData() only strips delay when a Xing/Info gapless header is present (+11-12ms late!).
+  function detectMp3MdctTrimSec(u8) {
+    if (!u8 || u8.length < 16) return 0;
+    // Skip non-MP3 containers (OggS, RIFF, fLaC)
+    if ((u8[0] === 0x4f && u8[1] === 0x67 && u8[2] === 0x67 && u8[3] === 0x53) ||
+        (u8[0] === 0x52 && u8[1] === 0x49 && u8[2] === 0x46 && u8[3] === 0x46) ||
+        (u8[0] === 0x66 && u8[1] === 0x4c && u8[2] === 0x61 && u8[3] === 0x43)) return 0;
+    let off = 0;
+    if (u8[0] === 0x49 && u8[1] === 0x44 && u8[2] === 0x33) {
+      const sz = ((u8[6] & 0x7f) << 21) | ((u8[7] & 0x7f) << 14) | ((u8[8] & 0x7f) << 7) | (u8[9] & 0x7f);
+      off = 10 + sz + ((u8[5] & 0x10) ? 10 : 0);
+    }
+    const srTbl = { 3: [44100, 48000, 32000], 2: [22050, 24000, 16000], 0: [11025, 12000, 8000] };
+    const limit = Math.min(u8.length - 4, off + 8192);
+    let frameOff = -1, sr = 0;
+    for (let i = off; i < limit; i++) {
+      if (u8[i] === 0xff && (u8[i + 1] & 0xe0) === 0xe0) {
+        const v = (u8[i + 1] >> 3) & 3;
+        const l = (u8[i + 1] >> 1) & 3;
+        const brIdx = (u8[i + 2] >> 4) & 0xf;
+        const srIdx = (u8[i + 2] >> 2) & 3;
+        if (v !== 1 && l === 1 && brIdx !== 0 && brIdx !== 15 && srIdx !== 3) {
+          frameOff = i; sr = srTbl[v][srIdx]; break;
+        }
+      }
+    }
+    if (frameOff < 0 || !sr) return 0;
+    const end = Math.min(u8.length, frameOff + 256);
+    let ascii = '';
+    for (let i = frameOff; i < end; i++) ascii += String.fromCharCode(u8[i]);
+    if (ascii.includes('Xing') || ascii.includes('Info') || ascii.includes('VBRI')) return 0;
+    return 529 / sr;
+  }
+
+  function trimAudioBufferStart(c, buf, trimSec) {
+    if (!buf || !trimSec || trimSec <= 0) return buf;
+    const drop = Math.round(trimSec * buf.sampleRate);
+    if (drop <= 0 || drop >= buf.length - 128) return buf;
+    const trimmed = c.createBuffer(buf.numberOfChannels, buf.length - drop, buf.sampleRate);
+    for (let ch = 0; ch < buf.numberOfChannels; ch++) {
+      trimmed.getChannelData(ch).set(buf.getChannelData(ch).subarray(drop));
+    }
+    return trimmed;
+  }
+
   function playCustomSample(sample1Idx, volPct = 100) {
     if (!ctx || ctx.state !== 'running' || !App.settings.enableKeysounds) return;
     const buf = customSamples[sample1Idx - 1];
@@ -4339,24 +4595,27 @@ const AudioEngine = (() => {
     const c = ensureContext();
     if (audioKey === '__builtin_darkwave_pulse__') {
       if (!cachedStarterBuf) cachedStarterBuf = StarterSynth.buildAudioBuffer(c);
-      return { buffer: cachedStarterBuf, blob: null };
+      return { buffer: cachedStarterBuf, blob: null, trimSec: 0 };
     }
     if (currentAudioKey === audioKey && currentBuffer) {
-      return { buffer: currentBuffer, blob: await blobGetter(audioKey) };
+      return { buffer: currentBuffer, blob: await blobGetter(audioKey), trimSec: currentBufferTrimSec };
     }
     const blob = await blobGetter(audioKey);
     if (!blob) throw new Error('Audio file not found for this mapset');
     const ab = await blob.arrayBuffer();
-    const buf = await c.decodeAudioData(ab.slice(0));
-    return { buffer: buf, blob };
+    const trimSec = detectMp3MdctTrimSec(new Uint8Array(ab, 0, Math.min(ab.byteLength, 32768)));
+    let buf = await c.decodeAudioData(ab.slice(0));
+    if (trimSec > 0) buf = trimAudioBufferStart(c, buf, trimSec);
+    return { buffer: buf, blob, trimSec };
   }
 
   async function loadSong(audioKey, blobGetter, customSampleDefs, sampleBlobGetter) {
     stopSong();
     stopPreview();
-    const { buffer, blob } = await decodeAudioKey(audioKey, blobGetter);
+    const { buffer, blob, trimSec } = await decodeAudioKey(audioKey, blobGetter);
     currentAudioKey = audioKey;
     currentBuffer = buffer;
+    currentBufferTrimSec = trimSec || 0;
 
     // Cleanup old unpitched audio element URL
     if (unpitchedUrl) { URL.revokeObjectURL(unpitchedUrl); unpitchedUrl = null; }
@@ -4392,7 +4651,7 @@ const AudioEngine = (() => {
       // Smooth PLL-tracked performance clock aligned to HTMLAudioElement
       const est = startOffsetMs + (nowPerf - songStartPerfTime) * rate + pllOffsetMs;
       if (perfNowOpt === undefined && !unpitchedEl.paused && unpitchedEl.readyState >= 2) {
-        const elMs = unpitchedEl.currentTime * 1000;
+        const elMs = (unpitchedEl.currentTime - currentBufferTrimSec) * 1000;
         const drift = elMs - est;
         if (Math.abs(drift) > 40) pllOffsetMs += drift;
         else pllOffsetMs += drift * 0.06;
@@ -4437,7 +4696,7 @@ const AudioEngine = (() => {
       unpitchedEl.webkitPreservesPitch = true;
       unpitchedEl.playbackRate = rate;
       if (offsetMs >= 0) {
-        unpitchedEl.currentTime = offsetMs / 1000;
+        unpitchedEl.currentTime = offsetMs / 1000 + currentBufferTrimSec;
         unpitchedEl.play().catch(() => {});
         songStartPerfTime = performance.now();
       } else {
@@ -4446,7 +4705,7 @@ const AudioEngine = (() => {
         const leadRealMs = (-offsetMs) / rate;
         unpitchedEl._leadTimer = setTimeout(() => {
           if (isPlaying && useUnpitchedEl) {
-            unpitchedEl.currentTime = 0;
+            unpitchedEl.currentTime = currentBufferTrimSec;
             unpitchedEl.play().catch(() => {});
           }
         }, leadRealMs);
@@ -4508,7 +4767,7 @@ const AudioEngine = (() => {
     stopSongNodes();
   }
 
-  // Preview LRU cache + debounce + pending unlock + exact hardware-aligned playback clock for Map Preview
+  // Preview / Menu Jukebox LRU cache + debounce + pending unlock + exact hardware-aligned playback clock
   const previewBufCache = new Map(); // audioKey -> AudioBuffer (max 6)
   let previewDebounceTimer = null;
   let pendingPreview = null;
@@ -4518,6 +4777,8 @@ const AudioEngine = (() => {
   let previewRate = 1.0;
   let previewPausedAtSec = null;
   let previewActiveBlobGetter = null;
+  let previewLoop = true;
+  let previewOnEnded = null;
 
   function cachePreviewBuffer(key, buf) {
     if (previewBufCache.has(key)) previewBufCache.delete(key);
@@ -4537,7 +4798,7 @@ const AudioEngine = (() => {
     return ctx.currentTime - getHardwareLatencySec();
   }
 
-  function launchPreviewBuffer(audioKey, buffer, startSec, playbackRate, fadeInSec = 0.35) {
+  function launchPreviewBuffer(audioKey, buffer, startSec, playbackRate, fadeInSec = 0.35, loop = true, onEnded = null) {
     const c = ensureContext();
     stopPreviewNodesOnly();
     const dur = buffer.duration || 0;
@@ -4545,7 +4806,7 @@ const AudioEngine = (() => {
     const r = clamp(playbackRate || 1.0, 0.5, 2.0);
     const src = c.createBufferSource();
     src.buffer = buffer;
-    src.loop = true;
+    src.loop = !!loop;
     src.playbackRate.value = r;
     const g = c.createGain();
     if (fadeInSec > 0.01) {
@@ -4557,6 +4818,13 @@ const AudioEngine = (() => {
     src.connect(g);
     g.connect(musicGain);
     const startAt = c.currentTime + 0.015;
+    src.onended = () => {
+      if (previewSource === src && !src.loop && previewPausedAtSec === null) {
+        const cb = previewOnEnded;
+        previewSource = null;
+        if (typeof cb === 'function') cb();
+      }
+    };
     src.start(startAt, clampedStart);
     previewSource = src;
     previewGain = g;
@@ -4566,14 +4834,30 @@ const AudioEngine = (() => {
     previewDurationSec = dur;
     previewRate = r;
     previewPausedAtSec = null;
+    previewLoop = !!loop;
+    previewOnEnded = onEnded || null;
     pendingPreview = null;
   }
 
-  function startPreview(audioKey, previewTimeMs, blobGetter, immediate = false, playbackRate = 1.0) {
+  function setPreviewLoopMode(loop, onEnded = null) {
+    previewLoop = !!loop;
+    previewOnEnded = onEnded || null;
+    if (previewSource) previewSource.loop = previewLoop;
+    if (pendingPreview) {
+      pendingPreview.loop = previewLoop;
+      pendingPreview.onEnded = previewOnEnded;
+    }
+  }
+
+  function startPreview(audioKey, previewTimeMs, blobGetter, immediate = false, playbackRate = 1.0, options = {}) {
     if (!audioKey) return;
+    const loop = options.loop !== undefined ? !!options.loop : true;
+    const onEnded = options.onEnded || null;
+    const forceRestart = !!options.forceRestart;
     previewActiveBlobGetter = blobGetter;
-    pendingPreview = { audioKey, previewTimeMs, blobGetter, playbackRate };
-    if (previewKey === audioKey && (previewSource || previewPausedAtSec !== null) && ctx && ctx.state === 'running') {
+    pendingPreview = { audioKey, previewTimeMs, blobGetter, playbackRate, loop, onEnded };
+    if (!forceRestart && previewKey === audioKey && (previewSource || previewPausedAtSec !== null) && ctx && ctx.state === 'running') {
+      setPreviewLoopMode(loop, onEnded);
       if (Math.abs((playbackRate || 1.0) - previewRate) > 0.001) setPreviewRate(playbackRate);
       return;
     }
@@ -4582,17 +4866,19 @@ const AudioEngine = (() => {
     if (delay > 0) {
       previewDebounceTimer = setTimeout(() => {
         previewDebounceTimer = null;
-        startPreviewNow(audioKey, previewTimeMs, blobGetter, playbackRate);
+        startPreviewNow(audioKey, previewTimeMs, blobGetter, playbackRate, loop, onEnded);
       }, delay);
     } else {
-      startPreviewNow(audioKey, previewTimeMs, blobGetter, playbackRate);
+      startPreviewNow(audioKey, previewTimeMs, blobGetter, playbackRate, loop, onEnded);
     }
   }
 
-  async function startPreviewNow(audioKey, previewTimeMs, blobGetter, playbackRate = 1.0) {
+  async function startPreviewNow(audioKey, previewTimeMs, blobGetter, playbackRate = 1.0, loop = true, onEnded = null) {
     const token = ++previewToken;
     stopPreviewNodesOnly();
     previewPausedAtSec = null;
+    previewLoop = !!loop;
+    previewOnEnded = onEnded || null;
     const c = ensureContext();
     if (c.state === 'suspended') {
       try { await c.resume(); } catch {}
@@ -4608,7 +4894,7 @@ const AudioEngine = (() => {
       if (!buffer || token !== previewToken) return;
       const dur = buffer.duration || 0;
       const startSec = dur > 2 ? clamp((previewTimeMs || 0) / 1000, 0, Math.max(0, dur - 2)) : 0;
-      launchPreviewBuffer(audioKey, buffer, startSec, playbackRate, 0.35);
+      launchPreviewBuffer(audioKey, buffer, startSec, playbackRate, 0.25, loop, onEnded);
     } catch {}
   }
 
@@ -4623,7 +4909,8 @@ const AudioEngine = (() => {
       return { active: true, playing: false, key: previewKey, timeMs: previewStartOffsetSec * 1000, durationMs: previewDurationSec * 1000, rate: previewRate };
     }
     const elapsedCtx = Math.max(0, getPreviewContextNowSec() - previewStartCtxTime);
-    const curSec = (previewStartOffsetSec + elapsedCtx * previewRate) % previewDurationSec;
+    const rawSec = previewStartOffsetSec + elapsedCtx * previewRate;
+    const curSec = previewLoop ? (rawSec % previewDurationSec) : Math.min(rawSec, previewDurationSec);
     return { active: true, playing: true, key: previewKey, timeMs: curSec * 1000, durationMs: previewDurationSec * 1000, rate: previewRate };
   }
 
@@ -4636,7 +4923,7 @@ const AudioEngine = (() => {
       previewPausedAtSec = targetSec;
       return;
     }
-    launchPreviewBuffer(previewKey, buf, targetSec, previewRate, 0.04);
+    launchPreviewBuffer(previewKey, buf, targetSec, previewRate, 0.04, previewLoop, previewOnEnded);
   }
 
   function setPreviewRate(newRate) {
@@ -4653,13 +4940,13 @@ const AudioEngine = (() => {
 
   function togglePreviewPause() {
     if (!previewKey) {
-      if (pendingPreview) resumePendingPreview();
-      return true;
+      if (pendingPreview) { resumePendingPreview(); return true; }
+      return false;
     }
     const buf = previewBufCache.get(previewKey);
     if (!buf) return false;
     if (previewPausedAtSec !== null) {
-      launchPreviewBuffer(previewKey, buf, previewPausedAtSec, previewRate, 0.06);
+      launchPreviewBuffer(previewKey, buf, previewPausedAtSec, previewRate, 0.06, previewLoop, previewOnEnded);
       return true;
     } else {
       const st = getPreviewState();
@@ -4676,16 +4963,18 @@ const AudioEngine = (() => {
   function resumePendingPreview() {
     if (pendingPreview && !previewSource && previewPausedAtSec === null) {
       const p = pendingPreview;
-      startPreviewNow(p.audioKey, p.previewTimeMs, p.blobGetter, p.playbackRate || 1.0);
+      startPreviewNow(p.audioKey, p.previewTimeMs, p.blobGetter, p.playbackRate || 1.0, p.loop !== undefined ? p.loop : true, p.onEnded || null);
     }
   }
 
   function stopPreviewNodesOnly() {
     previewKey = null;
     if (previewSource) {
-      try { previewSource.stop(); } catch {}
-      try { previewSource.disconnect(); } catch {}
+      const old = previewSource;
       previewSource = null;
+      old.onended = null;
+      try { old.stop(); } catch {}
+      try { old.disconnect(); } catch {}
     }
     if (previewGain) {
       try { previewGain.disconnect(); } catch {}
@@ -4731,9 +5020,12 @@ const AudioEngine = (() => {
     getDurationMs,
     playHitsound,
     playSfx,
+    scheduleSfxAt,
+    getOutputClockSnapshot,
     playCustomSample,
     startPreview,
     stopPreview,
+    setPreviewLoopMode,
     resumePendingPreview,
     getPreviewState,
     seekPreview,
@@ -5435,7 +5727,8 @@ const Game = (() => {
     totalJudgements++;
     weightedSum += JUDGE_WEIGHTS[jIdx];
 
-    if (jIdx <= 3) {
+    // Quaver exact: Okay (jIdx === 4) keeps & increments combo; ONLY Miss (jIdx === 5) breaks combo!
+    if (jIdx <= 4) {
       combo++;
       if (combo > maxCombo) maxCombo = combo;
       if (App.settings.displayComboAlerts && combo > 0 && (combo === 50 || combo % 100 === 0)) {
@@ -5474,7 +5767,7 @@ const Game = (() => {
       allHitErrors.push({ t: songTimeMs, err: errMs, judge: jIdx });
     }
     runTimeline.push([Math.round(songTimeMs), jIdx, Math.round(getAccuracy() * 100), Math.round(health * 10), combo]);
-    if (lane >= 0 && jIdx <= 3) {
+    if (lane >= 0 && jIdx <= 4) {
       hitLightFrame[lane] = 0;
     }
   }
@@ -5489,6 +5782,47 @@ const Game = (() => {
     return -1;
   }
 
+  // Expire overdue missed notes (> +win.okay = +127ms) & held LNs past late tail window (> +win.okay * 1.5)
+  // across ALL lanes chronologically before judging any keypress/release or advancing a frame!
+  function expireOverdueObjects(atTimeMs) {
+    const win = getWindows();
+    const missLateMs = win.okay * rate;
+    const lnLateReleaseMs = win.okay * LN_RELEASE_MULT * rate;
+    for (let l = 0; l < chart.keyCount; l++) {
+      const notes = laneNotes[l];
+      let idx = laneNextIdx[l];
+      while (idx < notes.length) {
+        const n = notes[idx];
+        if (n.state !== 0) { idx++; continue; }
+        if (atTimeMs - n.startTime > missLateMs) {
+          if (n.isMine) {
+            n.state = 2;
+          } else {
+            n.state = 3;
+            n.dead = true;
+            recordJudgement(5, null, atTimeMs, -1);
+            if (n.isLN) recordJudgement(5, null, atTimeMs, -1); // Quaver awards 2 misses for unhit LN
+          }
+          idx++;
+        } else {
+          break;
+        }
+      }
+      laneNextIdx[l] = idx;
+
+      // Held LN auto-release past late window -> Quaver awards Good!
+      const hIdx = holdingNoteIdx[l];
+      if (hIdx >= 0) {
+        const hn = notes[hIdx];
+        if (hn && hn.state === 1 && atTimeMs - hn.endTime > lnLateReleaseMs) {
+          holdingNoteIdx[l] = -1;
+          hn.state = 2;
+          recordJudgement(3, (atTimeMs - hn.endTime) / rate, atTimeMs, l);
+        }
+      }
+    }
+  }
+
   function processLanePress(lane, songTimeMs, isUserInput) {
     if (lane < 0 || lane >= chart.keyCount) return;
     laneDown[lane] = 1;
@@ -5501,6 +5835,8 @@ const Game = (() => {
       if (kpsCount < MAX_KPS) kpsCount++;
     }
 
+    expireOverdueObjects(songTimeMs);
+    const win = getWindows();
     const notes = laneNotes[lane];
     let idx = laneNextIdx[lane];
     while (idx < notes.length && notes[idx].state !== 0) idx++;
@@ -5514,7 +5850,6 @@ const Game = (() => {
     const note = notes[idx];
     const diffReal = (songTimeMs - note.startTime) / rate;
     const absReal = Math.abs(diffReal);
-    const win = getWindows();
 
     if (note.isMine) {
       if (absReal <= win.great) {
@@ -5563,6 +5898,7 @@ const Game = (() => {
       recordedReplay.push([Math.round(songTimeMs * 10) / 10, lane, 0]);
     }
 
+    expireOverdueObjects(songTimeMs);
     const hIdx = holdingNoteIdx[lane];
     if (hIdx < 0) return;
     holdingNoteIdx[lane] = -1;
@@ -5572,14 +5908,17 @@ const Game = (() => {
     const diffReal = (songTimeMs - note.endTime) / rate;
     const absReal = Math.abs(diffReal);
     const win = getWindows();
-    const j = judgeHitWindow(absReal, win, LN_RELEASE_MULT);
+    let j = judgeHitWindow(absReal, win, LN_RELEASE_MULT);
+    // Quaver exact (ScoreProcessorKeys, verified across 201/201 Steam replays):
+    // LN releases NEVER award Okay (-100%); both early/late Okay (159-190.5ms) and any late release cap at Good (+25%)!
+    if (j === 4 || (diffReal > 0 && (j < 0 || j >= 4))) j = 3;
 
-    if (App.settings.enableLnReleaseHitsounds && j >= 0 && j <= 3) {
+    if (App.settings.enableLnReleaseHitsounds && j >= 0 && j <= 4) {
       AudioEngine.playHitsound(note.hitSound, null);
     }
 
     if (j < 0 || j === 5) {
-      // Released too early (before release window) or in miss window
+      // Released too early (before -win.okay * 1.5 release window)
       note.state = 3;
       note.dead = true;
       recordJudgement(5, diffReal < -win.miss * LN_RELEASE_MULT ? null : diffReal, songTimeMs, -1);
@@ -5891,10 +6230,6 @@ const Game = (() => {
   }
 
   function updateSimulation(songTimeMs, dtMs) {
-    const win = getWindows();
-    const missLateMs = win.miss * rate;
-    const lnLateReleaseMs = win.okay * LN_RELEASE_MULT * rate;
-
     // 1) Autoplay or Replay event driver
     if (mods.auto) {
       for (let l = 0; l < chart.keyCount; l++) {
@@ -5934,40 +6269,7 @@ const Game = (() => {
     }
 
     // 3) Advance missed notes & held LNs past tail
-    for (let l = 0; l < chart.keyCount; l++) {
-      const notes = laneNotes[l];
-      let idx = laneNextIdx[l];
-      while (idx < notes.length) {
-        const n = notes[idx];
-        if (n.state !== 0) { idx++; continue; }
-        if (songTimeMs - n.startTime > missLateMs) {
-          if (n.isMine) {
-            // Passing a mine unhit is safe!
-            n.state = 2;
-          } else {
-            n.state = 3;
-            n.dead = true;
-            recordJudgement(5, null, songTimeMs, -1);
-            if (n.isLN) recordJudgement(5, null, songTimeMs, -1); // Quaver awards 2 misses for unhit LN
-          }
-          idx++;
-        } else {
-          break;
-        }
-      }
-      laneNextIdx[l] = idx;
-
-      // Check held LN auto-release past late window -> Quaver awards Good!
-      const hIdx = holdingNoteIdx[l];
-      if (hIdx >= 0) {
-        const hn = notes[hIdx];
-        if (hn && hn.state === 1 && songTimeMs - hn.endTime > lnLateReleaseMs) {
-          holdingNoteIdx[l] = -1;
-          hn.state = 2;
-          recordJudgement(3, (songTimeMs - hn.endTime) / rate, songTimeMs, l); // Good
-        }
-      }
-    }
+    expireOverdueObjects(songTimeMs);
 
     // 4) Smooth visual decay for column lighting, hit lighting, health
     const dtSec = dtMs / 1000;
@@ -6030,8 +6332,9 @@ const Game = (() => {
       c.restore();
     }
 
-    // Visual song time (with VisualOffset)
-    const visTimeMs = songTimeMs + (s.visualOffset || 0);
+    // Visual song time (compensate 1-frame display scanout lead + user VisualOffset so notes align visually with audio!)
+    const frameLeadMs = paused ? 0 : Math.min(20, frameMsAvg);
+    const visTimeMs = songTimeMs + frameLeadMs + (s.visualOffset || 0);
     const curTrackPos = TimelineEngine.getTrackPos(timeline.mainTable, visTimeMs);
     const ssfMult = TimelineEngine.getSsfMultiplier(timeline.ssfs, visTimeMs);
 
@@ -6732,39 +7035,54 @@ const Game = (() => {
 })();
 
 /* ============================================================================
- * 10. INTERACTIVE AUDIO OFFSET CALIBRATION WIZARD (120 BPM Web Audio Metronome)
+ * 10. INTERACTIVE AUDIO OFFSET CALIBRATION WIZARD (Hardware-Clock Synced 120 BPM)
  * ========================================================================== */
 const Calibration = (() => {
-  const BEAT_MS = 500; // 120 BPM
+  const BEAT_SEC = 0.5; // 120 BPM
+  const BEAT_MS = 500;
   let running = false;
   let timerId = null;
-  let startPerf = 0;
-  let nextBeatIdx = 0;
+  let startCtxSec = 0;
+  let nextSchedBeat = 0;
+  let lastVisualBeat = -1;
   let samples = [];
 
   function start() {
-    AudioEngine.ensureContext();
+    const c = AudioEngine.ensureContext();
     reset();
     running = true;
-    startPerf = performance.now() + 250;
-    nextBeatIdx = 0;
+    startCtxSec = c.currentTime + 0.35;
+    nextSchedBeat = 0;
+    lastVisualBeat = -1;
     document.getElementById('btn-cal-toggle').textContent = 'Stop Calibration';
-    document.getElementById('cal-detail').textContent = 'Listen to the clicks and press SPACE in sync...';
+    document.getElementById('cal-detail').textContent = 'Listen to the clicks and press SPACE in sync (uses exact gameplay audio clock)...';
     tick();
   }
 
   function tick() {
     if (!running) return;
-    const now = performance.now();
-    const beatTime = startPerf + nextBeatIdx * BEAT_MS;
-    if (now >= beatTime - 12) {
-      AudioEngine.playSfx('metronome', 0.9);
-      const pulse = document.getElementById('cal-pulse');
-      pulse.classList.add('beat');
-      setTimeout(() => pulse.classList.remove('beat'), 95);
-      nextBeatIdx++;
+    const c = AudioEngine.context;
+    if (!c) return;
+    // Lookahead schedule clicks sample-accurately on AudioContext.currentTime (zero setTimeout jitter!)
+    while (startCtxSec + nextSchedBeat * BEAT_SEC < c.currentTime + 0.18) {
+      AudioEngine.scheduleSfxAt('metronome', startCtxSec + nextSchedBeat * BEAT_SEC, 0.9);
+      nextSchedBeat++;
     }
-    timerId = setTimeout(tick, 8);
+    // Pulse visual ring right when the beat leaves the output buffer (exact getOutputTimestamp alignment)
+    const snap = AudioEngine.getOutputClockSnapshot();
+    if (snap) {
+      const relSec = snap.contextTime - startCtxSec;
+      const curBeat = Math.floor((relSec + 0.015) / BEAT_SEC);
+      if (curBeat >= 0 && curBeat !== lastVisualBeat) {
+        lastVisualBeat = curBeat;
+        const pulse = document.getElementById('cal-pulse');
+        if (pulse) {
+          pulse.classList.add('beat');
+          setTimeout(() => pulse.classList.remove('beat'), 95);
+        }
+      }
+    }
+    timerId = setTimeout(tick, 12);
   }
 
   function stop() {
@@ -6781,10 +7099,14 @@ const Calibration = (() => {
 
   function onTap(evPerf) {
     if (!running) return;
-    const rel = evPerf - startPerf;
-    if (rel < -BEAT_MS / 2) return;
-    const nearest = Math.round(rel / BEAT_MS) * BEAT_MS;
-    const delta = rel - nearest; // positive = tapped late -> increase globalAudioOffset
+    const snap = AudioEngine.getOutputClockSnapshot();
+    if (!snap) return;
+    // Measure tap on the EXACT same hardware output timeline used by AudioEngine.getRawSongTimeMs()!
+    const tapCtxSec = snap.contextTime + (evPerf - snap.performanceTime) / 1000;
+    const relMs = (tapCtxSec - startCtxSec) * 1000;
+    if (relMs < -BEAT_MS / 2) return;
+    const nearest = Math.round(relMs / BEAT_MS) * BEAT_MS;
+    const delta = relMs - nearest; // positive = tapped late -> increase globalAudioOffset
     if (Math.abs(delta) > 200) return;
     samples.push(delta);
     // Reject top/bottom outliers once >= 6 samples
@@ -6796,7 +7118,7 @@ const Calibration = (() => {
     document.getElementById('cal-readout').textContent = `Taps: ${samples.length} / 16 | Mean: ${mean >= 0 ? '+' : ''}${mean.toFixed(1)} ms (SD ${sd.toFixed(1)}ms)`;
     document.getElementById('btn-cal-apply').disabled = samples.length < 4;
     if (samples.length >= 16) {
-      document.getElementById('cal-detail').textContent = `Suggested Global Audio Offset: ${Math.round(mean)} ms. Click Apply Offset to save!`;
+      document.getElementById('cal-detail').textContent = `Suggested Global Audio Offset: ${Math.round(mean) >= 0 ? '+' : ''}${Math.round(mean)} ms. Click Apply Offset to save!`;
     }
   }
 
@@ -6811,7 +7133,7 @@ const Calibration = (() => {
     App.syncSettingsUI();
     stop();
     App.closeModals();
-    App.toast(`Global Audio Offset set to ${App.settings.globalAudioOffset} ms`, 'ok');
+    App.toast(`Global Audio Offset set to ${App.settings.globalAudioOffset >= 0 ? '+' : ''}${App.settings.globalAudioOffset} ms`, 'ok');
   }
 
   function toggle() { if (running) stop(); else start(); }
@@ -6843,6 +7165,12 @@ const App = (() => {
   let listeningKeybind = null; // { group, keyCount, lane, btn }
   let hasPickedInitialRandom = false;
   let mapPreviewActive = false;
+
+  // Main Menu Jukebox state
+  const jukeboxHistory = []; // [{ msId, chHash }]
+  let jukeboxHistIdx = -1;
+  let jukeboxSeeking = false;
+  let jukeboxThumbKey = null;
 
   // Truly random integer using Web Crypto CSPRNG (zero fixed seed!)
   function trueRandomInt(max) {
@@ -6876,7 +7204,9 @@ const App = (() => {
     spd: 0.4 + Math.random() * 0.8,
     red: Math.random() < 0.22
   }));
-  const vizData = new Uint8Array(64);
+  const vizData = new Uint8Array(256);
+  const JB_ICON_PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.8c0-.8.9-1.3 1.6-.8l9.2 6.2c.6.4.6 1.2 0 1.6l-9.2 6.2c-.7.5-1.6 0-1.6-.8V5.8z"/></svg>';
+  const JB_ICON_PAUSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="5.5" width="3.5" height="13" rx="1.1"/><rect x="14" y="5.5" width="3.5" height="13" rx="1.1"/></svg>';
 
   function toast(msg, kind = '') {
     const c = document.getElementById('toast-container');
@@ -7149,11 +7479,34 @@ const App = (() => {
     toast(chartMeta[h].fav ? `Favorited ${pair.ch.title} [${pair.ch.difficultyName}] ★` : 'Removed from Favorites');
   }
 
-  async function recordLastQpack(file, handle, addedSets, addedCharts) {
+  async function collectFilesFromDirectoryHandle(dirHandle) {
+    const out = [];
+    async function walk(handle, prefix) {
+      if (handle.kind === 'file') {
+        const file = await handle.getFile();
+        out.push({ file, relPath: prefix + file.name, handle });
+      } else if (handle.kind === 'directory') {
+        for await (const [, child] of handle.entries()) {
+          await walk(child, prefix + handle.name + '/');
+        }
+      }
+    }
+    setImportProgress(true, `Scanning folder "${dirHandle.name}"...`, 2);
+    try {
+      await walk(dirHandle, '');
+    } finally {
+      setImportProgress(false);
+    }
+    return out;
+  }
+
+  async function recordLastQpack(fileOrMeta, handle, addedSets, addedCharts, kindOpt = null) {
+    const kind = kindOpt || (handle && handle.kind) || (fileOrMeta && fileOrMeta.kind) || 'file';
     const meta = {
-      name: file.name || 'quaver-library.qpack',
-      size: file.size || 0,
-      lastModified: file.lastModified || 0,
+      kind,
+      name: (fileOrMeta && fileOrMeta.name) || (handle && handle.name) || (kind === 'directory' ? 'Songs' : 'quaver-library.qpack'),
+      size: (fileOrMeta && fileOrMeta.size) || 0,
+      lastModified: (fileOrMeta && fileOrMeta.lastModified) || 0,
       mapsets: addedSets || 0,
       charts: addedCharts || 0,
       savedAt: Date.now(),
@@ -7163,6 +7516,9 @@ const App = (() => {
       savedQpackHandle = handle;
       const stored = await SafeStore.putHandle('lastQpack', handle);
       meta.hasHandle = !!stored;
+    } else if (kind === 'directory') {
+      // Clear stale file handle if user switched to a folder picked without File System Access handle
+      savedQpackHandle = null;
     }
     lastQpackMeta = meta;
     SafeStore.lsSet('quiver_last_qpack_v1', meta);
@@ -7188,21 +7544,26 @@ const App = (() => {
       return;
     }
 
-    const name = (savedQpackHandle && savedQpackHandle.name) || (lastQpackMeta && lastQpackMeta.name) || 'quaver-library.qpack';
-    const setsTxt = lastQpackMeta && lastQpackMeta.mapsets ? `${lastQpackMeta.mapsets} mapsets • ${lastQpackMeta.charts} charts` : '';
-    const sizeTxt = lastQpackMeta && lastQpackMeta.size ? `${(lastQpackMeta.size / 1048576).toFixed(0)} MB` : '';
+    const isDir = (savedQpackHandle && savedQpackHandle.kind === 'directory') ||
+      (!savedQpackHandle && lastQpackMeta && lastQpackMeta.kind === 'directory');
+    const name = (savedQpackHandle && savedQpackHandle.name) || (lastQpackMeta && lastQpackMeta.name) || (isDir ? 'Songs' : 'quaver-library.qpack');
+    const setsTxt = lastQpackMeta && lastQpackMeta.mapsets ? `${lastQpackMeta.mapsets} sets • ${lastQpackMeta.charts} charts` : '';
+    const sizeTxt = !isDir && lastQpackMeta && lastQpackMeta.size ? `${(lastQpackMeta.size / 1048576).toFixed(0)} MB` : '';
     const detail = [setsTxt, sizeTxt].filter(Boolean).join(' • ');
 
-    if (titleEl) titleEl.textContent = `Last Library: ${name}`;
+    if (titleEl) titleEl.textContent = `${isDir ? 'Last Folder' : 'Last Library'}: ${name}`;
     if (savedQpackHandle) {
-      if (subEl) subEl.textContent = `${detail ? detail + ' — ' : ''}Click to grant browser permission & reload instantly`;
+      if (subEl) subEl.textContent = detail ? `${detail} — Grant permission to reload` : 'Click to grant browser permission & reload';
       if (btnEl) btnEl.textContent = 'Allow & Load';
     } else {
-      if (subEl) subEl.textContent = `${detail ? detail + ' — ' : ''}Quick re-open your saved .qpack location`;
-      if (btnEl) btnEl.textContent = 'Re-open .qpack';
+      if (subEl) subEl.textContent = detail ? `${detail} — Quick re-open` : `Quick re-open your saved ${isDir ? 'folder' : '.qpack'}`;
+      if (btnEl) btnEl.textContent = isDir ? 'Re-open Folder' : 'Re-open .qpack';
     }
     if (card) card.classList.toggle('visible', !reconnectDismissed);
-    if (selBtn) selBtn.style.display = '';
+    if (selBtn) {
+      selBtn.style.display = '';
+      selBtn.textContent = isDir ? 'Reload Folder' : 'Reload .qpack';
+    }
   }
 
   function dismissReconnectCard() {
@@ -7212,7 +7573,8 @@ const App = (() => {
   }
 
   async function reconnectLastQpack() {
-    // Path 1: Real persisted FileSystemFileHandle -> prompt browser permission & load directly without folder hunting!
+    AudioEngine.ensureContext();
+    // Path 1: Real persisted FileSystemFileHandle OR FileSystemDirectoryHandle -> prompt permission & reload!
     if (savedQpackHandle) {
       try {
         let perm = typeof savedQpackHandle.queryPermission === 'function'
@@ -7222,23 +7584,53 @@ const App = (() => {
           perm = await savedQpackHandle.requestPermission({ mode: 'read' });
         }
         if (perm === 'granted') {
+          if (savedQpackHandle.kind === 'directory') {
+            const items = await collectFilesFromDirectoryHandle(savedQpackHandle);
+            if (items.length) await handleIncomingFiles(items, { dirHandle: savedQpackHandle, stayOnMenu: true });
+            else toast(`Folder "${savedQpackHandle.name}" appears empty.`, 'err');
+            return;
+          }
           const file = await savedQpackHandle.getFile();
-          await handleIncomingFiles([{ file, relPath: file.name, handle: savedQpackHandle }]);
+          await handleIncomingFiles([{ file, relPath: file.name, handle: savedQpackHandle }], { stayOnMenu: true });
           return;
         } else {
-          toast('Permission not granted — you can still pick or drop your .qpack file.', 'err');
+          toast('Permission not granted — you can still pick or drop your library.', 'err');
           return;
         }
       } catch (err) {
-        console.warn('Saved qpack handle reconnect failed, falling back to picker:', err);
+        console.warn('Saved library handle reconnect failed, falling back to picker:', err);
         savedQpackHandle = null;
       }
     }
-    // Path 2: Fallback picker (remembering last OS directory via showOpenFilePicker id or native file dialog)
-    await triggerImportFiles(true);
+    // Path 2: Fallback picker (opens folder picker if last library was a folder, else file picker!)
+    if (lastQpackMeta && lastQpackMeta.kind === 'directory') {
+      await triggerImportFolder();
+    } else {
+      await triggerImportFiles(true);
+    }
+  }
+
+  async function triggerImportFolder() {
+    AudioEngine.ensureContext();
+    if (typeof window.showDirectoryPicker === 'function') {
+      try {
+        const dirHandle = await window.showDirectoryPicker({ id: 'quiver-songs', mode: 'read' });
+        if (dirHandle) {
+          const items = await collectFilesFromDirectoryHandle(dirHandle);
+          if (items.length) await handleIncomingFiles(items, { dirHandle, stayOnMenu: currentScreen === 'menu' });
+          else toast(`No files found inside "${dirHandle.name}".`, 'err');
+        }
+        return;
+      } catch (err) {
+        if (err && err.name === 'AbortError') return;
+        // SecurityError on file:// or unsupported browser -> fall through to native webkitdirectory input
+      }
+    }
+    document.getElementById('file-input-folder').click();
   }
 
   async function triggerImportFiles(qpackFocus = false) {
+    AudioEngine.ensureContext();
     if (typeof window.showOpenFilePicker === 'function') {
       try {
         const types = qpackFocus
@@ -7333,6 +7725,157 @@ const App = (() => {
     updateReconnectUI();
   }
 
+  /* ---------- MAIN MENU JUKEBOX CONTROLLER ---------- */
+  function pickRandomPlayablePair(poolSets = null, excludeMapsetId = null) {
+    const src = poolSets && poolSets.length ? poolSets : mapsets;
+    if (!src.length) return null;
+    const realOnly = src.filter(m => !m.builtIn);
+    let candidateSets = realOnly.length ? realOnly : src;
+    if (excludeMapsetId && candidateSets.length > 1) {
+      const others = candidateSets.filter(m => m.id !== excludeMapsetId);
+      if (others.length) candidateSets = others;
+    }
+    const mf = document.getElementById('sel-mode-filter');
+    const wantMode = mf ? mf.value : '4';
+    let pairs = [];
+    if (wantMode === '4' || wantMode === '7') {
+      const wantK = Number(wantMode);
+      for (const ms of candidateSets) {
+        const chs = ms.charts.filter(c => c.keyCount === wantK);
+        if (chs.length) pairs.push({ ms, charts: chs });
+      }
+    }
+    if (!pairs.length) {
+      for (const ms of candidateSets) {
+        if (ms.charts && ms.charts.length) pairs.push({ ms, charts: ms.charts });
+      }
+    }
+    if (!pairs.length) return null;
+    const chosenSet = pairs[trueRandomInt(pairs.length)];
+    const chosenChart = chosenSet.charts[trueRandomInt(chosenSet.charts.length)];
+    return { ms: chosenSet.ms, ch: chosenChart };
+  }
+
+  function syncJukeboxUI(pairOpt = null) {
+    const pair = pairOpt || getSelectedPair();
+    const titleEl = document.getElementById('jb-title');
+    const subEl = document.getElementById('jb-sub');
+    const thumbEl = document.getElementById('jb-thumb');
+    const vizLbl = document.getElementById('jukebox-label');
+    if (!pair) return;
+    const { ms, ch } = pair;
+    const bpm = Math.round((ch.meta && ch.meta.dominantBpm) || (ch.timingPoints && ch.timingPoints[0] && ch.timingPoints[0].bpm) || 120);
+    if (titleEl) titleEl.textContent = ms.title || ch.title || 'Untitled';
+    if (subEl) subEl.textContent = `${ms.artist || ch.artist || 'Unknown'} • ${bpm} BPM`;
+    if (vizLbl) vizLbl.textContent = `${ms.title || ch.title} • ${bpm} BPM`;
+    if (thumbEl) {
+      if (ms.bgKey) {
+        if (jukeboxThumbKey !== ms.bgKey) {
+          jukeboxThumbKey = ms.bgKey;
+          const cached = bgUrlCache.get(ms.bgKey);
+          if (cached) thumbEl.style.backgroundImage = `url("${cached}")`;
+          else {
+            thumbEl.style.backgroundImage = '';
+            const reqKey = ms.bgKey;
+            getBgUrl(reqKey).then(u => {
+              if (u && jukeboxThumbKey === reqKey) thumbEl.style.backgroundImage = `url("${u}")`;
+            });
+          }
+        }
+      } else {
+        jukeboxThumbKey = null;
+        thumbEl.style.backgroundImage = '';
+      }
+    }
+  }
+
+  function startMenuJukebox(pair, fromStart = true, pushHistory = true) {
+    if (!pair || !pair.ms || !pair.ch) return;
+    selectedMapsetId = pair.ms.id;
+    selectedChartHash = pair.ch.hash;
+    hasPickedInitialRandom = true;
+    const mf = document.getElementById('sel-mode-filter');
+    if (mf && mf.value !== 'all' && String(pair.ch.keyCount) !== mf.value) {
+      // Keep mode filter aligned if we fell back to another keymode
+      if ((mf.value === '4' || mf.value === '7') && !pair.ms.charts.some(c => String(c.keyCount) === mf.value)) {
+        mf.value = 'all';
+      }
+    }
+    if (pushHistory) {
+      if (jukeboxHistIdx >= 0 && jukeboxHistIdx < jukeboxHistory.length - 1) {
+        jukeboxHistory.length = jukeboxHistIdx + 1;
+      }
+      const last = jukeboxHistory[jukeboxHistory.length - 1];
+      if (!last || last.msId !== pair.ms.id) {
+        jukeboxHistory.push({ msId: pair.ms.id, chHash: pair.ch.hash });
+        if (jukeboxHistory.length > 50) jukeboxHistory.shift();
+      }
+      jukeboxHistIdx = jukeboxHistory.length - 1;
+    }
+    syncJukeboxUI(pair);
+    const startMs = fromStart ? 0 : (pair.ch.songPreviewTime || 0);
+    AudioEngine.startPreview(pair.ms.audioKey, startMs, getBlob, true, 1.0, {
+      loop: false,
+      forceRestart: fromStart,
+      onEnded: () => { if (currentScreen === 'menu') jukeboxNext(true); }
+    });
+  }
+
+  function findPairByIds(msId, chHash) {
+    const ms = mapsets.find(m => m.id === msId);
+    if (!ms || !ms.charts.length) return null;
+    const ch = ms.charts.find(c => c.hash === chHash) || ms.charts[0];
+    return { ms, ch };
+  }
+
+  function jukeboxNext(autoAdvance = false) {
+    AudioEngine.ensureContext();
+    if (!autoAdvance && jukeboxHistIdx >= 0 && jukeboxHistIdx < jukeboxHistory.length - 1) {
+      const nextEntry = jukeboxHistory[jukeboxHistIdx + 1];
+      const found = findPairByIds(nextEntry.msId, nextEntry.chHash);
+      if (found) {
+        jukeboxHistIdx++;
+        startMenuJukebox(found, true, false);
+        return;
+      }
+    }
+    const pick = pickRandomPlayablePair(null, selectedMapsetId);
+    if (pick) startMenuJukebox(pick, true, true);
+  }
+
+  function jukeboxPrev() {
+    AudioEngine.ensureContext();
+    const pst = AudioEngine.getPreviewState();
+    if (pst.active && pst.timeMs > 3000) {
+      AudioEngine.seekPreview(0);
+      return;
+    }
+    if (jukeboxHistIdx > 0) {
+      const prevEntry = jukeboxHistory[jukeboxHistIdx - 1];
+      const found = findPairByIds(prevEntry.msId, prevEntry.chHash);
+      if (found) {
+        jukeboxHistIdx--;
+        startMenuJukebox(found, true, false);
+        return;
+      }
+    }
+    const pick = pickRandomPlayablePair(null, selectedMapsetId);
+    if (pick) startMenuJukebox(pick, true, true);
+  }
+
+  function jukeboxTogglePlay() {
+    AudioEngine.ensureContext();
+    const pst = AudioEngine.getPreviewState();
+    if (!pst.active) {
+      const pair = getSelectedPair() || pickRandomPlayablePair();
+      if (pair) startMenuJukebox(pair, true, jukeboxHistory.length === 0);
+      return;
+    }
+    const nowPlaying = AudioEngine.togglePreviewPause();
+    const btn = document.getElementById('btn-jb-play');
+    if (btn) btn.innerHTML = nowPlaying ? JB_ICON_PAUSE : JB_ICON_PLAY;
+  }
+
   /* ---------- SCREEN NAVIGATION ---------- */
   function showScreen(name) {
     currentScreen = name;
@@ -7358,6 +7901,7 @@ const App = (() => {
       bgCanvas.style.display = '';
       startMenuAnimation();
       if (name === 'select') {
+        AudioEngine.setPreviewLoopMode(true, null);
         if (!hasPickedInitialRandom) {
           const filtered = getFilteredMapsets();
           if (filtered.length > 0) {
@@ -7380,6 +7924,9 @@ const App = (() => {
         if (name === 'menu') {
           bgLayer.style.opacity = '0';
           updateProfileHeader();
+          AudioEngine.setPreviewRate(1.0);
+          AudioEngine.setPreviewLoopMode(false, () => { if (currentScreen === 'menu') jukeboxNext(true); });
+          syncJukeboxUI();
         }
       }
     }
@@ -7424,17 +7971,279 @@ const App = (() => {
       [0.50, 0.02], [0.60, 0.10], [0.71, 0.05], [0.80, 0.11], [0.90, 0.04], [1.0, 0.08]
     ];
 
+    // Map-Driven Note Choreography state (driven directly by the playing chart's hitObjects)
+    // Rolling 1.2s NPS intensity sets moon baseline; taps/chords pop the moon spring;
+    // Long Notes hold luminous swells; left/right lanes flare cyan/purple crescents!
+    let moonPos = 0;        // spring-driven displacement (-0.068 .. +0.28)
+    let moonVel = 0;
+    let moonGlow = 0;
+    let leadPitchSmooth = 0.5;
+    let secSmooth = 0;
+    let leftArcGlow = 0;    // left cyan orbiting crescent (left-hand lanes)
+    let rightArcGlow = 0;   // right purple orbiting crescent (right-hand lanes)
+    let secArcAngle = 0;
+    let bassPulse = 0;      // measure downbeat / chord impulse routed to horizon & near ridge
+    const secRipples = [];  // expanding harmonic ripple rings on chords
+
+    let lastAnimPerf = performance.now();
+    let lastSecRipplePerf = 0;
+
+    let chartDensity = 0;
+    let chartPulse = 0;
+    let chartLnHold = 0;
+    let leftLanePulse = 0;
+    let rightLanePulse = 0;
+    let npsWinStart = 0;
+    let lastNoteEvT = -9999;
+
+    let activeMelHash = null;
+    let melData = { events: [], lns: [], p90Nps: 6 };
+    let melIdx = 0;
+    let lastPstMs = -1;
+    let lastJbPlaying = null;
+
+    function buildChartMelodyEvents(ch) {
+      const empty = { events: [], lns: [], p90Nps: 6 };
+      if (!ch) return empty;
+      try { ChartParser.ensureHitObjects(ch); } catch { return empty; }
+      const hos = ch.hitObjects;
+      if (!hos || !hos.length) return empty;
+      const keys = Math.max(1, ch.keyCount || 4);
+      const midLane = (keys + 1) * 0.5;
+      const tps = (ch.timingPoints && ch.timingPoints.length)
+        ? ch.timingPoints
+        : [{ startTime: 0, bpm: (ch.meta && ch.meta.dominantBpm) || 120, signature: 4 }];
+
+      function classifySnap(tMs) {
+        let tp = tps[0];
+        for (let i = 1; i < tps.length; i++) {
+          if (tps[i].startTime <= tMs + 2) tp = tps[i];
+          else break;
+        }
+        const bpm = Math.max(20, tp.bpm || 120);
+        const beatMs = 60000 / bpm;
+        const beats = (tMs - (tp.startTime || 0)) / beatMs;
+        const sig = Math.max(1, tp.signature || 4);
+        const frac = beats - Math.floor(beats);
+        const dist = (d) => {
+          const r = Math.round(frac * d) / d;
+          return Math.abs(frac - r) * beatMs;
+        };
+        const isMeasure = Math.abs(beats - Math.round(beats / sig) * sig) * beatMs <= 16;
+        let snapMult = 0.64;
+        if (dist(1) <= 15) snapMult = isMeasure ? 1.24 : 1.14;
+        else if (dist(2) <= 15) snapMult = 1.02;
+        else if (dist(3) <= 14) snapMult = 0.94;
+        else if (dist(4) <= 14) snapMult = 0.78;
+        return { snapMult, isMeasure };
+      }
+
+      const events = [];
+      const lns = [];
+      let cur = null;
+      const finalize = (ev) => {
+        ev.weight = Math.min(1.2, 0.55 + (ev.cnt - 1) * 0.25);
+        const sn = classifySnap(ev.t);
+        ev.snapMult = sn.snapMult;
+        ev.isMeasure = sn.isMeasure;
+        ev.lanePos = ev.laneSum / Math.max(1, ev.cnt);
+        events.push(ev);
+      };
+
+      for (let i = 0; i < hos.length; i++) {
+        const o = hos[i];
+        if (o.type === 'Mine') continue;
+        const st = o.startTime || 0;
+        const en = (o.endTime && o.endTime > st) ? o.endTime : st;
+        const lane = clamp(o.lane || 1, 1, keys);
+        const isLeft = lane < midLane - 0.01 ? 1 : (lane > midLane + 0.01 ? 0 : 0.5);
+        const isRight = 1 - isLeft;
+        const normLane = keys > 1 ? ((lane - 1) / (keys - 1)) : 0.5;
+        if (en > st + 90) lns.push({ t: st, endT: en, isLeft, isRight });
+
+        if (cur && Math.abs(st - cur.t) <= 14) {
+          cur.cnt++;
+          cur.leftCnt += isLeft;
+          cur.rightCnt += isRight;
+          cur.laneSum += normLane;
+          if (en > cur.endT) cur.endT = en;
+        } else {
+          if (cur) finalize(cur);
+          cur = { t: st, endT: en, cnt: 1, leftCnt: isLeft, rightCnt: isRight, laneSum: normLane, weight: 0.55, snapMult: 1, isMeasure: false, lanePos: normLane };
+        }
+      }
+      if (cur) finalize(cur);
+
+      // Compute 90th-percentile local 1.2s NPS so chill & intense charts normalize smoothly
+      const samples = [];
+      let w0 = 0;
+      for (let i = 0; i < events.length; i++) {
+        const t = events[i].t;
+        while (w0 < i && events[w0].t < t - 1200) w0++;
+        let notes = 0;
+        for (let k = w0; k <= i; k++) notes += events[k].cnt;
+        samples.push(notes / 1.2);
+      }
+      samples.sort((a, b) => a - b);
+      const p90Nps = samples.length ? Math.max(2.2, samples[Math.floor((samples.length - 1) * 0.90)]) : 6;
+      return { events, lns, p90Nps };
+    }
+
+    function seekMelIdx(tMs) {
+      const evs = melData.events;
+      let lo = 0, hi = evs.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (evs[mid].t < tMs) lo = mid + 1;
+        else hi = mid;
+      }
+      return lo;
+    }
+
     function step() {
       menuAnimId = requestAnimationFrame(step);
       const w = window.innerWidth, h = window.innerHeight;
       if (bgc.width !== w || bgc.height !== h) { bgc.width = w; bgc.height = h; }
 
-      const nowSec = performance.now() * 0.001;
+      const nowPerf = performance.now();
+      const dtSec = clamp((nowPerf - lastAnimPerf) / 1000, 0.004, 0.06);
+      lastAnimPerf = nowPerf;
+      const nowSec = nowPerf * 0.001;
       const hasAudio = AudioEngine.getSpectrum(vizData);
-      let bassEnergy = 0;
-      if (hasAudio) {
-        for (let i = 0; i < 8; i++) bassEnergy += vizData[i] / 255;
-        bassEnergy /= 8;
+      const pst = AudioEngine.getPreviewState();
+
+      // Advance chart note choreography cursor
+      chartPulse *= Math.exp(-dtSec * 12.5);
+      leftLanePulse *= Math.exp(-dtSec * 10.5);
+      rightLanePulse *= Math.exp(-dtSec * 10.5);
+      const firedEvents = [];
+
+      if (pst.playing && hasAudio) {
+        const pair = getSelectedPair();
+        const ch = pair && pair.ch;
+        if (ch && ch.hash !== activeMelHash) {
+          activeMelHash = ch.hash;
+          melData = buildChartMelodyEvents(ch);
+          melIdx = seekMelIdx(pst.timeMs);
+          npsWinStart = melIdx;
+          lastPstMs = pst.timeMs;
+          lastNoteEvT = -9999;
+          chartDensity = 0; chartPulse = 0; chartLnHold = 0;
+          leftLanePulse = 0; rightLanePulse = 0;
+        }
+        const evs = melData.events;
+        if (evs.length) {
+          if (lastPstMs < 0 || pst.timeMs < lastPstMs - 40 || pst.timeMs > lastPstMs + 350) {
+            melIdx = seekMelIdx(pst.timeMs);
+            npsWinStart = melIdx;
+            lastNoteEvT = pst.timeMs - 200;
+          }
+          while (melIdx < evs.length && evs[melIdx].t <= pst.timeMs) {
+            firedEvents.push(evs[melIdx++]);
+          }
+        }
+        lastPstMs = pst.timeMs;
+      } else {
+        lastPstMs = -1;
+      }
+
+      if (pst.playing && hasAudio && melData.events.length > 0) {
+        const evs = melData.events;
+        // Sliding 1.2s local NPS window (O(1) amortized)
+        const winCut = pst.timeMs - 1200;
+        while (npsWinStart < melIdx && evs[npsWinStart].t < winCut) npsWinStart++;
+        let winNotes = 0;
+        for (let k = npsWinStart; k < melIdx; k++) winNotes += evs[k].cnt;
+        const npsNorm = clamp((winNotes / 1.2) / Math.max(2.2, melData.p90Nps), 0, 1.2);
+        chartDensity += (npsNorm - chartDensity) * (1 - Math.exp(-dtSec * 3.8));
+
+        // Count currently held Long Notes + their left/right balance
+        let heldLns = 0, lnLeft = 0, lnRight = 0;
+        const lns = melData.lns;
+        for (let i = 0; i < lns.length; i++) {
+          const ln = lns[i];
+          if (ln.t > pst.timeMs) break;
+          if (ln.endT >= pst.timeMs) {
+            heldLns++;
+            lnLeft += ln.isLeft;
+            lnRight += ln.isRight;
+          }
+        }
+        const lnTarget = heldLns > 0 ? clamp(0.45 + (heldLns - 1) * 0.24, 0, 1.1) : 0;
+        chartLnHold += (lnTarget - chartLnHold) * (lnTarget > chartLnHold ? (1 - Math.exp(-dtSec * 16)) : (1 - Math.exp(-dtSec * 11)));
+
+        // Fire note/chord hits for this frame
+        let downbeatKick = 0;
+        for (let i = 0; i < firedEvents.length; i++) {
+          const ev = firedEvents[i];
+          const dtGap = clamp((ev.t - lastNoteEvT) / 175, 0.34, 1.0);
+          lastNoteEvT = ev.t;
+          const chordW = ev.cnt === 1 ? 0.68 : (ev.cnt === 2 ? 1.08 : (ev.cnt === 3 ? 1.38 : 1.62));
+          const streamAtten = ev.cnt >= 2 ? Math.max(0.72, dtGap) : dtGap;
+          const imp = chordW * ev.snapMult * streamAtten;
+
+          chartPulse = Math.min(1.35, chartPulse * 0.34 + imp * 0.78);
+          moonVel += imp * 0.92;
+
+          // Asymmetric Left (cyan) vs Right (purple) lane arcs
+          const lrScale = Math.min(1.2, 0.62 + (ev.cnt - 1) * 0.22);
+          if (ev.leftCnt > 0) leftLanePulse = Math.min(1.25, leftLanePulse * 0.42 + (ev.leftCnt / ev.cnt) * lrScale);
+          if (ev.rightCnt > 0) rightLanePulse = Math.min(1.25, rightLanePulse * 0.42 + (ev.rightCnt / ev.cnt) * lrScale);
+
+          // Subtle pitch/tint hint from lane position & chord density
+          leadPitchSmooth += (clamp(ev.lanePos * 0.75 + (ev.cnt - 1) * 0.12, 0, 1) - leadPitchSmooth) * 0.35;
+
+          if (ev.isMeasure || ev.cnt >= 2) {
+            downbeatKick = Math.max(downbeatKick, ev.isMeasure ? 0.95 : (0.55 + (ev.cnt - 2) * 0.22));
+          }
+          if (!settings.performanceMode && (ev.cnt >= 3 || (ev.isMeasure && ev.cnt >= 2)) && nowPerf - lastSecRipplePerf > 260) {
+            lastSecRipplePerf = nowPerf;
+            if (secRipples.length >= 2) secRipples.shift();
+            secRipples.push({ age: 0, dur: 0.68, strength: clamp(0.55 + (ev.cnt - 2) * 0.18, 0.5, 0.95), cyan: ev.leftCnt >= ev.rightCnt });
+          }
+        }
+
+        // Smooth horizon & ridge downbeat pulse
+        const targetBass = clamp(downbeatKick + chartDensity * 0.32, 0, 1.1);
+        bassPulse += (targetBass - bassPulse) * (targetBass > bassPulse ? (1 - Math.exp(-dtSec * 36)) : (1 - Math.exp(-dtSec * 9.5)));
+
+        // Secondary sky arcs reflect L/R lane choreography + active LN holds
+        const lTarget = clamp(leftLanePulse * 0.78 + (lnLeft > 0 ? 0.45 : 0) + chartDensity * 0.22, 0, 1.15);
+        const rTarget = clamp(rightLanePulse * 0.78 + (lnRight > 0 ? 0.45 : 0) + chartDensity * 0.22, 0, 1.15);
+        leftArcGlow += (lTarget - leftArcGlow) * (lTarget > leftArcGlow ? (1 - Math.exp(-dtSec * 26)) : (1 - Math.exp(-dtSec * 9)));
+        rightArcGlow += (rTarget - rightArcGlow) * (rTarget > rightArcGlow ? (1 - Math.exp(-dtSec * 26)) : (1 - Math.exp(-dtSec * 9)));
+        secSmooth = 0.5 * (leftArcGlow + rightArcGlow);
+        secArcAngle += dtSec * (0.24 + chartDensity * 0.75 + secSmooth * 0.38);
+
+        // Moon spring driven strictly by chart density baseline + note/chord pops + LN hold swells
+        const isBreak = chartDensity < 0.04 && chartPulse < 0.04 && chartLnHold < 0.02;
+        const targetPos = isBreak
+          ? -0.060
+          : (-0.056 + chartDensity * 0.105 + chartPulse * 0.135 + chartLnHold * 0.095);
+
+        const stiffness = 185;
+        const damping = 18.8;
+        moonVel += ((targetPos - moonPos) * stiffness - moonVel * damping) * dtSec;
+        moonPos = clamp(moonPos + moonVel * dtSec, -0.068, 0.28);
+
+        const targetGlow = clamp(chartDensity * 0.38 + chartPulse * 0.62 + chartLnHold * 0.42, 0, 1.12);
+        moonGlow += (targetGlow - moonGlow) * (1 - Math.exp(-dtSec * 16));
+      } else {
+        // Idle / Paused gentle resting breath
+        const idleTarget = 0.012 * Math.sin(nowSec * 1.4);
+        moonVel += ((idleTarget - moonPos) * 40 - moonVel * 12) * dtSec;
+        moonPos += moonVel * dtSec;
+        moonGlow     *= Math.exp(-dtSec * 6);
+        secSmooth    *= Math.exp(-dtSec * 6);
+        leftArcGlow  *= Math.exp(-dtSec * 6);
+        rightArcGlow *= Math.exp(-dtSec * 6);
+        bassPulse    *= Math.exp(-dtSec * 8);
+      }
+
+      // Advance secondary-melody echo ripples
+      for (let i = secRipples.length - 1; i >= 0; i--) {
+        secRipples[i].age += dtSec;
+        if (secRipples[i].age >= secRipples[i].dur) secRipples.splice(i, 1);
       }
 
       const horizonY = Math.round(h * 0.64);
@@ -7456,18 +8265,18 @@ const App = (() => {
       bctx.fillStyle = ground;
       bctx.fillRect(0, horizonY, w, h - horizonY);
 
-      // 2) Luminous Blue & Purple Atmospheric Aurora Orbs
-      const pulse = 1 + bassEnergy * 0.18;
+      // 2) Luminous Blue & Purple Atmospheric Aurora Orbs (subtle main melody + secondary harmony aura)
+      const pulse = 1 + Math.max(0, moonPos) * 0.55 + secSmooth * 0.08;
       const orb1 = bctx.createRadialGradient(w * 0.62, horizonY - h * 0.08, 10, w * 0.62, horizonY - h * 0.08, w * 0.44 * pulse);
-      orb1.addColorStop(0, 'rgba(139, 92, 246, 0.36)');
-      orb1.addColorStop(0.42, 'rgba(56, 189, 248, 0.18)');
+      orb1.addColorStop(0, `rgba(139, 92, 246, ${(0.30 + moonGlow * 0.12).toFixed(3)})`);
+      orb1.addColorStop(0.42, `rgba(56, 189, 248, ${(0.14 + secSmooth * 0.08).toFixed(3)})`);
       orb1.addColorStop(1, 'rgba(0, 0, 0, 0)');
       bctx.fillStyle = orb1;
       bctx.fillRect(0, 0, w, h);
 
-      const orb2 = bctx.createRadialGradient(w * 0.24, h * 0.30, 8, w * 0.24, h * 0.30, w * 0.34);
-      orb2.addColorStop(0, 'rgba(2, 171, 255, 0.20)');
-      orb2.addColorStop(0.55, 'rgba(124, 58, 237, 0.10)');
+      const orb2 = bctx.createRadialGradient(w * 0.24, h * 0.30, 8, w * 0.24, h * 0.30, w * (0.32 + secSmooth * 0.03));
+      orb2.addColorStop(0, `rgba(2, 171, 255, ${(0.18 + secSmooth * 0.06).toFixed(3)})`);
+      orb2.addColorStop(0.55, `rgba(124, 58, 237, ${(0.09 + secSmooth * 0.04).toFixed(3)})`);
       orb2.addColorStop(1, 'rgba(0, 0, 0, 0)');
       bctx.fillStyle = orb2;
       bctx.fillRect(0, 0, w, h);
@@ -7475,7 +8284,7 @@ const App = (() => {
       // 3) Subtle Twinkling Starfield
       for (let i = 0; i < stars.length; i++) {
         const st = stars[i];
-        const tw = settings.performanceMode ? 0.65 : (0.35 + 0.55 * (0.5 + 0.5 * Math.sin(nowSec * 1.4 + st.phase)));
+        const tw = settings.performanceMode ? 0.65 : clamp(0.32 + 0.52 * (0.5 + 0.5 * Math.sin(nowSec * 1.4 + st.phase)) + secSmooth * 0.09, 0, 1);
         bctx.globalAlpha = tw;
         bctx.fillStyle = st.hue;
         bctx.beginPath();
@@ -7484,27 +8293,100 @@ const App = (() => {
       }
       bctx.globalAlpha = 1;
 
-      // 4) Iconic Darkwave Blue-Purple Retrowave Sun behind the mountain horizon
+      // 4) Iconic Darkwave Blue-Purple Retrowave Moon/Sun — Main Melody (refined expressive size swings)
+      //    + Subtle Harmonic Ring, Stereo Crescents & Gossamer Ripples — Secondary Melodies!
       const sunX = w * 0.62;
-      const sunR = Math.min(w, h) * (0.165 + bassEnergy * 0.014);
-      const sunY = horizonY - sunR * 0.22;
+      const baseSunR = Math.min(w, h) * 0.165;
+      const sunR = baseSunR * (1 + moonPos); // refined dynamic swing: ~0.95x trough -> ~1.20x main melody peak
+      const sunY = horizonY - baseSunR * 0.22;
       bctx.save();
       bctx.beginPath();
       bctx.rect(0, 0, w, horizonY);
       bctx.clip();
+
+      // 4a) Subtle Secondary-Melody Echo Ripples
+      if (!settings.performanceMode && secRipples.length) {
+        for (let i = 0; i < secRipples.length; i++) {
+          const rp = secRipples[i];
+          const p = rp.age / rp.dur;
+          const ease = 1 - Math.pow(1 - p, 2.2);
+          const rr = sunR * (1.04 + ease * 0.42);
+          const alpha = (1 - p) * (1 - p) * 0.24 * rp.strength;
+          bctx.strokeStyle = rp.cyan
+            ? `rgba(103, 232, 249, ${alpha.toFixed(3)})`
+            : `rgba(192, 132, 252, ${alpha.toFixed(3)})`;
+          bctx.lineWidth = Math.max(0.8, (1 - p) * 1.8);
+          bctx.beginPath();
+          bctx.arc(sunX, sunY, rr, 0, Math.PI * 2);
+          bctx.stroke();
+        }
+      }
+
+      // 4b) Sleek Secondary-Melody Harmonic Ring + Subtle Orbiting Stereo/Lane Crescents
+      if (!settings.performanceMode && (secSmooth > 0.04 || leftArcGlow > 0.04 || rightArcGlow > 0.04)) {
+        const ringR = sunR * (1.08 + secSmooth * 0.17);
+        const ringAlpha = clamp(secSmooth * 0.44, 0, 0.46);
+        bctx.save();
+        bctx.strokeStyle = `rgba(168, 85, 247, ${(ringAlpha * 0.74).toFixed(3)})`;
+        bctx.lineWidth = 1.1 + secSmooth * 0.95;
+        bctx.beginPath();
+        bctx.arc(sunX, sunY, ringR, 0, Math.PI * 2);
+        bctx.stroke();
+
+        const lArcR = ringR + 5 + leftArcGlow * 7.5;
+        const rArcR = ringR + 5 + rightArcGlow * 7.5;
+        const lSpan = 0.36 + leftArcGlow * 0.48;
+        const rSpan = 0.36 + rightArcGlow * 0.48;
+        bctx.lineCap = 'round';
+        if (leftArcGlow > 0.04) {
+          bctx.lineWidth = 1.6 + leftArcGlow * 1.45;
+          bctx.shadowColor = 'rgba(56, 189, 248, 0.58)';
+          bctx.shadowBlur = 9 * leftArcGlow;
+          bctx.strokeStyle = `rgba(103, 232, 249, ${clamp(leftArcGlow * 0.62, 0, 0.68).toFixed(3)})`;
+          bctx.beginPath();
+          bctx.arc(sunX, sunY, lArcR, Math.PI + secArcAngle - lSpan * 0.5, Math.PI + secArcAngle + lSpan * 0.5);
+          bctx.stroke();
+        }
+        if (rightArcGlow > 0.04) {
+          bctx.lineWidth = 1.6 + rightArcGlow * 1.45;
+          bctx.shadowColor = 'rgba(192, 132, 252, 0.58)';
+          bctx.shadowBlur = 9 * rightArcGlow;
+          bctx.strokeStyle = `rgba(192, 132, 252, ${clamp(rightArcGlow * 0.62, 0, 0.68).toFixed(3)})`;
+          bctx.beginPath();
+          bctx.arc(sunX, sunY, rArcR, secArcAngle - rSpan * 0.5, secArcAngle + rSpan * 0.5);
+          bctx.stroke();
+        }
+        bctx.restore();
+      }
+
+      // 4c) Soft Main-Melody Outer Aura
+      if (!settings.performanceMode && moonGlow > 0.04) {
+        const haloR = sunR * (1.25 + Math.max(0, moonPos) * 0.36);
+        const haloGrad = bctx.createRadialGradient(sunX, sunY, sunR * 0.84, sunX, sunY, haloR);
+        haloGrad.addColorStop(0, `rgba(103, 232, 249, ${(moonGlow * 0.23).toFixed(3)})`);
+        haloGrad.addColorStop(0.55, `rgba(139, 92, 246, ${(moonGlow * 0.15).toFixed(3)})`);
+        haloGrad.addColorStop(1, 'rgba(124, 58, 237, 0)');
+        bctx.fillStyle = haloGrad;
+        bctx.beginPath();
+        bctx.arc(sunX, sunY, haloR, 0, Math.PI * 2);
+        bctx.fill();
+      }
+
+      // 4d) Main-Melody Moon Disc
       const sunGrad = bctx.createLinearGradient(sunX, sunY - sunR, sunX, sunY + sunR);
-      sunGrad.addColorStop(0, '#67e8f9');
+      sunGrad.addColorStop(0, leadPitchSmooth > 0.55 ? '#94eefc' : '#67e8f9');
       sunGrad.addColorStop(0.38, '#38bdf8');
       sunGrad.addColorStop(0.72, '#7c3aed');
       sunGrad.addColorStop(1, '#c026d3');
-      bctx.shadowColor = 'rgba(124, 58, 237, 0.55)';
-      bctx.shadowBlur = settings.performanceMode ? 0 : 42;
+      bctx.shadowColor = 'rgba(124, 58, 237, 0.60)';
+      bctx.shadowBlur = settings.performanceMode ? 0 : (28 + moonGlow * 32);
       bctx.fillStyle = sunGrad;
       bctx.beginPath();
       bctx.arc(sunX, sunY, sunR, 0, Math.PI * 2);
       bctx.fill();
       bctx.shadowBlur = 0;
-      // Clean darkwave horizontal slice cuts across lower half of the sun
+
+      // Clean darkwave horizontal slice cuts across lower half of the moon
       bctx.fillStyle = '#14092e';
       for (let s = 0; s < 6; s++) {
         const sy = sunY + sunR * (0.04 + s * 0.13);
@@ -7513,8 +8395,8 @@ const App = (() => {
       }
       bctx.restore();
 
-      // 5) Silhouetted Distant & Near Darkwave Mountain Ridges
-      const drawRidge = (pts, fillStyle, strokeStyle) => {
+      // 5) Silhouetted Distant & Near Darkwave Mountain Ridges (gentle rim-glow on harmony & bass)
+      const drawRidge = (pts, fillStyle, strokeStyle, lw = 1.2) => {
         bctx.beginPath();
         bctx.moveTo(0, horizonY + 1);
         for (let i = 0; i < pts.length; i++) {
@@ -7526,24 +8408,25 @@ const App = (() => {
         bctx.fill();
         if (strokeStyle) {
           bctx.strokeStyle = strokeStyle;
-          bctx.lineWidth = 1.2;
+          bctx.lineWidth = lw;
           bctx.stroke();
         }
       };
-      drawRidge(farRidge, '#120829', 'rgba(139, 92, 246, 0.35)');
-      drawRidge(nearRidge, '#070214', 'rgba(2, 171, 255, 0.32)');
+      drawRidge(farRidge, '#120829', `rgba(139, 92, 246, ${(0.32 + secSmooth * 0.20).toFixed(3)})`, 1.2 + secSmooth * 0.4);
+      drawRidge(nearRidge, '#070214', `rgba(2, 171, 255, ${(0.30 + bassPulse * 0.28).toFixed(3)})`, 1.2 + bassPulse * 0.55);
 
       // 6) Smooth Scrolling 3D Perspective Neon Blue-Purple Floor Grid
       const gridH = Math.max(40, h - horizonY);
       const vanishX = w * 0.62;
-      // Glowing horizon line
+      // Glowing horizon line (gentle bass crest pulse)
+      const hLineH = 2 + bassPulse * 1.4;
       const hLineGrad = bctx.createLinearGradient(0, horizonY, w, horizonY);
-      hLineGrad.addColorStop(0, 'rgba(2, 171, 255, 0.18)');
-      hLineGrad.addColorStop(0.55, 'rgba(56, 189, 248, 0.85)');
-      hLineGrad.addColorStop(0.8, 'rgba(168, 85, 247, 0.82)');
-      hLineGrad.addColorStop(1, 'rgba(168, 85, 247, 0.15)');
+      hLineGrad.addColorStop(0, `rgba(2, 171, 255, ${(0.18 + bassPulse * 0.16).toFixed(3)})`);
+      hLineGrad.addColorStop(0.55, `rgba(56, 189, 248, ${(0.82 + bassPulse * 0.14).toFixed(3)})`);
+      hLineGrad.addColorStop(0.8, `rgba(168, 85, 247, ${(0.78 + secSmooth * 0.14).toFixed(3)})`);
+      hLineGrad.addColorStop(1, `rgba(168, 85, 247, ${(0.15 + secSmooth * 0.14).toFixed(3)})`);
       bctx.fillStyle = hLineGrad;
-      bctx.fillRect(0, horizonY - 1, w, 2);
+      bctx.fillRect(0, horizonY - hLineH * 0.5, w, hLineH);
 
       // Perspective radiating lanes
       bctx.lineWidth = 1;
@@ -7598,7 +8481,27 @@ const App = (() => {
         }
       }
 
-      // Menu audio frequency visualizer
+      // Menu audio frequency visualizer + Main Menu Jukebox playback bar sync
+      if (currentScreen === 'menu') {
+        if (lastJbPlaying !== pst.playing) {
+          lastJbPlaying = pst.playing;
+          const jbPlayBtn = document.getElementById('btn-jb-play');
+          if (jbPlayBtn) jbPlayBtn.innerHTML = pst.playing ? JB_ICON_PAUSE : JB_ICON_PLAY;
+        }
+        const jbTimeEl = document.getElementById('jb-time');
+        const jbDurEl = document.getElementById('jb-dur');
+        const jbSeekEl = document.getElementById('jb-seek');
+        const pairNow = getSelectedPair();
+        const fallbackDur = (pairNow && pairNow.ch && pairNow.ch.meta && pairNow.ch.meta.lengthMs) || 0;
+        const durMs = pst.durationMs > 0 ? pst.durationMs : fallbackDur;
+        const curMs = pst.active ? pst.timeMs : 0;
+        if (jbTimeEl) jbTimeEl.textContent = formatTime(curMs);
+        if (jbDurEl) jbDurEl.textContent = formatTime(durMs);
+        if (jbSeekEl && !jukeboxSeeking && durMs > 0) {
+          jbSeekEl.max = Math.round(durMs);
+          jbSeekEl.value = clamp(Math.round(curMs), 0, Math.round(durMs));
+        }
+      }
       if (currentScreen === 'menu' && vctx) {
         const vw = vizC.width, vh = vizC.height;
         vctx.clearRect(0, 0, vw, vh);
@@ -7606,7 +8509,9 @@ const App = (() => {
         const bw = (vw - 24) / bars;
         const t = nowSec * 2.5;
         for (let i = 0; i < bars; i++) {
-          const raw = hasAudio ? (vizData[i] / 255) : 0;
+          // Spread 48 bars across 0..108 (~0Hz–10kHz) with higher resolution in bass & melody range
+          const binIdx = Math.min(255, Math.floor(Math.pow(i / (bars - 1), 1.35) * 108));
+          const raw = hasAudio ? (vizData[binIdx] / 255) : 0;
           const idle = 0.08 + 0.06 * Math.sin(t + i * 0.35);
           const v = Math.max(idle, raw);
           const bh = Math.max(3, v * (vh - 14));
@@ -7896,7 +8801,7 @@ const App = (() => {
     return { addedSets: importedSets.length, addedCharts, importedSets, elapsedMs };
   }
 
-  async function handleIncomingFiles(fileObjects) {
+  async function handleIncomingFiles(fileObjects, opts = {}) {
     const persist = settings.persistImports;
     const folderMap = new Map(); // folderKey -> [{ name, blob }]
     let zipCount = 0;
@@ -7919,7 +8824,7 @@ const App = (() => {
           qpackImported.push(...qr.importedSets);
           qpackCharts += qr.addedCharts;
           qpackMs += qr.elapsedMs;
-          await recordLastQpack(f, item.handle || null, qr.addedSets, qr.addedCharts);
+          await recordLastQpack(f, item.handle || null, qr.addedSets, qr.addedCharts, 'file');
         } catch (err) {
           toast(`Failed to load ${f.name}: ${err.message}`, 'err');
         }
@@ -7959,34 +8864,37 @@ const App = (() => {
     const totalAddedCharts = res.addedCharts + qpackCharts;
     const allImportedSets = qpackImported.concat(res.importedSets);
 
+    // Remember folder library (both FileSystemDirectoryHandle & fallback folder pick) for one-click reconnect on relaunch!
+    if (res.addedCharts > 0 && qpackCharts === 0 && (opts.dirHandle || opts.folderName)) {
+      const folderName = (opts.dirHandle && opts.dirHandle.name) || opts.folderName || 'Songs';
+      await recordLastQpack({ name: folderName, size: 0, lastModified: Date.now() }, opts.dirHandle || null, res.addedSets, res.addedCharts, 'directory');
+    }
+
     if (totalAddedCharts > 0) {
       const note = qpackCharts > 0
         ? ` in ${qpackMs}ms (lazy .qpack stream)`
         : (res.bulkSessionMode ? ' (instant disk-handle session mode)' : '');
       toast(`Loaded ${totalAddedSets} mapset(s) (${totalAddedCharts} charts)${note}`, 'ok');
       // Pick a truly random chart from the imported sets (preferring current mode filter e.g. 4K)
-      const mf = document.getElementById('sel-mode-filter');
-      let matchingPairs = [];
-      if (mf.value === '4' || mf.value === '7') {
-        const wantK = Number(mf.value);
-        for (const ms of allImportedSets) {
-          for (const c of ms.charts) if (c.keyCount === wantK) matchingPairs.push({ ms, ch: c });
-        }
-      }
-      if (!matchingPairs.length) {
-        for (const ms of allImportedSets) {
-          for (const c of ms.charts) matchingPairs.push({ ms, ch: c });
-        }
-      }
-      if (matchingPairs.length) {
-        const chosen = matchingPairs[trueRandomInt(matchingPairs.length)];
+      const chosen = pickRandomPlayablePair(allImportedSets);
+      if (chosen) {
         selectedMapsetId = chosen.ms.id;
         selectedChartHash = chosen.ch.hash;
         hasPickedInitialRandom = true;
-        if (mf.value !== 'all' && String(chosen.ch.keyCount) !== mf.value) mf.value = 'all';
+        const mf = document.getElementById('sel-mode-filter');
+        if (mf && mf.value !== 'all' && String(chosen.ch.keyCount) !== mf.value) mf.value = 'all';
       }
       updateProfileHeader();
-      if (currentScreen !== 'game') showScreen('select');
+      const shouldStayMenu = currentScreen === 'menu' && (qpackCharts > 0 || opts.stayOnMenu || opts.dirHandle || opts.folderName);
+      if (shouldStayMenu) {
+        // Stay on Main Menu on library load & start playing the randomly chosen song!
+        if (chosen) startMenuJukebox(chosen, true, true);
+      } else if (currentScreen === 'select') {
+        renderMapsetList(true);
+        updateSelectedChartUI();
+      } else if (currentScreen !== 'game') {
+        showScreen('select');
+      }
     } else if (zipCount === 0) {
       const diag = `Scanned ${fileObjects.length} files in ${folderMap.size} folder(s): ${res.totalQuaFound} .qua/.osu found, ${res.parseErrors} read/parse errors, ${res.missingAudio} missing audio.${res.firstErrorMsg ? ' (' + res.firstErrorMsg + ')' : ''}`;
       toast(diag, 'err');
@@ -7994,15 +8902,18 @@ const App = (() => {
     }
   }
 
-  // Recursive drag-and-drop reader (captures FileSystemFileHandle synchronously before await so .qpack handle can persist!)
+  // Recursive drag-and-drop reader (captures FileSystemFileHandle & root FileSystemDirectoryHandle before await!)
   async function readDataTransferItems(items) {
     const out = [];
+    let rootDirHandle = null;
+    let rootFolderName = '';
     async function walkEntry(entry, prefix) {
       if (entry.isFile) {
         await new Promise((res) => {
           entry.file((file) => { out.push({ file, relPath: prefix + file.name, handle: null }); res(); }, () => res());
         });
       } else if (entry.isDirectory) {
+        if (!rootFolderName) rootFolderName = entry.name;
         const reader = entry.createReader();
         const readBatch = () => new Promise((res) => reader.readEntries(res, () => res([])));
         let batch;
@@ -8016,6 +8927,7 @@ const App = (() => {
         const file = await handle.getFile();
         out.push({ file, relPath: prefix + file.name, handle });
       } else if (handle.kind === 'directory') {
+        if (!rootDirHandle) { rootDirHandle = handle; rootFolderName = handle.name; }
         for await (const [, child] of handle.entries()) {
           await walkHandle(child, prefix + handle.name + '/');
         }
@@ -8045,7 +8957,7 @@ const App = (() => {
     }
     for (const e of fallbackEntries) await walkEntry(e, '');
     for (const f of fallbackFiles) out.push({ file: f, relPath: f.name, handle: null });
-    return out;
+    return { files: out, dirHandle: rootDirHandle, folderName: rootFolderName };
   }
 
   /* ---------- SONG SELECT RENDERING & FILTERING ---------- */
@@ -9010,7 +9922,9 @@ const App = (() => {
 
     const advice = Math.abs(res.mean) < 4
       ? 'Timing is well centered!'
-      : (res.mean > 0 ? `You hit ~${res.mean}ms late on average — try adding +${Math.round(res.mean)}ms map offset.` : `You hit ~${Math.abs(res.mean)}ms early on average — try ${Math.round(res.mean)}ms map offset.`);
+      : (res.mean > 0
+        ? `You hit ~${res.mean}ms late on average — apply +${Math.round(res.mean)}ms to Global Offset (all songs) or Map Offset.`
+        : `You hit ~${Math.abs(res.mean)}ms early on average — apply ${Math.round(res.mean)}ms to Global Offset (all songs) or Map Offset.`);
     document.getElementById('res-offset-advice').textContent = advice;
 
     // Stacked judgement composition ribbon + detailed breakdown bars with counts & percentages
@@ -9575,6 +10489,16 @@ const App = (() => {
     toast(`Map offset updated to ${next >= 0 ? '+' : ''}${next} ms`, 'ok');
   }
 
+  function applyMeanToGlobalOffset() {
+    if (!lastResult) return;
+    const delta = Math.round(lastResult.mean || 0);
+    const next = clamp((settings.globalAudioOffset || 0) + delta, -150, 150);
+    settings.globalAudioOffset = next;
+    saveSettings();
+    syncSettingsUI();
+    toast(`Global Audio Offset updated to ${next >= 0 ? '+' : ''}${next} ms (applies to all songs)`, 'ok');
+  }
+
   function watchLastReplay() {
     if (!lastResult || !lastResult.replay) { toast('No replay data stored for this score', 'err'); return; }
     selectedChartHash = lastResult.mapHash;
@@ -9661,7 +10585,6 @@ const App = (() => {
 
     setVal('set-username', s.username);
     setChk('set-persistlib', s.persistImports);
-    setChk('chk-persist-imports', s.persistImports);
 
     renderKeybindGrids();
   }
@@ -9820,14 +10743,7 @@ const App = (() => {
       settings.username = e.target.value.trim() || 'JackHacks4';
       saveSettings();
     });
-    bindChk('set-persistlib', 'persistImports', () => {
-      document.getElementById('chk-persist-imports').checked = settings.persistImports;
-    });
-    document.getElementById('chk-persist-imports').addEventListener('change', (e) => {
-      settings.persistImports = !!e.target.checked;
-      document.getElementById('set-persistlib').checked = settings.persistImports;
-      saveSettings();
-    });
+    bindChk('set-persistlib', 'persistImports');
     const modeSel = document.getElementById('kb-mode-select');
     if (modeSel) modeSel.addEventListener('change', () => renderKeybindGrids());
   }
@@ -9930,6 +10846,7 @@ const App = (() => {
     selectedMapsetId = mapsets[0].id;
     selectedChartHash = mapsets[0].charts[0].hash;
     updateProfileHeader();
+    syncJukeboxUI();
     if (currentScreen === 'select') { renderMapsetList(); updateSelectedChartUI(); }
     toast('Cleared cached library (built-in starter kept)', 'ok');
   }
@@ -10006,10 +10923,10 @@ const App = (() => {
 
   /* ---------- GLOBAL INPUT & FILE HOOKS ---------- */
   function wireGlobalEvents() {
-    // Unlock Web Audio on first user interaction & immediately kick off any pending song preview
+    // Unlock Web Audio on first user interaction & immediately kick off any pending menu/select playback
     const unlock = () => {
       AudioEngine.ensureContext();
-      if (currentScreen === 'select') AudioEngine.resumePendingPreview();
+      if (currentScreen === 'select' || currentScreen === 'menu') AudioEngine.resumePendingPreview();
     };
     window.addEventListener('pointerdown', unlock, { passive: true });
     window.addEventListener('keydown', unlock, { passive: true });
@@ -10018,6 +10935,7 @@ const App = (() => {
 
     // File pickers (IMPORTANT: await reading BEFORE resetting e.target.value so browsers never revoke File handles!)
     document.getElementById('file-input-files').addEventListener('change', async (e) => {
+      AudioEngine.ensureContext();
       const picked = e.target.files ? Array.from(e.target.files) : [];
       try {
         if (picked.length) await handleIncomingFiles(picked.map(f => ({ file: f, relPath: f.name })));
@@ -10026,9 +10944,17 @@ const App = (() => {
       }
     });
     document.getElementById('file-input-folder').addEventListener('change', async (e) => {
+      AudioEngine.ensureContext();
       const picked = e.target.files ? Array.from(e.target.files) : [];
       try {
-        if (picked.length) await handleIncomingFiles(picked.map(f => ({ file: f, relPath: f.webkitRelativePath || f.name })));
+        if (picked.length) {
+          const firstRel = (picked[0].webkitRelativePath || '').replace(/\\/g, '/');
+          const topDir = firstRel.includes('/') ? firstRel.split('/')[0] : 'Songs';
+          await handleIncomingFiles(
+            picked.map(f => ({ file: f, relPath: f.webkitRelativePath || f.name })),
+            { folderName: topDir, stayOnMenu: currentScreen === 'menu' }
+          );
+        }
       } finally {
         e.target.value = '';
       }
@@ -10076,9 +11002,12 @@ const App = (() => {
       dragDepth = 0;
       overlay.classList.remove('active');
       if (Game.isActive) return;
+      AudioEngine.ensureContext();
       if (e.dataTransfer && e.dataTransfer.items && e.dataTransfer.items.length) {
-        const files = await readDataTransferItems(e.dataTransfer.items);
-        if (files.length) await handleIncomingFiles(files);
+        const res = await readDataTransferItems(e.dataTransfer.items);
+        if (res.files && res.files.length) {
+          await handleIncomingFiles(res.files, { dirHandle: res.dirHandle, folderName: res.folderName, stayOnMenu: currentScreen === 'menu' });
+        }
       } else if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) {
         await handleIncomingFiles(Array.from(e.dataTransfer.files).map(f => ({ file: f, relPath: f.name })));
       }
@@ -10099,6 +11028,21 @@ const App = (() => {
       const endSeek = () => { previewSeeking = false; };
       pvSeek.addEventListener('pointerup', endSeek);
       pvSeek.addEventListener('change', endSeek);
+    }
+
+    // Main Menu Jukebox scrub bar
+    const jbSeek = document.getElementById('jb-seek');
+    if (jbSeek) {
+      jbSeek.addEventListener('pointerdown', () => { jukeboxSeeking = true; });
+      jbSeek.addEventListener('input', (e) => {
+        const ms = Number(e.target.value) || 0;
+        const jbTimeEl = document.getElementById('jb-time');
+        if (jbTimeEl) jbTimeEl.textContent = formatTime(ms);
+        AudioEngine.seekPreview(ms);
+      });
+      const endJbSeek = () => { jukeboxSeeking = false; };
+      jbSeek.addEventListener('pointerup', endJbSeek);
+      jbSeek.addEventListener('change', endJbSeek);
     }
 
     // Master Keyboard Dispatcher (1:1 Quaver keybind parity via settings.hotkeys)
@@ -10239,9 +11183,15 @@ const App = (() => {
     wireGlobalEvents();
     syncSettingsUI();
     updateProfileHeader();
+    if (mapsets.some(m => !m.builtIn)) {
+      const initPick = pickRandomPlayablePair();
+      if (initPick) startMenuJukebox(initPick, true, true);
+    } else {
+      syncJukeboxUI();
+    }
     startMenuAnimation();
 
-    // Auto-reconnect saved .qpack handle immediately if browser permission is already granted,
+    // Auto-reconnect saved .qpack file OR Song folder handle immediately if browser permission is already granted,
     // otherwise display the one-click permission prompt card on Main Menu!
     if (savedQpackHandle && !mapsets.some(m => !m.builtIn)) {
       try {
@@ -10249,8 +11199,13 @@ const App = (() => {
           ? await savedQpackHandle.queryPermission({ mode: 'read' })
           : 'prompt';
         if (perm === 'granted') {
-          const f = await savedQpackHandle.getFile();
-          await handleIncomingFiles([{ file: f, relPath: f.name, handle: savedQpackHandle }]);
+          if (savedQpackHandle.kind === 'directory') {
+            const items = await collectFilesFromDirectoryHandle(savedQpackHandle);
+            if (items.length) await handleIncomingFiles(items, { dirHandle: savedQpackHandle, stayOnMenu: true });
+          } else {
+            const f = await savedQpackHandle.getFile();
+            await handleIncomingFiles([{ file: f, relPath: f.name, handle: savedQpackHandle }], { stayOnMenu: true });
+          }
         } else {
           updateReconnectUI();
         }
@@ -10280,7 +11235,7 @@ const App = (() => {
     toggleFullscreen,
     formatModsDisplay,
     triggerImportFiles,
-    triggerImportFolder: () => document.getElementById('file-input-folder').click(),
+    triggerImportFolder,
     triggerImportSkin: () => document.getElementById('file-input-skin').click(),
     triggerImportBackup: () => document.getElementById('file-input-backup').click(),
     reconnectLastQpack,
@@ -10302,6 +11257,10 @@ const App = (() => {
     onGameFinished,
     setResultGraph,
     applyMeanToMapOffset,
+    applyMeanToGlobalOffset,
+    jukeboxPrev,
+    jukeboxNext,
+    jukeboxTogglePlay,
     watchLastReplay,
     watchScoreReplay,
     retryLastMap,
